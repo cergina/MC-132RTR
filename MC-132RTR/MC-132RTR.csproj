@@ -81,6 +81,8 @@
     <Compile Include="Model\Core\C_RIPv2.cs" />
     <Compile Include="Model\Core\C_Routing.cs" />
     <Compile Include="Model\Core\Device.cs" />
+    <Compile Include="Model\Packet\Extractor.cs" />
+    <Compile Include="Model\Packet\Insertor.cs" />
     <Compile Include="Model\Packet\P_ARP.cs" />
     <Compile Include="Model\Packet\P_RIPv2.cs" />
     <Compile Include="Model\Support\Logging.cs" />
