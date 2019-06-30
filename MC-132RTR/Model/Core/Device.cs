@@ -15,7 +15,7 @@ namespace MC_132RTR.Model.Core
         public static List<Device> ListOfDevices = new List<Device>();
 
         public ICaptureDevice ICapDev { get; private set; }
-        private Network Network = null;
+        public Network Network { get; private set; } = null;
 
         private bool Disabled = true;
         private bool DisabledRIPv2 = true;
