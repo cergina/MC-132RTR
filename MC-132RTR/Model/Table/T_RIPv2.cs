@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using MC_132RTR.Controller.Middleman;
+using MC_132RTR.Model.TablePrimitive;
 
 namespace MC_132RTR.Model.Table
 {
@@ -18,6 +19,8 @@ namespace MC_132RTR.Model.Table
         // HOLD DOWN (seconds) - during this time is network advertised with 16 metrics and NOT UPDATES itself
         public int HOLDDOWN { private set; get; } = 180;
 
+        // entries of 
+        public List<TP_RIPv2> Table = new List<TP_RIPv2>(); 
 
         // generic stuff
         public static T_RIPv2 GetInstance()

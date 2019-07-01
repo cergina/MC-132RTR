@@ -14,10 +14,7 @@ namespace MC_132RTR.Model.Packet
             if (Data == null || Value == null || StartByte < 0 || HowManyBytes < 0)
                 return null;
 
-            // expand packet if necessary
-            if ((StartByte + HowManyBytes) > (Data.Length))
-                Array.Resize(ref Data, StartByte + HowManyBytes);
-
+            Data = MakeBiggerIfNecessary(Data, StartByte, HowManyBytes);
             Array.Copy(Value, 0, Data, StartByte, HowManyBytes);
 
             return Data;
@@ -30,6 +27,8 @@ namespace MC_132RTR.Model.Packet
 
             byte[] ValueBytes = BitConverter.GetBytes((ushort)Value);
             Array.Reverse(ValueBytes);
+
+            Data = MakeBiggerIfNecessary(Data, StartByte, ValueBytes.Length);
             Array.Copy(ValueBytes, 0, Data, StartByte, ValueBytes.Length);
 
             return Data;
@@ -42,6 +41,8 @@ namespace MC_132RTR.Model.Packet
 
             byte[] ValueBytes = BitConverter.GetBytes((uint)Value);
             Array.Reverse(ValueBytes);
+
+            Data = MakeBiggerIfNecessary(Data, StartByte, ValueBytes.Length);
             Array.Copy(ValueBytes, 0, Data, StartByte, ValueBytes.Length);
 
             return Data;
@@ -52,6 +53,7 @@ namespace MC_132RTR.Model.Packet
             if (Data == null || StartByte < 0)
                 return null;
 
+            Data = MakeBiggerIfNecessary(Data, StartByte, 1);
             Data[StartByte] = Value;
 
             return Data;
@@ -63,7 +65,18 @@ namespace MC_132RTR.Model.Packet
                 return null;
 
             byte[] ValueBytes = ((IPAddress)Value).GetAddressBytes();
+
+            Data = MakeBiggerIfNecessary(Data, StartByte, ValueBytes.Length);
             Array.Copy(ValueBytes, 0, Data, StartByte, ValueBytes.Length);
+
+            return Data;
+        }
+
+        public static byte[] MakeBiggerIfNecessary(byte[] Data, int StartByte, int HowManyBytes)
+        {
+            // expand packet if necessary
+            if ((StartByte + HowManyBytes) > (Data.Length))
+                Array.Resize(ref Data, StartByte + HowManyBytes);
 
             return Data;
         }
