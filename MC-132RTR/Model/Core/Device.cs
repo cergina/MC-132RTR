@@ -1,9 +1,11 @@
 ﻿using MC_132RTR.Model.Support;
+using PacketDotNet;
 using SharpPcap;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
+using System.Net.NetworkInformation;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -53,10 +55,25 @@ namespace MC_132RTR.Model.Core
             
         }
 
-        public void SendViaThisDevice()
+        // This function's used to send directly ethernet, from upper layers or ARP
+        public void SendViaThisDevice(PhysicalAddress MAC_Dst, EthernetPacketType Type,
+            byte[] Payload)
         {
             if (Disabled)
                 return;
+
+            var EthPckt = new EthernetPacket(this.ICapDev.MacAddress, MAC_Dst, Type);
+            EthPckt.PayloadData = Payload;
+
+            this.ICapDev.SendPacket(EthPckt.Bytes);
+        }
+
+        // use this to send Ip layers (like UDP, ...)
+        public void SendViaThisDevice(PhysicalAddress MAC_Dst, IPv4Packet IpPckt)
+        {
+            IpPckt.UpdateIPChecksum();
+
+            SendViaThisDevice(MAC_Dst, EthernetPacketType.IpV4, IpPckt.Bytes);
         }
 
         public void EnableRIPv2()
