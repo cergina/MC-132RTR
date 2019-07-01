@@ -15,7 +15,12 @@ namespace MC_132RTR.Model.Packet
         // must be zero
         public ushort MBZ { get; private set; }
 
+        public byte[] Bytes = null;
 
+        private P_RIPv2()
+        {
+            Bytes = new byte[4];
+        }
 
         // basic header validation
         public bool Validate()
@@ -36,7 +41,22 @@ namespace MC_132RTR.Model.Packet
             // Insert into packet
         }
 
-        public void 
+        public static P_RIPv2 CraftRequest()
+        {
+            P_RIPv2 Pckt = new P_RIPv2();
+            Pckt.InitializeRIPv2(true);
+        }
 
+        public static List<P_RIPv2> CraftPeriodicResponse()
+        {
+            P_RIPv2 Pckt = new P_RIPv2();
+            Pckt.InitializeRIPv2(false);
+        }
+
+        public static List<P_RIPv2> CraftImmediateResponse()
+        {
+            P_RIPv2 Pckt = new P_RIPv2();
+            Pckt.InitializeRIPv2(false);
+        }
     }
 }
