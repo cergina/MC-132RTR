@@ -19,8 +19,8 @@ namespace MC_132RTR.Model.Core
         public ICaptureDevice ICapDev { get; private set; }
         public Network Network { get; private set; } = null;
 
-        private bool Disabled = true;
-        private bool DisabledRIPv2 = true;
+        public bool Disabled { get; private set; } = true;
+        public bool DisabledRIPv2 { get; private set; } = true;
 
         private Device(ICaptureDevice TmpICapDev)
         {
