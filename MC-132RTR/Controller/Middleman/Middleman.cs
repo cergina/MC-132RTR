@@ -25,11 +25,17 @@ namespace MC_132RTR.Controller.Middleman
         // GENERAL
         public static void TryToStartRouter()
         {
+            if (Device.RouterRunning || Device.CountActiveDevices() < 2)
+                return;
+
+
+
             throw new NotImplementedException();
         }
 
         public static void StopRouter()
         {
+            if ()
             throw new NotImplementedException();
         }
 
@@ -56,11 +62,13 @@ namespace MC_132RTR.Controller.Middleman
 
         public static Device GetDeviceByICapture(SharpPcap.ICaptureDevice ICapDev)
         {
+
             throw new NotImplementedException();
         }
 
         public static Device GetDeviceByShorterName(String ShorterName)
         {
+
             throw new NotImplementedException();
         }
 
@@ -97,11 +105,16 @@ namespace MC_132RTR.Controller.Middleman
         // STATIC ROUTES
         public static void TryToAddStaticRoute(Network NetTmp)
         {
+            if (!NetTmp.IsCorrect())
+                return;
+
+
             throw new NotImplementedException();
         }
 
         public static void RemoveStaticRoute(Network NetTmp)
         {
+            
             throw new NotImplementedException();
         }
 

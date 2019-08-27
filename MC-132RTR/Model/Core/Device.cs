@@ -13,53 +13,60 @@ namespace MC_132RTR.Model.Core
 {
     public class Device
     {
-        public static bool Started = false;
+        public static bool RouterRunning = false;
         public static List<Device> ListOfDevices = new List<Device>();
 
         public ICaptureDevice ICapDev { get; private set; }
         public Network Network { get; private set; } = null;
 
-        public bool Disabled { get; private set; } = true;
-        public bool DisabledRIPv2 { get; private set; } = true;
+        public bool DEV_Disabled { get; private set; } = true;
+        public bool DEV_DisabledRIPv2 { get; private set; } = true;
 
         private Device(ICaptureDevice TmpICapDev)
         {
             ICapDev = TmpICapDev;
             Network = null;
-            Disabled = true;
-            DisabledRIPv2 = true;
+            DEV_Disabled = true;
+            DEV_DisabledRIPv2 = true;
         }
 
-        public void SetWhenRouterOff(IPAddress TmpIp, IPAddress TmpMask)
+        private void SetWhenRouterOff(Network TmpNet)
+        {
+            Network = TmpNet;
+        }
+
+        private void SetWhenRouterOn(Network TmpNet)
+        {
+            // guarantee that correct network is about to change
+            SendInfoAboutChange(TmpNet);
+            Network = TmpNet;
+        }
+
+        public void Set(IPAddress TmpIp, IPAddress TmpMask)
         {
             Network TmpNet = new Network(TmpIp, new Mask(TmpMask));
+            if (!TmpNet.IsCorrect())
+                return;
 
-            if (TmpNet.IsCorrect())
-                Network = TmpNet;
+            if (RouterRunning)
+                SetWhenRouterOn(TmpNet);
+            else
+                SetWhenRouterOff(TmpNet);
         }
 
-        public void SetWhenRouterOn(IPAddress TmpIp, IPAddress TmpMask)
+        public static void SendInfoAboutChange(Network NewNetwork)
         {
-            Network TmpNet = new Network(TmpIp, new Mask(TmpMask));
+            if (!RouterRunning)
+                return;
 
-            if (TmpNet.IsCorrect())
-            {
-                // guarantee that correct network is about to change
-                SendInfoAboutChange();
-                Network = TmpNet;
-            }
-        }
-
-        public static void SendInfoAboutChange()
-        {
-            
+            throw new NotImplementedException();
         }
 
         // This function's used to send directly ethernet, from upper layers or ARP
         public void SendViaThisDevice(PhysicalAddress MAC_Dst, EthernetPacketType Type,
             byte[] Payload)
         {
-            if (Disabled)
+            if (DEV_Disabled)
                 return;
 
             var EthPckt = new EthernetPacket(this.ICapDev.MacAddress, MAC_Dst, Type);
@@ -71,6 +78,9 @@ namespace MC_132RTR.Model.Core
         // use this to send Ip layers (like UDP, ...)
         public void SendViaThisDevice(PhysicalAddress MAC_Dst, IPv4Packet IpPckt)
         {
+            if (DEV_Disabled)
+                return;
+
             IpPckt.UpdateIPChecksum();
 
             SendViaThisDevice(MAC_Dst, EthernetPacketType.IpV4, IpPckt.Bytes);
@@ -78,22 +88,36 @@ namespace MC_132RTR.Model.Core
 
         public void EnableRIPv2()
         {
-            if (Disabled)
+            if (DEV_Disabled || (!DEV_DisabledRIPv2))
                 return;
 
-            DisabledRIPv2 = false;
+            DEV_DisabledRIPv2 = false;
         }
 
         public void DisableRIPv2()
         {
-            DisabledRIPv2 = true;
+            if (DEV_Disabled || DEV_DisabledRIPv2)
+                return;
+
+            DEV_DisabledRIPv2 = true;
         }
 
         public bool TurnOn()
         {
+            if (DEV_Disabled)
+            {
+                bool ToReturn = IsUsable();
+                DEV_Disabled = !ToReturn;
+                return ToReturn;
+            }
+
+            return true;
+        }
+
+        public bool IsUsable()
+        {
             if (Network != null && Network.IsCorrect())
             {
-                Disabled = false;
                 return true;
             }
             return false;
@@ -101,14 +125,17 @@ namespace MC_132RTR.Model.Core
 
         public void TurnOff()
         {
+            if (DEV_Disabled)
+                return;
+
             DisableRIPv2();
             Network = null;
-            Disabled = true;
+            DEV_Disabled = true;
         }
 
-        public string GetDescription(bool Shorter)
+        public string GetDescription(bool UseShorterDescription)
         {
-            if (Shorter)
+            if (UseShorterDescription)
                 return ICapDev.Description.Split('\n')[1].Substring(14);
 
             return ICapDev.Description;
@@ -118,8 +145,8 @@ namespace MC_132RTR.Model.Core
 
         public static void InitializeAllDevices()
         {
+            StopRouter();
             CaptureDeviceList.Instance.Refresh();
-
             ListOfDevices.Clear();
 
             foreach(var Dev in CaptureDeviceList.Instance)
@@ -130,23 +157,23 @@ namespace MC_132RTR.Model.Core
 
         public static void StopRouter()
         {
-            if (!Started)
+            if (!RouterRunning)
                 return;
 
             foreach(var TmpDev in ListOfDevices)
             {
-                if (!TmpDev.Disabled)
+                if (!TmpDev.DEV_Disabled)
                 {
                     TmpDev.TurnOff();
                 }
             }
 
-            Started = false;
+            RouterRunning = false;
         }
 
         public static void StartRouter()
         {
-            if (Started)
+            if (RouterRunning)
                 return;
 
             int StartedYet = 0;
@@ -157,7 +184,7 @@ namespace MC_132RTR.Model.Core
             }
 
             if (StartedYet >= 2)
-                Started = true;
+                RouterRunning = true;
         }
 
         public static int CountActiveDevices()
@@ -166,11 +193,23 @@ namespace MC_132RTR.Model.Core
 
             foreach(var TmpDev in ListOfDevices)
             {
-                if (!TmpDev.Disabled)
+                if (!TmpDev.DEV_Disabled)
                     ++TmpActive;
             }
 
             return TmpActive;
+        }
+
+        public static int CountUsableDevices()
+        {
+            int TmpUsable = 0;
+            foreach(var TmpDev in ListOfDevices)
+            {
+                if (TmpDev.IsUsable())
+                    ++TmpUsable;
+            }
+
+            return TmpUsable;
         }
     }
 }
