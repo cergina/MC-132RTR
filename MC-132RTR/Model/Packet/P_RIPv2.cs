@@ -112,7 +112,7 @@ namespace MC_132RTR.Model.Packet
 
         public static List<P_RIPv2> CraftPeriodicResponses(Device ForThisDevice)
         {
-            if (ForThisDevice.DisabledRIPv2)
+            if (ForThisDevice.DEV_DisabledRIPv2)
                 return null;
 
             // init list to return for this specific device
