@@ -28,14 +28,14 @@ namespace MC_132RTR.Controller.Middleman
             if (Device.RouterRunning || Device.CountActiveDevices() < 2)
                 return;
 
-
-
             throw new NotImplementedException();
         }
 
         public static void StopRouter()
         {
-            if ()
+            if (!Device.RouterRunning)
+                return;
+
             throw new NotImplementedException();
         }
 

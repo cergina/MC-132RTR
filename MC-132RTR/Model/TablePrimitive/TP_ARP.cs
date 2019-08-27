@@ -65,5 +65,10 @@ namespace MC_132RTR.Model.TablePrimitive
             else
                 return false;
         }
+
+        public PhysicalAddress GetMAC()
+        {
+            return this.Mac;
+        }
     }
 }
