@@ -136,7 +136,16 @@ namespace MC_132RTR.Model.Core
         public string GetDescription(bool UseShorterDescription)
         {
             if (UseShorterDescription)
+            {
+                Logging.OutALWAYS("1");
+                Logging.OutALWAYS(ICapDev.Description);
+                Logging.OutALWAYS();
+                Logging.OutALWAYS(ICapDev.Description.Split('\n')[1]);
+                String  Tmp = ICapDev.Description.Split('\n')[0]
+
                 return ICapDev.Description.Split('\n')[1].Substring(14);
+            }
+                
 
             return ICapDev.Description;
         }

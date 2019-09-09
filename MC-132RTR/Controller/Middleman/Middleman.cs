@@ -23,6 +23,12 @@ namespace MC_132RTR.Controller.Middleman
 
 
         // GENERAL
+        public static List<Device> InitializeRouter()
+        {
+            Device.InitializeAllDevices();
+            return Device.ListOfDevices;
+        }
+
         public static void TryToStartRouter()
         {
             if (Device.RouterRunning || Device.CountActiveDevices() < 2)
