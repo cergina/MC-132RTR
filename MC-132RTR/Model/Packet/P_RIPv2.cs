@@ -126,7 +126,7 @@ namespace MC_132RTR.Model.Packet
             foreach (TP_RIPv2 TPR in T_RIPv2.GetInstance().Table.ToList())
             {
                 // ignore TablePRimitive that was learned via this device
-                if (TPR.OriginDevice.GetDescription(true).Equals(ForThisDevice.GetDescription(true)))
+                if (TPR.OriginDevice.ToString().Equals(ForThisDevice.ToString()))
                     continue;
 
                 if (Curr_RouteIndex == PACKET_MAX_ENTRIES)

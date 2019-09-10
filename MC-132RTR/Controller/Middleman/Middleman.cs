@@ -4,6 +4,7 @@ using MC_132RTR.Model.Table;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
 using System.Net.NetworkInformation;
 using System.Text;
 using System.Threading.Tasks;
@@ -29,12 +30,25 @@ namespace MC_132RTR.Controller.Middleman
             return Device.ListOfDevices;
         }
 
+        public static string GetStartState()
+        {
+            if (Device.RouterRunning)
+                return Form1.STOP;
+            else
+                return Form1.START_UP;
+        }
+
+        public static string GetPowerState()
+        {
+            return "";
+        }
+
         public static void TryToStartRouter()
         {
-            if (Device.RouterRunning || Device.CountActiveDevices() < 2)
+            if (Device.RouterRunning || Device.CountUsableDevices() < 2)
                 return;
 
-            throw new NotImplementedException();
+            Device.StartRouter();
         }
 
         public static void StopRouter()
@@ -42,25 +56,26 @@ namespace MC_132RTR.Controller.Middleman
             if (!Device.RouterRunning)
                 return;
 
-            throw new NotImplementedException();
+            Device.StopRouter();
         }
 
         // DEVICES
-        public static void TryToInitialiazeDevice(String DevName, Network Net)
+        public static void TryToInitialiazeDevice(Device Dev, String Ip, String Mask)
         {
-            Device Dev = GetDeviceByShorterName(DevName);
-
-            if (Dev == null)
+            if (Dev == null || String.IsNullOrEmpty(Ip) || String.IsNullOrEmpty(Mask))
                 return;
 
-            throw new NotImplementedException();
+            try
+            {
+                Dev.Set(IPAddress.Parse(Ip), IPAddress.Parse(Mask));
+            } catch (Exception exc)
+            {
+            }
         }
 
-        public static void TryToChangeDevice(String DevName, Network Net)
+        public static void TryToChangeDevice(Device Dev, String Ip, String Mask)
         {
-            Device Dev = GetDeviceByShorterName(DevName);
-
-            if (Dev == null)
+            if (Dev == null || String.IsNullOrEmpty(Ip) || String.IsNullOrEmpty(Mask))
                 return;
 
             throw new NotImplementedException();
@@ -68,14 +83,12 @@ namespace MC_132RTR.Controller.Middleman
 
         public static Device GetDeviceByICapture(SharpPcap.ICaptureDevice ICapDev)
         {
-
             throw new NotImplementedException();
         }
 
         public static Device GetDeviceByShorterName(String ShorterName)
         {
-
-            throw new NotImplementedException();
+            return Device.PairDeviceWithToString(ShorterName);
         }
 
         // RIPv2
