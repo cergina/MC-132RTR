@@ -58,6 +58,8 @@ namespace MC_132RTR
                 case POWER_UP:
                     break;
             }
+
+            UpdateDeviceInfo();
         }
 
         private void StartButton_Click(object sender, EventArgs e)
@@ -74,6 +76,7 @@ namespace MC_132RTR
 
             StartState = Middleman.GetStartState();
             StartButton.Text = StartState;
+            UpdateDeviceInfo();
         }
 
         private void ActivateDevButton_Click(object sender, EventArgs e)
@@ -132,7 +135,7 @@ namespace MC_132RTR
                 Dev1Label.Text = Device.Dev1;
                 Device Tmp = Device.PairDeviceWithToString(Device.Dev1);
                 Dev1UsableCHeckBox.Checked = Tmp.IsUsable();
-                Dev1NetworkLabel.Text = Tmp.Network.ToString();
+                Dev1NetworkLabel.Text = (Tmp.Network != null) ? Tmp.Network.ToString() : "null";
             }
 
             if (!String.IsNullOrEmpty(Device.Dev2))
@@ -140,8 +143,19 @@ namespace MC_132RTR
                 Dev2Label.Text = Device.Dev2;
                 Device Tmp = Device.PairDeviceWithToString(Device.Dev2);
                 Dev2UsableCHeckBox.Checked = Tmp.IsUsable();
-                Dev2NetworkLabel.Text = Tmp.Network.ToString();
-            }            
+                Dev2NetworkLabel.Text = (Tmp.Network != null) ? Tmp.Network.ToString() : "null";
+            }
+
+            if (Device.RouterRunning)
+            {
+                DeviceRouterComboBOx.Items.Clear();
+                
+                foreach(Device Dev in Device.ListOfDevices)
+                {
+                    if (Dev.IsUsable())
+                        DeviceRouterComboBOx.Items.Add(Dev);
+                }
+            }
         }
 
         private void DefaultValues()
