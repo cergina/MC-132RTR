@@ -163,5 +163,42 @@ namespace MC_132RTR
             IPTextBox.Text = "192.168.1.1";
             MaskTextBox.Text = "255.255.255.0";
         }
+
+        // Timers stuff
+
+        private void TimerArpButton_Click(object sender, EventArgs e)
+        {
+            try {
+                Middleman.SetTimer(Middleman.ARP, 0, int.Parse(TimerArpTextBox.Text));
+            } 
+            catch (Exception en) { }
+        }
+
+        private void TimerInvalidButton_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                Middleman.SetTimer(Middleman.RIPv2, Middleman.RIPv2_INVALID, int.Parse(TimerInvalidTextBox.Text));
+            }
+            catch (Exception en) { }
+        }
+
+        private void TimerFlushButton_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                Middleman.SetTimer(Middleman.RIPv2, Middleman.RIPv2_FLUSH, int.Parse(TimerFlushTextBox.Text));
+            }
+            catch (Exception en) { }
+        }
+
+        private void TimerHoldButton_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                Middleman.SetTimer(Middleman.RIPv2, Middleman.RIPv2_HOLDDOWN, int.Parse(TimerHoldTextBox.Text));
+            }
+            catch (Exception en) { }
+        }
     }
 }

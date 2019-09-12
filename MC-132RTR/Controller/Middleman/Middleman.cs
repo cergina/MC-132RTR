@@ -8,6 +8,7 @@ using System.Net;
 using System.Net.NetworkInformation;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Forms;
 
 namespace MC_132RTR.Controller.Middleman
 {
@@ -185,10 +186,32 @@ namespace MC_132RTR.Controller.Middleman
             }
         }
 
+
+        public static List<ListViewItem> GetListViewItemsARP()
+        {
+            List<ListViewItem> ListTmp = new List<ListViewItem>();
+
+            return ListTmp;
+        }
+
+        public static List<ListViewItem> GetListViewItemsROUTE()
+        {
+            List<ListViewItem> ListTmp = new List<ListViewItem>();
+
+            return ListTmp;
+        }
+
+        public static List<ListViewItem> GetListViewItemsRIP()
+        {
+            List<ListViewItem> ListTmp = new List<ListViewItem>();
+
+            return ListTmp;
+        }
+
         /*
          * 
          */
-        public static void SetTimer(int WhichProto, int Name, int Value)
+        public static void SetTimer(int WhichProto, int NameOnlyRip, int Value)
         {
             switch (WhichProto)
             {
@@ -196,12 +219,12 @@ namespace MC_132RTR.Controller.Middleman
                     T_ARP.GetInstance().ChangeTimeout(Value);
                     return;
                 case RIPv2:
-                    switch (Name)
+                    switch (NameOnlyRip)
                     {
                         case RIPv2_FLUSH:
                         case RIPv2_INVALID:
                         case RIPv2_HOLDDOWN:
-                            T_RIPv2.GetInstance().ChangeTimer(Name, Value);
+                            T_RIPv2.GetInstance().ChangeTimer(NameOnlyRip, Value);
                             return;
                         case RIPv2_INTERVAL:
                             C_RIPv2.GetInstance().ChangeTimer(Value);

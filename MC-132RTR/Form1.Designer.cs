@@ -36,14 +36,12 @@
             this.Dev1UsableCHeckBox = new System.Windows.Forms.CheckBox();
             this.Dev1RipButton = new System.Windows.Forms.Button();
             this.Dev1RIPv2CheckBox = new System.Windows.Forms.CheckBox();
-            this.Dev1StatusCheckBox = new System.Windows.Forms.CheckBox();
             this.Dev1Label = new System.Windows.Forms.Label();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
             this.Dev2NetworkLabel = new System.Windows.Forms.Label();
             this.Dev2UsableCHeckBox = new System.Windows.Forms.CheckBox();
             this.Dev2RipButton = new System.Windows.Forms.Button();
             this.Dev2RIPv2CheckBox = new System.Windows.Forms.CheckBox();
-            this.Dev2StatusCheckBox = new System.Windows.Forms.CheckBox();
             this.Dev2Label = new System.Windows.Forms.Label();
             this.groupBox3 = new System.Windows.Forms.GroupBox();
             this.MaskTextBox = new System.Windows.Forms.TextBox();
@@ -73,24 +71,31 @@
             this.TimerInvalidTextBox = new System.Windows.Forms.TextBox();
             this.TimerArpTextBox = new System.Windows.Forms.TextBox();
             this.groupBox5 = new System.Windows.Forms.GroupBox();
+            this.ARPClearButton = new System.Windows.Forms.Button();
+            this.ARPListView = new System.Windows.Forms.ListView();
+            this.ArpIpColumn = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.ArpMacColumn = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.ArpDevColumn = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.ArpTTLColumn = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.ArpSendButton = new System.Windows.Forms.Button();
+            this.textBox1 = new System.Windows.Forms.TextBox();
+            this.radioButton2 = new System.Windows.Forms.RadioButton();
+            this.radioButton1 = new System.Windows.Forms.RadioButton();
             this.groupBox6 = new System.Windows.Forms.GroupBox();
+            this.RoutingListView = new System.Windows.Forms.ListView();
+            this.NetworkColumn = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.AdminDistanceColumn = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.DeviceColumn = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.NextHopColumn = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.groupBox7 = new System.Windows.Forms.GroupBox();
             this.groupBox8 = new System.Windows.Forms.GroupBox();
-            this.radioButton1 = new System.Windows.Forms.RadioButton();
-            this.radioButton2 = new System.Windows.Forms.RadioButton();
-            this.textBox1 = new System.Windows.Forms.TextBox();
-            this.ArpSendButton = new System.Windows.Forms.Button();
-            this.listView1 = new System.Windows.Forms.ListView();
-            this.ArpIp = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.ArpMac = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.ArpDev = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.ArpTTL = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
             this.groupBox3.SuspendLayout();
             this.groupBox4.SuspendLayout();
             this.Timers.SuspendLayout();
             this.groupBox5.SuspendLayout();
+            this.groupBox6.SuspendLayout();
             this.SuspendLayout();
             // 
             // PowerButton
@@ -134,7 +139,6 @@
             this.groupBox1.Controls.Add(this.Dev1UsableCHeckBox);
             this.groupBox1.Controls.Add(this.Dev1RipButton);
             this.groupBox1.Controls.Add(this.Dev1RIPv2CheckBox);
-            this.groupBox1.Controls.Add(this.Dev1StatusCheckBox);
             this.groupBox1.Controls.Add(this.Dev1Label);
             this.groupBox1.Location = new System.Drawing.Point(9, 71);
             this.groupBox1.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
@@ -159,7 +163,7 @@
             // 
             this.Dev1UsableCHeckBox.AutoSize = true;
             this.Dev1UsableCHeckBox.Enabled = false;
-            this.Dev1UsableCHeckBox.Location = new System.Drawing.Point(4, 50);
+            this.Dev1UsableCHeckBox.Location = new System.Drawing.Point(8, 49);
             this.Dev1UsableCHeckBox.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.Dev1UsableCHeckBox.Name = "Dev1UsableCHeckBox";
             this.Dev1UsableCHeckBox.Size = new System.Drawing.Size(59, 17);
@@ -184,25 +188,13 @@
             // 
             this.Dev1RIPv2CheckBox.AutoSize = true;
             this.Dev1RIPv2CheckBox.Enabled = false;
-            this.Dev1RIPv2CheckBox.Location = new System.Drawing.Point(116, 50);
+            this.Dev1RIPv2CheckBox.Location = new System.Drawing.Point(71, 49);
             this.Dev1RIPv2CheckBox.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.Dev1RIPv2CheckBox.Name = "Dev1RIPv2CheckBox";
             this.Dev1RIPv2CheckBox.Size = new System.Drawing.Size(56, 17);
             this.Dev1RIPv2CheckBox.TabIndex = 11;
             this.Dev1RIPv2CheckBox.Text = "RIPv2";
             this.Dev1RIPv2CheckBox.UseVisualStyleBackColor = true;
-            // 
-            // Dev1StatusCheckBox
-            // 
-            this.Dev1StatusCheckBox.AutoSize = true;
-            this.Dev1StatusCheckBox.Enabled = false;
-            this.Dev1StatusCheckBox.Location = new System.Drawing.Point(64, 50);
-            this.Dev1StatusCheckBox.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
-            this.Dev1StatusCheckBox.Name = "Dev1StatusCheckBox";
-            this.Dev1StatusCheckBox.Size = new System.Drawing.Size(56, 17);
-            this.Dev1StatusCheckBox.TabIndex = 10;
-            this.Dev1StatusCheckBox.Text = "Status";
-            this.Dev1StatusCheckBox.UseVisualStyleBackColor = true;
             // 
             // Dev1Label
             // 
@@ -220,7 +212,6 @@
             this.groupBox2.Controls.Add(this.Dev2UsableCHeckBox);
             this.groupBox2.Controls.Add(this.Dev2RipButton);
             this.groupBox2.Controls.Add(this.Dev2RIPv2CheckBox);
-            this.groupBox2.Controls.Add(this.Dev2StatusCheckBox);
             this.groupBox2.Controls.Add(this.Dev2Label);
             this.groupBox2.Location = new System.Drawing.Point(9, 147);
             this.groupBox2.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
@@ -245,7 +236,7 @@
             // 
             this.Dev2UsableCHeckBox.AutoSize = true;
             this.Dev2UsableCHeckBox.Enabled = false;
-            this.Dev2UsableCHeckBox.Location = new System.Drawing.Point(4, 50);
+            this.Dev2UsableCHeckBox.Location = new System.Drawing.Point(8, 47);
             this.Dev2UsableCHeckBox.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.Dev2UsableCHeckBox.Name = "Dev2UsableCHeckBox";
             this.Dev2UsableCHeckBox.Size = new System.Drawing.Size(59, 17);
@@ -270,7 +261,7 @@
             // 
             this.Dev2RIPv2CheckBox.AutoSize = true;
             this.Dev2RIPv2CheckBox.Enabled = false;
-            this.Dev2RIPv2CheckBox.Location = new System.Drawing.Point(121, 50);
+            this.Dev2RIPv2CheckBox.Location = new System.Drawing.Point(71, 47);
             this.Dev2RIPv2CheckBox.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.Dev2RIPv2CheckBox.Name = "Dev2RIPv2CheckBox";
             this.Dev2RIPv2CheckBox.Size = new System.Drawing.Size(56, 17);
@@ -278,19 +269,6 @@
             this.Dev2RIPv2CheckBox.Text = "RIPv2";
             this.Dev2RIPv2CheckBox.UseVisualStyleBackColor = true;
             this.Dev2RIPv2CheckBox.CheckedChanged += new System.EventHandler(this.Dev2RIPv2CheckBox_CheckedChanged);
-            // 
-            // Dev2StatusCheckBox
-            // 
-            this.Dev2StatusCheckBox.AutoSize = true;
-            this.Dev2StatusCheckBox.Enabled = false;
-            this.Dev2StatusCheckBox.Location = new System.Drawing.Point(64, 50);
-            this.Dev2StatusCheckBox.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
-            this.Dev2StatusCheckBox.Name = "Dev2StatusCheckBox";
-            this.Dev2StatusCheckBox.Size = new System.Drawing.Size(56, 17);
-            this.Dev2StatusCheckBox.TabIndex = 8;
-            this.Dev2StatusCheckBox.Text = "Status";
-            this.Dev2StatusCheckBox.UseVisualStyleBackColor = true;
-            this.Dev2StatusCheckBox.CheckedChanged += new System.EventHandler(this.Dev2StatusCheckBox_CheckedChanged);
             // 
             // Dev2Label
             // 
@@ -556,6 +534,7 @@
             this.TimerHoldButton.TabIndex = 31;
             this.TimerHoldButton.Text = "Hold";
             this.TimerHoldButton.UseVisualStyleBackColor = false;
+            this.TimerHoldButton.Click += new System.EventHandler(this.TimerHoldButton_Click);
             // 
             // TimerFlushButton
             // 
@@ -568,6 +547,7 @@
             this.TimerFlushButton.TabIndex = 30;
             this.TimerFlushButton.Text = "Flush";
             this.TimerFlushButton.UseVisualStyleBackColor = false;
+            this.TimerFlushButton.Click += new System.EventHandler(this.TimerFlushButton_Click);
             // 
             // TimerInvalidButton
             // 
@@ -580,6 +560,7 @@
             this.TimerInvalidButton.TabIndex = 29;
             this.TimerInvalidButton.Text = "Invalid";
             this.TimerInvalidButton.UseVisualStyleBackColor = false;
+            this.TimerInvalidButton.Click += new System.EventHandler(this.TimerInvalidButton_Click);
             // 
             // TimerArpButton
             // 
@@ -592,6 +573,7 @@
             this.TimerArpButton.TabIndex = 28;
             this.TimerArpButton.Text = "ARP";
             this.TimerArpButton.UseVisualStyleBackColor = false;
+            this.TimerArpButton.Click += new System.EventHandler(this.TimerArpButton_Click);
             // 
             // TimerInvalidTextBox
             // 
@@ -611,7 +593,8 @@
             // 
             // groupBox5
             // 
-            this.groupBox5.Controls.Add(this.listView1);
+            this.groupBox5.Controls.Add(this.ARPClearButton);
+            this.groupBox5.Controls.Add(this.ARPListView);
             this.groupBox5.Controls.Add(this.ArpSendButton);
             this.groupBox5.Controls.Add(this.textBox1);
             this.groupBox5.Controls.Add(this.radioButton2);
@@ -620,25 +603,150 @@
             this.groupBox5.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.groupBox5.Name = "groupBox5";
             this.groupBox5.Padding = new System.Windows.Forms.Padding(2, 2, 2, 2);
-            this.groupBox5.Size = new System.Drawing.Size(263, 249);
+            this.groupBox5.Size = new System.Drawing.Size(323, 249);
             this.groupBox5.TabIndex = 14;
             this.groupBox5.TabStop = false;
             this.groupBox5.Text = "ARP";
             // 
+            // ARPClearButton
+            // 
+            this.ARPClearButton.BackColor = System.Drawing.SystemColors.Window;
+            this.ARPClearButton.Font = new System.Drawing.Font("Perpetua Titling MT", 7.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.ARPClearButton.Location = new System.Drawing.Point(259, 225);
+            this.ARPClearButton.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.ARPClearButton.Name = "ARPClearButton";
+            this.ARPClearButton.Size = new System.Drawing.Size(60, 20);
+            this.ARPClearButton.TabIndex = 34;
+            this.ARPClearButton.Text = "Clear";
+            this.ARPClearButton.UseVisualStyleBackColor = false;
+            // 
+            // ARPListView
+            // 
+            this.ARPListView.BackColor = System.Drawing.SystemColors.ControlDarkDark;
+            this.ARPListView.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
+            this.ArpIpColumn,
+            this.ArpMacColumn,
+            this.ArpDevColumn,
+            this.ArpTTLColumn});
+            this.ARPListView.ForeColor = System.Drawing.SystemColors.InfoText;
+            this.ARPListView.HideSelection = false;
+            this.ARPListView.Location = new System.Drawing.Point(5, 18);
+            this.ARPListView.Name = "ARPListView";
+            this.ARPListView.Size = new System.Drawing.Size(314, 200);
+            this.ARPListView.TabIndex = 33;
+            this.ARPListView.UseCompatibleStateImageBehavior = false;
+            this.ARPListView.View = System.Windows.Forms.View.Details;
+            // 
+            // ArpIpColumn
+            // 
+            this.ArpIpColumn.Text = "IP";
+            // 
+            // ArpMacColumn
+            // 
+            this.ArpMacColumn.Text = "MAC";
+            // 
+            // ArpDevColumn
+            // 
+            this.ArpDevColumn.Text = "Device";
+            // 
+            // ArpTTLColumn
+            // 
+            this.ArpTTLColumn.Text = "TTL";
+            this.ArpTTLColumn.Width = 61;
+            // 
+            // ArpSendButton
+            // 
+            this.ArpSendButton.BackColor = System.Drawing.SystemColors.Window;
+            this.ArpSendButton.Font = new System.Drawing.Font("Perpetua Titling MT", 7.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.ArpSendButton.Location = new System.Drawing.Point(203, 224);
+            this.ArpSendButton.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.ArpSendButton.Name = "ArpSendButton";
+            this.ArpSendButton.Size = new System.Drawing.Size(52, 20);
+            this.ArpSendButton.TabIndex = 32;
+            this.ArpSendButton.Text = "Send";
+            this.ArpSendButton.UseVisualStyleBackColor = false;
+            // 
+            // textBox1
+            // 
+            this.textBox1.Location = new System.Drawing.Point(87, 224);
+            this.textBox1.Name = "textBox1";
+            this.textBox1.Size = new System.Drawing.Size(111, 20);
+            this.textBox1.TabIndex = 2;
+            // 
+            // radioButton2
+            // 
+            this.radioButton2.AutoSize = true;
+            this.radioButton2.Location = new System.Drawing.Point(46, 228);
+            this.radioButton2.Name = "radioButton2";
+            this.radioButton2.Size = new System.Drawing.Size(39, 17);
+            this.radioButton2.TabIndex = 1;
+            this.radioButton2.TabStop = true;
+            this.radioButton2.Text = "D2";
+            this.radioButton2.UseVisualStyleBackColor = true;
+            // 
+            // radioButton1
+            // 
+            this.radioButton1.AutoSize = true;
+            this.radioButton1.Location = new System.Drawing.Point(5, 228);
+            this.radioButton1.Name = "radioButton1";
+            this.radioButton1.Size = new System.Drawing.Size(39, 17);
+            this.radioButton1.TabIndex = 0;
+            this.radioButton1.TabStop = true;
+            this.radioButton1.Text = "D1";
+            this.radioButton1.UseVisualStyleBackColor = true;
+            // 
             // groupBox6
             // 
-            this.groupBox6.Location = new System.Drawing.Point(541, 10);
+            this.groupBox6.Controls.Add(this.RoutingListView);
+            this.groupBox6.Location = new System.Drawing.Point(602, 10);
             this.groupBox6.Name = "groupBox6";
-            this.groupBox6.Size = new System.Drawing.Size(509, 249);
+            this.groupBox6.Size = new System.Drawing.Size(489, 249);
             this.groupBox6.TabIndex = 15;
             this.groupBox6.TabStop = false;
             this.groupBox6.Text = "Routing Table";
+            // 
+            // RoutingListView
+            // 
+            this.RoutingListView.BackColor = System.Drawing.SystemColors.ControlDarkDark;
+            this.RoutingListView.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
+            this.NetworkColumn,
+            this.AdminDistanceColumn,
+            this.DeviceColumn,
+            this.NextHopColumn});
+            this.RoutingListView.ForeColor = System.Drawing.SystemColors.InfoText;
+            this.RoutingListView.HideSelection = false;
+            this.RoutingListView.Location = new System.Drawing.Point(6, 18);
+            this.RoutingListView.Name = "RoutingListView";
+            this.RoutingListView.Size = new System.Drawing.Size(475, 200);
+            this.RoutingListView.TabIndex = 35;
+            this.RoutingListView.UseCompatibleStateImageBehavior = false;
+            this.RoutingListView.View = System.Windows.Forms.View.Details;
+            // 
+            // NetworkColumn
+            // 
+            this.NetworkColumn.Text = "Network";
+            this.NetworkColumn.Width = 165;
+            // 
+            // AdminDistanceColumn
+            // 
+            this.AdminDistanceColumn.Text = "AD";
+            this.AdminDistanceColumn.Width = 54;
+            // 
+            // DeviceColumn
+            // 
+            this.DeviceColumn.Text = "Device";
+            this.DeviceColumn.Width = 149;
+            // 
+            // NextHopColumn
+            // 
+            this.NextHopColumn.Text = "Next hop";
+            this.NextHopColumn.Width = 102;
             // 
             // groupBox7
             // 
             this.groupBox7.Location = new System.Drawing.Point(643, 265);
             this.groupBox7.Name = "groupBox7";
-            this.groupBox7.Size = new System.Drawing.Size(407, 210);
+            this.groupBox7.Size = new System.Drawing.Size(448, 210);
             this.groupBox7.TabIndex = 16;
             this.groupBox7.TabStop = false;
             this.groupBox7.Text = "RIPv2";
@@ -650,87 +758,13 @@
             this.groupBox8.Size = new System.Drawing.Size(363, 118);
             this.groupBox8.TabIndex = 17;
             this.groupBox8.TabStop = false;
-            this.groupBox8.Text = "Console";
-            // 
-            // radioButton1
-            // 
-            this.radioButton1.AutoSize = true;
-            this.radioButton1.Location = new System.Drawing.Point(1, 227);
-            this.radioButton1.Name = "radioButton1";
-            this.radioButton1.Size = new System.Drawing.Size(54, 17);
-            this.radioButton1.TabIndex = 0;
-            this.radioButton1.TabStop = true;
-            this.radioButton1.Text = "Dev 1";
-            this.radioButton1.UseVisualStyleBackColor = true;
-            // 
-            // radioButton2
-            // 
-            this.radioButton2.AutoSize = true;
-            this.radioButton2.Location = new System.Drawing.Point(50, 227);
-            this.radioButton2.Name = "radioButton2";
-            this.radioButton2.Size = new System.Drawing.Size(54, 17);
-            this.radioButton2.TabIndex = 1;
-            this.radioButton2.TabStop = true;
-            this.radioButton2.Text = "Dev 2";
-            this.radioButton2.UseVisualStyleBackColor = true;
-            // 
-            // textBox1
-            // 
-            this.textBox1.Location = new System.Drawing.Point(101, 224);
-            this.textBox1.Name = "textBox1";
-            this.textBox1.Size = new System.Drawing.Size(107, 20);
-            this.textBox1.TabIndex = 2;
-            // 
-            // ArpSendButton
-            // 
-            this.ArpSendButton.BackColor = System.Drawing.SystemColors.Window;
-            this.ArpSendButton.Font = new System.Drawing.Font("Perpetua Titling MT", 7.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.ArpSendButton.Location = new System.Drawing.Point(211, 224);
-            this.ArpSendButton.Margin = new System.Windows.Forms.Padding(2);
-            this.ArpSendButton.Name = "ArpSendButton";
-            this.ArpSendButton.Size = new System.Drawing.Size(52, 20);
-            this.ArpSendButton.TabIndex = 32;
-            this.ArpSendButton.Text = "Send";
-            this.ArpSendButton.UseVisualStyleBackColor = false;
-            // 
-            // listView1
-            // 
-            this.listView1.BackColor = System.Drawing.SystemColors.ControlDarkDark;
-            this.listView1.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
-            this.ArpIp,
-            this.ArpMac,
-            this.ArpDev,
-            this.ArpTTL});
-            this.listView1.ForeColor = System.Drawing.SystemColors.InfoText;
-            this.listView1.HideSelection = false;
-            this.listView1.Location = new System.Drawing.Point(5, 18);
-            this.listView1.Name = "listView1";
-            this.listView1.Size = new System.Drawing.Size(253, 200);
-            this.listView1.TabIndex = 33;
-            this.listView1.UseCompatibleStateImageBehavior = false;
-            this.listView1.View = System.Windows.Forms.View.Details;
-            // 
-            // ArpIp
-            // 
-            this.ArpIp.Text = "IP";
-            // 
-            // ArpMac
-            // 
-            this.ArpMac.Text = "MAC";
-            // 
-            // ArpDev
-            // 
-            this.ArpDev.Text = "Device";
-            // 
-            // ArpTTL
-            // 
-            this.ArpTTL.Text = "TTL";
+            this.groupBox8.Text = "Extra";
             // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1062, 482);
+            this.ClientSize = new System.Drawing.Size(1095, 482);
             this.Controls.Add(this.groupBox8);
             this.Controls.Add(this.groupBox7);
             this.Controls.Add(this.groupBox6);
@@ -755,6 +789,7 @@
             this.Timers.PerformLayout();
             this.groupBox5.ResumeLayout(false);
             this.groupBox5.PerformLayout();
+            this.groupBox6.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }
@@ -771,9 +806,7 @@
         private System.Windows.Forms.GroupBox groupBox3;
         private System.Windows.Forms.Button ActivateDevButton;
         private System.Windows.Forms.CheckBox Dev1RIPv2CheckBox;
-        private System.Windows.Forms.CheckBox Dev1StatusCheckBox;
         private System.Windows.Forms.CheckBox Dev2RIPv2CheckBox;
-        private System.Windows.Forms.CheckBox Dev2StatusCheckBox;
         private System.Windows.Forms.CheckBox ActiveCheckBox;
         private System.Windows.Forms.CheckBox PowerCheckBox;
         private System.Windows.Forms.Button Dev1RipButton;
@@ -809,15 +842,21 @@
         private System.Windows.Forms.GroupBox groupBox6;
         private System.Windows.Forms.GroupBox groupBox7;
         private System.Windows.Forms.GroupBox groupBox8;
-        private System.Windows.Forms.ListView listView1;
-        private System.Windows.Forms.ColumnHeader ArpIp;
-        private System.Windows.Forms.ColumnHeader ArpMac;
-        private System.Windows.Forms.ColumnHeader ArpDev;
-        private System.Windows.Forms.ColumnHeader ArpTTL;
+        private System.Windows.Forms.ListView ARPListView;
+        private System.Windows.Forms.ColumnHeader ArpIpColumn;
+        private System.Windows.Forms.ColumnHeader ArpMacColumn;
+        private System.Windows.Forms.ColumnHeader ArpDevColumn;
+        private System.Windows.Forms.ColumnHeader ArpTTLColumn;
         private System.Windows.Forms.Button ArpSendButton;
         private System.Windows.Forms.TextBox textBox1;
         private System.Windows.Forms.RadioButton radioButton2;
         private System.Windows.Forms.RadioButton radioButton1;
+        private System.Windows.Forms.Button ARPClearButton;
+        private System.Windows.Forms.ListView RoutingListView;
+        private System.Windows.Forms.ColumnHeader NetworkColumn;
+        private System.Windows.Forms.ColumnHeader AdminDistanceColumn;
+        private System.Windows.Forms.ColumnHeader DeviceColumn;
+        private System.Windows.Forms.ColumnHeader NextHopColumn;
     }
 }
 
