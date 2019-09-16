@@ -1,6 +1,7 @@
 ﻿using MC_132RTR.Model.Core;
 using MC_132RTR.Model.Support;
 using MC_132RTR.Model.Table;
+using MC_132RTR.Model.TablePrimitive;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -191,7 +192,10 @@ namespace MC_132RTR.Controller.Middleman
         {
             List<ListViewItem> ListTmp = new List<ListViewItem>();
 
-            T_ARP.GetInstance().GetListForView();
+            foreach (TP_ARP tparp in T_ARP.GetInstance().GetListForView())
+            {
+                ListTmp.Add(tparp.ToListViewItem());
+            }
 
             return ListTmp;
         }

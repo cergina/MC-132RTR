@@ -6,6 +6,7 @@ using System.Net;
 using System.Net.NetworkInformation;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Forms;
 
 namespace MC_132RTR.Model.TablePrimitive
 {
@@ -25,7 +26,7 @@ namespace MC_132RTR.Model.TablePrimitive
         }
 
         // will be called by some thread
-        private void RegularDecrement()
+        public void RegularDecrement()
         {
             if (this.Validity > 0)
                 --this.Validity;
@@ -73,6 +74,16 @@ namespace MC_132RTR.Model.TablePrimitive
         public PhysicalAddress GetMAC()
         {
             return this.Mac;
+        }
+
+        public ListViewItem ToListViewItem()
+        {
+            String ArpIpColumn = Ip.ToString();
+            String ArpMacColumn = Mac.ToString();
+            String ArpDevColumn = "";
+            String ArpTTLColumn = "test " + testParam;
+
+            return new ListViewItem(new string[] {ArpIpColumn, ArpMacColumn, ArpDevColumn, ArpTTLColumn });
         }
     }
 }

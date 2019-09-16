@@ -23,11 +23,15 @@ namespace MC_132RTR.Model.Table
 
         public List<TP_ARP> GetListForView()
         {
-            List<KeyValuePair<IPAddress, TP_ARP>> Tmp = Dict.ToList();
+            List<IPAddress> keys = new List<IPAddress>(Dict.Keys);
+            List<TP_ARP> tmp = new List<TP_ARP>();
 
-            Logging.Out("ARP NO: " + Tmp.Count);
+            foreach (IPAddress ip in keys)
+            {
+                tmp.Add(Dict[ip]);
+            }
 
-            return null;
+            return tmp;
         }
 
         public TP_ARP MacToIp(IPAddress key, bool Always)
@@ -117,6 +121,13 @@ namespace MC_132RTR.Model.Table
                     if (c == 0)
                     {
                         Dict.Add(IPAddress.Parse("192.168.1.1"), new TP_ARP(IPAddress.Parse("192.168.1.1"), PhysicalAddress.Parse("BB:BB:BB:CC:CC:CC")));
+                    } else
+                    {
+                        List<IPAddress> keys = new List<IPAddress>(Dict.Keys);
+                        foreach (IPAddress ip in keys)
+                        {
+                            Dict[ip].RegularDecrement();
+                        }
                     }
                 }
 

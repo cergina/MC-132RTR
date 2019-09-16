@@ -28,6 +28,7 @@ namespace MC_132RTR
         {
             InitializeComponent();
             InitializeGui();
+            RefreshEverySecond();
         }
 
         public void InitializeGui()
