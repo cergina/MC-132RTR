@@ -14,6 +14,7 @@ namespace MC_132RTR.Model.Core
     public class Device
     {
         public static bool RouterRunning = false;
+        public static bool FinalShutdown = false;
         public static List<Device> ListOfDevices = new List<Device>();
         public static string Dev1 = null;
         public static string Dev2 = null;

@@ -14,12 +14,14 @@ namespace MC_132RTR.Model.TablePrimitive
         private PhysicalAddress Mac = null;
         private IPAddress Ip = null;
         private int Validity;
+        private int testParam;
 
         public TP_ARP(IPAddress Ip, PhysicalAddress Mac)
         {
             this.Mac = Mac;
             this.Ip = Ip;
             this.Validity = T_ARP.TIMEOUT;
+            this.testParam = 0;
         }
 
         // will be called by some thread
@@ -27,6 +29,8 @@ namespace MC_132RTR.Model.TablePrimitive
         {
             if (this.Validity > 0)
                 --this.Validity;
+
+            ++testParam;
         }
 
         public void Renew()

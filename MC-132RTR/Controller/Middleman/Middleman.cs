@@ -191,12 +191,16 @@ namespace MC_132RTR.Controller.Middleman
         {
             List<ListViewItem> ListTmp = new List<ListViewItem>();
 
+            T_ARP.GetInstance().GetListForView();
+
             return ListTmp;
         }
 
         public static List<ListViewItem> GetListViewItemsROUTE()
         {
             List<ListViewItem> ListTmp = new List<ListViewItem>();
+
+            
 
             return ListTmp;
         }

@@ -1,10 +1,14 @@
-﻿using MC_132RTR.Model.TablePrimitive;
+﻿using MC_132RTR.Model.Core;
+using MC_132RTR.Model.Support;
+using MC_132RTR.Model.TablePrimitive;
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using System.Net.NetworkInformation;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace MC_132RTR.Model.Table
@@ -17,6 +21,14 @@ namespace MC_132RTR.Model.Table
 
         private IDictionary<IPAddress, TP_ARP> Dict = new Dictionary<IPAddress, TP_ARP>();
 
+        public List<TP_ARP> GetListForView()
+        {
+            List<KeyValuePair<IPAddress, TP_ARP>> Tmp = Dict.ToList();
+
+            Logging.Out("ARP NO: " + Tmp.Count);
+
+            return null;
+        }
 
         public TP_ARP MacToIp(IPAddress key, bool Always)
         {
@@ -76,6 +88,40 @@ namespace MC_132RTR.Model.Table
                 Instance = new T_ARP();
 
             return Instance;
+        }
+
+        // THREAD
+        public void ARP_Thread()
+        {
+            Thread t = new Thread(Thread_Operation);
+
+            t.Start();
+
+            t.Join();
+        }
+
+        private void Thread_Operation()
+        {
+            while (true)
+            {
+                if (Device.FinalShutdown)
+                    break;
+
+                if (Device.RouterRunning)
+                {
+
+                } else
+                {
+                    //test
+                    int c = Dict.Count();
+                    if (c == 0)
+                    {
+                        Dict.Add(IPAddress.Parse("192.168.1.1"), new TP_ARP(IPAddress.Parse("192.168.1.1"), PhysicalAddress.Parse("BB:BB:BB:CC:CC:CC")));
+                    }
+                }
+
+                Thread.Sleep(1000);
+            }
         }
     }
 }

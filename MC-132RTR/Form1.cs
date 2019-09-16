@@ -200,5 +200,40 @@ namespace MC_132RTR
             }
             catch (Exception en) { }
         }
+
+        // Refresh Stuff
+
+        
+        private void RefreshEverySecond()
+        {
+            this.Invoke(new MethodInvoker(delegate
+            {
+                // ARP
+                ARPListView.Clear();
+
+                foreach (ListViewItem Item in Middleman.GetListViewItemsARP())
+                {
+                    ARPListView.Items.Add(Item);
+                }
+
+                // Routing
+                //RoutingListView.Clear();
+
+                //foreach (ListViewItem Item in Middleman.GetListViewItemsROUTE())
+                //{
+                //   RoutingListView.Items.Add(Item);
+                //}
+
+                // RIP
+                //RIPList
+                //ARPListView.Clear();
+
+                //foreach (ListViewItem Item in Middleman.GetListViewItemsRIP())
+                //{
+                //   //Rip ListView.Items.Add(Item);
+                //}
+            }));
+            
+        }
     }
 }
