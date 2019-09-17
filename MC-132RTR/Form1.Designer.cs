@@ -31,25 +31,25 @@
             this.PowerButton = new System.Windows.Forms.Button();
             this.StartButton = new System.Windows.Forms.Button();
             this.DeviceRouterComboBOx = new System.Windows.Forms.ComboBox();
-            this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.Dev1GB = new System.Windows.Forms.GroupBox();
             this.Dev1NetworkLabel = new System.Windows.Forms.Label();
             this.Dev1UsableCHeckBox = new System.Windows.Forms.CheckBox();
             this.Dev1RipButton = new System.Windows.Forms.Button();
             this.Dev1RIPv2CheckBox = new System.Windows.Forms.CheckBox();
             this.Dev1Label = new System.Windows.Forms.Label();
-            this.groupBox2 = new System.Windows.Forms.GroupBox();
+            this.Dev2GB = new System.Windows.Forms.GroupBox();
             this.Dev2NetworkLabel = new System.Windows.Forms.Label();
             this.Dev2UsableCHeckBox = new System.Windows.Forms.CheckBox();
             this.Dev2RipButton = new System.Windows.Forms.Button();
             this.Dev2RIPv2CheckBox = new System.Windows.Forms.CheckBox();
             this.Dev2Label = new System.Windows.Forms.Label();
-            this.groupBox3 = new System.Windows.Forms.GroupBox();
+            this.RouterGB = new System.Windows.Forms.GroupBox();
             this.MaskTextBox = new System.Windows.Forms.TextBox();
             this.IPTextBox = new System.Windows.Forms.TextBox();
             this.ActiveCheckBox = new System.Windows.Forms.CheckBox();
             this.PowerCheckBox = new System.Windows.Forms.CheckBox();
             this.ActivateDevButton = new System.Windows.Forms.Button();
-            this.groupBox4 = new System.Windows.Forms.GroupBox();
+            this.StaticRoutesGB = new System.Windows.Forms.GroupBox();
             this.label3 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
@@ -61,7 +61,7 @@
             this.StaticNextHopTextBox = new System.Windows.Forms.TextBox();
             this.StaticMaskTextBox = new System.Windows.Forms.TextBox();
             this.StaticIpTextBox = new System.Windows.Forms.TextBox();
-            this.Timers = new System.Windows.Forms.GroupBox();
+            this.TimersGB = new System.Windows.Forms.GroupBox();
             this.TimerHoldTextBox = new System.Windows.Forms.TextBox();
             this.TimerFlushTextBox = new System.Windows.Forms.TextBox();
             this.TimerHoldButton = new System.Windows.Forms.Button();
@@ -70,7 +70,7 @@
             this.TimerArpButton = new System.Windows.Forms.Button();
             this.TimerInvalidTextBox = new System.Windows.Forms.TextBox();
             this.TimerArpTextBox = new System.Windows.Forms.TextBox();
-            this.groupBox5 = new System.Windows.Forms.GroupBox();
+            this.ArpGB = new System.Windows.Forms.GroupBox();
             this.ARPClearButton = new System.Windows.Forms.Button();
             this.ARPListView = new System.Windows.Forms.ListView();
             this.ArpIpColumn = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
@@ -81,31 +81,34 @@
             this.textBox1 = new System.Windows.Forms.TextBox();
             this.radioButton2 = new System.Windows.Forms.RadioButton();
             this.radioButton1 = new System.Windows.Forms.RadioButton();
-            this.groupBox6 = new System.Windows.Forms.GroupBox();
+            this.RoutTabGB = new System.Windows.Forms.GroupBox();
             this.RoutingListView = new System.Windows.Forms.ListView();
             this.NetworkColumn = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.AdminDistanceColumn = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.DeviceColumn = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.NextHopColumn = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.groupBox7 = new System.Windows.Forms.GroupBox();
-            this.groupBox8 = new System.Windows.Forms.GroupBox();
-            this.groupBox1.SuspendLayout();
-            this.groupBox2.SuspendLayout();
-            this.groupBox3.SuspendLayout();
-            this.groupBox4.SuspendLayout();
-            this.Timers.SuspendLayout();
-            this.groupBox5.SuspendLayout();
-            this.groupBox6.SuspendLayout();
+            this.RipGB = new System.Windows.Forms.GroupBox();
+            this.ExtraGB = new System.Windows.Forms.GroupBox();
+            this.TimeLabel = new System.Windows.Forms.Label();
+            this.changeButton = new System.Windows.Forms.Button();
+            this.Dev1GB.SuspendLayout();
+            this.Dev2GB.SuspendLayout();
+            this.RouterGB.SuspendLayout();
+            this.StaticRoutesGB.SuspendLayout();
+            this.TimersGB.SuspendLayout();
+            this.ArpGB.SuspendLayout();
+            this.RoutTabGB.SuspendLayout();
             this.SuspendLayout();
             // 
             // PowerButton
             // 
-            this.PowerButton.BackColor = System.Drawing.SystemColors.Window;
+            this.PowerButton.BackColor = System.Drawing.Color.Red;
             this.PowerButton.Font = new System.Drawing.Font("Perpetua Titling MT", 10.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.PowerButton.Location = new System.Drawing.Point(5, 55);
+            this.PowerButton.ForeColor = System.Drawing.SystemColors.Control;
+            this.PowerButton.Location = new System.Drawing.Point(12, 479);
             this.PowerButton.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.PowerButton.Name = "PowerButton";
-            this.PowerButton.Size = new System.Drawing.Size(141, 36);
+            this.PowerButton.Size = new System.Drawing.Size(194, 103);
             this.PowerButton.TabIndex = 0;
             this.PowerButton.Text = "POWER";
             this.PowerButton.UseVisualStyleBackColor = false;
@@ -115,10 +118,10 @@
             // 
             this.StartButton.BackColor = System.Drawing.SystemColors.Window;
             this.StartButton.Font = new System.Drawing.Font("Perpetua Titling MT", 10.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.StartButton.Location = new System.Drawing.Point(155, 55);
+            this.StartButton.Location = new System.Drawing.Point(8, 55);
             this.StartButton.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.StartButton.Name = "StartButton";
-            this.StartButton.Size = new System.Drawing.Size(148, 36);
+            this.StartButton.Size = new System.Drawing.Size(345, 36);
             this.StartButton.TabIndex = 1;
             this.StartButton.Text = "START";
             this.StartButton.UseVisualStyleBackColor = false;
@@ -127,27 +130,27 @@
             // DeviceRouterComboBOx
             // 
             this.DeviceRouterComboBOx.FormattingEnabled = true;
-            this.DeviceRouterComboBOx.Location = new System.Drawing.Point(5, 21);
+            this.DeviceRouterComboBOx.Location = new System.Drawing.Point(8, 24);
             this.DeviceRouterComboBOx.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.DeviceRouterComboBOx.Name = "DeviceRouterComboBOx";
-            this.DeviceRouterComboBOx.Size = new System.Drawing.Size(296, 24);
+            this.DeviceRouterComboBOx.Size = new System.Drawing.Size(251, 24);
             this.DeviceRouterComboBOx.TabIndex = 3;
             // 
-            // groupBox1
+            // Dev1GB
             // 
-            this.groupBox1.Controls.Add(this.Dev1NetworkLabel);
-            this.groupBox1.Controls.Add(this.Dev1UsableCHeckBox);
-            this.groupBox1.Controls.Add(this.Dev1RipButton);
-            this.groupBox1.Controls.Add(this.Dev1RIPv2CheckBox);
-            this.groupBox1.Controls.Add(this.Dev1Label);
-            this.groupBox1.Location = new System.Drawing.Point(12, 87);
-            this.groupBox1.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
-            this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Padding = new System.Windows.Forms.Padding(3, 2, 3, 2);
-            this.groupBox1.Size = new System.Drawing.Size(347, 89);
-            this.groupBox1.TabIndex = 6;
-            this.groupBox1.TabStop = false;
-            this.groupBox1.Text = "Device 1";
+            this.Dev1GB.Controls.Add(this.Dev1NetworkLabel);
+            this.Dev1GB.Controls.Add(this.Dev1UsableCHeckBox);
+            this.Dev1GB.Controls.Add(this.Dev1RipButton);
+            this.Dev1GB.Controls.Add(this.Dev1RIPv2CheckBox);
+            this.Dev1GB.Controls.Add(this.Dev1Label);
+            this.Dev1GB.Location = new System.Drawing.Point(12, 87);
+            this.Dev1GB.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.Dev1GB.Name = "Dev1GB";
+            this.Dev1GB.Padding = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.Dev1GB.Size = new System.Drawing.Size(347, 89);
+            this.Dev1GB.TabIndex = 6;
+            this.Dev1GB.TabStop = false;
+            this.Dev1GB.Text = "Device 1";
             // 
             // Dev1NetworkLabel
             // 
@@ -204,21 +207,21 @@
             this.Dev1Label.TabIndex = 7;
             this.Dev1Label.Text = "Device Name";
             // 
-            // groupBox2
+            // Dev2GB
             // 
-            this.groupBox2.Controls.Add(this.Dev2NetworkLabel);
-            this.groupBox2.Controls.Add(this.Dev2UsableCHeckBox);
-            this.groupBox2.Controls.Add(this.Dev2RipButton);
-            this.groupBox2.Controls.Add(this.Dev2RIPv2CheckBox);
-            this.groupBox2.Controls.Add(this.Dev2Label);
-            this.groupBox2.Location = new System.Drawing.Point(12, 181);
-            this.groupBox2.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
-            this.groupBox2.Name = "groupBox2";
-            this.groupBox2.Padding = new System.Windows.Forms.Padding(3, 2, 3, 2);
-            this.groupBox2.Size = new System.Drawing.Size(347, 89);
-            this.groupBox2.TabIndex = 8;
-            this.groupBox2.TabStop = false;
-            this.groupBox2.Text = "Device 2";
+            this.Dev2GB.Controls.Add(this.Dev2NetworkLabel);
+            this.Dev2GB.Controls.Add(this.Dev2UsableCHeckBox);
+            this.Dev2GB.Controls.Add(this.Dev2RipButton);
+            this.Dev2GB.Controls.Add(this.Dev2RIPv2CheckBox);
+            this.Dev2GB.Controls.Add(this.Dev2Label);
+            this.Dev2GB.Location = new System.Drawing.Point(12, 180);
+            this.Dev2GB.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.Dev2GB.Name = "Dev2GB";
+            this.Dev2GB.Padding = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.Dev2GB.Size = new System.Drawing.Size(347, 90);
+            this.Dev2GB.TabIndex = 8;
+            this.Dev2GB.TabStop = false;
+            this.Dev2GB.Text = "Device 2";
             // 
             // Dev2NetworkLabel
             // 
@@ -276,46 +279,45 @@
             this.Dev2Label.TabIndex = 7;
             this.Dev2Label.Text = "Device Name";
             // 
-            // groupBox3
+            // RouterGB
             // 
-            this.groupBox3.Controls.Add(this.MaskTextBox);
-            this.groupBox3.Controls.Add(this.IPTextBox);
-            this.groupBox3.Controls.Add(this.ActiveCheckBox);
-            this.groupBox3.Controls.Add(this.PowerCheckBox);
-            this.groupBox3.Controls.Add(this.DeviceRouterComboBOx);
-            this.groupBox3.Controls.Add(this.ActivateDevButton);
-            this.groupBox3.Controls.Add(this.StartButton);
-            this.groupBox3.Controls.Add(this.PowerButton);
-            this.groupBox3.Location = new System.Drawing.Point(63, 480);
-            this.groupBox3.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
-            this.groupBox3.Name = "groupBox3";
-            this.groupBox3.Padding = new System.Windows.Forms.Padding(3, 2, 3, 2);
-            this.groupBox3.Size = new System.Drawing.Size(739, 102);
-            this.groupBox3.TabIndex = 11;
-            this.groupBox3.TabStop = false;
-            this.groupBox3.Text = "Router";
+            this.RouterGB.Controls.Add(this.MaskTextBox);
+            this.RouterGB.Controls.Add(this.IPTextBox);
+            this.RouterGB.Controls.Add(this.ActiveCheckBox);
+            this.RouterGB.Controls.Add(this.PowerCheckBox);
+            this.RouterGB.Controls.Add(this.DeviceRouterComboBOx);
+            this.RouterGB.Controls.Add(this.ActivateDevButton);
+            this.RouterGB.Controls.Add(this.StartButton);
+            this.RouterGB.Location = new System.Drawing.Point(211, 479);
+            this.RouterGB.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.RouterGB.Name = "RouterGB";
+            this.RouterGB.Padding = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.RouterGB.Size = new System.Drawing.Size(639, 102);
+            this.RouterGB.TabIndex = 11;
+            this.RouterGB.TabStop = false;
+            this.RouterGB.Text = "Router";
             // 
             // MaskTextBox
             // 
-            this.MaskTextBox.Location = new System.Drawing.Point(517, 23);
+            this.MaskTextBox.Location = new System.Drawing.Point(465, 26);
             this.MaskTextBox.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.MaskTextBox.Name = "MaskTextBox";
-            this.MaskTextBox.Size = new System.Drawing.Size(215, 22);
+            this.MaskTextBox.Size = new System.Drawing.Size(165, 22);
             this.MaskTextBox.TabIndex = 19;
             // 
             // IPTextBox
             // 
-            this.IPTextBox.Location = new System.Drawing.Point(308, 23);
+            this.IPTextBox.Location = new System.Drawing.Point(265, 26);
             this.IPTextBox.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.IPTextBox.Name = "IPTextBox";
-            this.IPTextBox.Size = new System.Drawing.Size(203, 22);
+            this.IPTextBox.Size = new System.Drawing.Size(195, 22);
             this.IPTextBox.TabIndex = 18;
             // 
             // ActiveCheckBox
             // 
             this.ActiveCheckBox.AutoSize = true;
             this.ActiveCheckBox.Enabled = false;
-            this.ActiveCheckBox.Location = new System.Drawing.Point(308, 70);
+            this.ActiveCheckBox.Location = new System.Drawing.Point(359, 70);
             this.ActiveCheckBox.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.ActiveCheckBox.Name = "ActiveCheckBox";
             this.ActiveCheckBox.Size = new System.Drawing.Size(78, 21);
@@ -327,7 +329,7 @@
             // 
             this.PowerCheckBox.AutoSize = true;
             this.PowerCheckBox.Enabled = false;
-            this.PowerCheckBox.Location = new System.Drawing.Point(308, 50);
+            this.PowerCheckBox.Location = new System.Drawing.Point(359, 50);
             this.PowerCheckBox.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.PowerCheckBox.Name = "PowerCheckBox";
             this.PowerCheckBox.Size = new System.Drawing.Size(82, 21);
@@ -339,41 +341,41 @@
             // 
             this.ActivateDevButton.BackColor = System.Drawing.SystemColors.Window;
             this.ActivateDevButton.Font = new System.Drawing.Font("Perpetua Titling MT", 10.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.ActivateDevButton.Location = new System.Drawing.Point(405, 50);
+            this.ActivateDevButton.Location = new System.Drawing.Point(457, 52);
             this.ActivateDevButton.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.ActivateDevButton.Name = "ActivateDevButton";
-            this.ActivateDevButton.Size = new System.Drawing.Size(327, 39);
+            this.ActivateDevButton.Size = new System.Drawing.Size(173, 39);
             this.ActivateDevButton.TabIndex = 15;
             this.ActivateDevButton.Text = "ACTIVATE";
             this.ActivateDevButton.UseVisualStyleBackColor = false;
             this.ActivateDevButton.Click += new System.EventHandler(this.ActivateDevButton_Click);
             // 
-            // groupBox4
+            // StaticRoutesGB
             // 
-            this.groupBox4.Controls.Add(this.label3);
-            this.groupBox4.Controls.Add(this.label2);
-            this.groupBox4.Controls.Add(this.label1);
-            this.groupBox4.Controls.Add(this.StaticDev2RadioButton);
-            this.groupBox4.Controls.Add(this.StaticDev1RadioButton);
-            this.groupBox4.Controls.Add(this.StaticNoDevRadioButton);
-            this.groupBox4.Controls.Add(this.StaticRemoveButton);
-            this.groupBox4.Controls.Add(this.StaticAddButton);
-            this.groupBox4.Controls.Add(this.StaticNextHopTextBox);
-            this.groupBox4.Controls.Add(this.StaticMaskTextBox);
-            this.groupBox4.Controls.Add(this.StaticIpTextBox);
-            this.groupBox4.Location = new System.Drawing.Point(12, 274);
-            this.groupBox4.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
-            this.groupBox4.Name = "groupBox4";
-            this.groupBox4.Padding = new System.Windows.Forms.Padding(3, 2, 3, 2);
-            this.groupBox4.Size = new System.Drawing.Size(347, 201);
-            this.groupBox4.TabIndex = 12;
-            this.groupBox4.TabStop = false;
-            this.groupBox4.Text = "Static Routes";
+            this.StaticRoutesGB.Controls.Add(this.label3);
+            this.StaticRoutesGB.Controls.Add(this.label2);
+            this.StaticRoutesGB.Controls.Add(this.label1);
+            this.StaticRoutesGB.Controls.Add(this.StaticDev2RadioButton);
+            this.StaticRoutesGB.Controls.Add(this.StaticDev1RadioButton);
+            this.StaticRoutesGB.Controls.Add(this.StaticNoDevRadioButton);
+            this.StaticRoutesGB.Controls.Add(this.StaticRemoveButton);
+            this.StaticRoutesGB.Controls.Add(this.StaticAddButton);
+            this.StaticRoutesGB.Controls.Add(this.StaticNextHopTextBox);
+            this.StaticRoutesGB.Controls.Add(this.StaticMaskTextBox);
+            this.StaticRoutesGB.Controls.Add(this.StaticIpTextBox);
+            this.StaticRoutesGB.Location = new System.Drawing.Point(12, 308);
+            this.StaticRoutesGB.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.StaticRoutesGB.Name = "StaticRoutesGB";
+            this.StaticRoutesGB.Padding = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.StaticRoutesGB.Size = new System.Drawing.Size(347, 167);
+            this.StaticRoutesGB.TabIndex = 12;
+            this.StaticRoutesGB.TabStop = false;
+            this.StaticRoutesGB.Text = "Static Routes";
             // 
             // label3
             // 
             this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(3, 162);
+            this.label3.Location = new System.Drawing.Point(5, 143);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(100, 17);
             this.label3.TabIndex = 27;
@@ -382,7 +384,7 @@
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(3, 130);
+            this.label2.Location = new System.Drawing.Point(5, 117);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(76, 17);
             this.label2.TabIndex = 26;
@@ -391,7 +393,7 @@
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(3, 98);
+            this.label1.Location = new System.Drawing.Point(4, 91);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(111, 17);
             this.label1.TabIndex = 25;
@@ -400,7 +402,7 @@
             // StaticDev2RadioButton
             // 
             this.StaticDev2RadioButton.AutoSize = true;
-            this.StaticDev2RadioButton.Location = new System.Drawing.Point(5, 66);
+            this.StaticDev2RadioButton.Location = new System.Drawing.Point(4, 63);
             this.StaticDev2RadioButton.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.StaticDev2RadioButton.Name = "StaticDev2RadioButton";
             this.StaticDev2RadioButton.Size = new System.Drawing.Size(103, 21);
@@ -412,7 +414,7 @@
             // StaticDev1RadioButton
             // 
             this.StaticDev1RadioButton.AutoSize = true;
-            this.StaticDev1RadioButton.Location = new System.Drawing.Point(5, 47);
+            this.StaticDev1RadioButton.Location = new System.Drawing.Point(4, 38);
             this.StaticDev1RadioButton.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.StaticDev1RadioButton.Name = "StaticDev1RadioButton";
             this.StaticDev1RadioButton.Size = new System.Drawing.Size(103, 21);
@@ -424,7 +426,7 @@
             // StaticNoDevRadioButton
             // 
             this.StaticNoDevRadioButton.AutoSize = true;
-            this.StaticNoDevRadioButton.Location = new System.Drawing.Point(5, 23);
+            this.StaticNoDevRadioButton.Location = new System.Drawing.Point(4, 17);
             this.StaticNoDevRadioButton.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.StaticNoDevRadioButton.Name = "StaticNoDevRadioButton";
             this.StaticNoDevRadioButton.Size = new System.Drawing.Size(150, 21);
@@ -437,7 +439,7 @@
             // 
             this.StaticRemoveButton.BackColor = System.Drawing.SystemColors.Window;
             this.StaticRemoveButton.Font = new System.Drawing.Font("Perpetua Titling MT", 10.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.StaticRemoveButton.Location = new System.Drawing.Point(173, 53);
+            this.StaticRemoveButton.Location = new System.Drawing.Point(172, 50);
             this.StaticRemoveButton.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.StaticRemoveButton.Name = "StaticRemoveButton";
             this.StaticRemoveButton.Size = new System.Drawing.Size(168, 34);
@@ -449,7 +451,7 @@
             // 
             this.StaticAddButton.BackColor = System.Drawing.SystemColors.Window;
             this.StaticAddButton.Font = new System.Drawing.Font("Perpetua Titling MT", 10.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.StaticAddButton.Location = new System.Drawing.Point(173, 14);
+            this.StaticAddButton.Location = new System.Drawing.Point(172, 12);
             this.StaticAddButton.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.StaticAddButton.Name = "StaticAddButton";
             this.StaticAddButton.Size = new System.Drawing.Size(168, 34);
@@ -459,7 +461,7 @@
             // 
             // StaticNextHopTextBox
             // 
-            this.StaticNextHopTextBox.Location = new System.Drawing.Point(124, 162);
+            this.StaticNextHopTextBox.Location = new System.Drawing.Point(124, 140);
             this.StaticNextHopTextBox.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.StaticNextHopTextBox.Name = "StaticNextHopTextBox";
             this.StaticNextHopTextBox.Size = new System.Drawing.Size(217, 22);
@@ -467,7 +469,7 @@
             // 
             // StaticMaskTextBox
             // 
-            this.StaticMaskTextBox.Location = new System.Drawing.Point(124, 130);
+            this.StaticMaskTextBox.Location = new System.Drawing.Point(124, 114);
             this.StaticMaskTextBox.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.StaticMaskTextBox.Name = "StaticMaskTextBox";
             this.StaticMaskTextBox.Size = new System.Drawing.Size(217, 22);
@@ -475,30 +477,30 @@
             // 
             // StaticIpTextBox
             // 
-            this.StaticIpTextBox.Location = new System.Drawing.Point(124, 96);
+            this.StaticIpTextBox.Location = new System.Drawing.Point(123, 88);
             this.StaticIpTextBox.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.StaticIpTextBox.Name = "StaticIpTextBox";
             this.StaticIpTextBox.Size = new System.Drawing.Size(217, 22);
             this.StaticIpTextBox.TabIndex = 0;
             // 
-            // Timers
+            // TimersGB
             // 
-            this.Timers.Controls.Add(this.TimerHoldTextBox);
-            this.Timers.Controls.Add(this.TimerFlushTextBox);
-            this.Timers.Controls.Add(this.TimerHoldButton);
-            this.Timers.Controls.Add(this.TimerFlushButton);
-            this.Timers.Controls.Add(this.TimerInvalidButton);
-            this.Timers.Controls.Add(this.TimerArpButton);
-            this.Timers.Controls.Add(this.TimerInvalidTextBox);
-            this.Timers.Controls.Add(this.TimerArpTextBox);
-            this.Timers.Location = new System.Drawing.Point(12, 2);
-            this.Timers.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
-            this.Timers.Name = "Timers";
-            this.Timers.Padding = new System.Windows.Forms.Padding(3, 2, 3, 2);
-            this.Timers.Size = new System.Drawing.Size(341, 79);
-            this.Timers.TabIndex = 13;
-            this.Timers.TabStop = false;
-            this.Timers.Text = "Timers";
+            this.TimersGB.Controls.Add(this.TimerHoldTextBox);
+            this.TimersGB.Controls.Add(this.TimerFlushTextBox);
+            this.TimersGB.Controls.Add(this.TimerHoldButton);
+            this.TimersGB.Controls.Add(this.TimerFlushButton);
+            this.TimersGB.Controls.Add(this.TimerInvalidButton);
+            this.TimersGB.Controls.Add(this.TimerArpButton);
+            this.TimersGB.Controls.Add(this.TimerInvalidTextBox);
+            this.TimersGB.Controls.Add(this.TimerArpTextBox);
+            this.TimersGB.Location = new System.Drawing.Point(12, 2);
+            this.TimersGB.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.TimersGB.Name = "TimersGB";
+            this.TimersGB.Padding = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.TimersGB.Size = new System.Drawing.Size(341, 79);
+            this.TimersGB.TabIndex = 13;
+            this.TimersGB.TabStop = false;
+            this.TimersGB.Text = "Timers";
             // 
             // TimerHoldTextBox
             // 
@@ -584,22 +586,22 @@
             this.TimerArpTextBox.Size = new System.Drawing.Size(71, 22);
             this.TimerArpTextBox.TabIndex = 0;
             // 
-            // groupBox5
+            // ArpGB
             // 
-            this.groupBox5.Controls.Add(this.ARPClearButton);
-            this.groupBox5.Controls.Add(this.ARPListView);
-            this.groupBox5.Controls.Add(this.ArpSendButton);
-            this.groupBox5.Controls.Add(this.textBox1);
-            this.groupBox5.Controls.Add(this.radioButton2);
-            this.groupBox5.Controls.Add(this.radioButton1);
-            this.groupBox5.Location = new System.Drawing.Point(364, 12);
-            this.groupBox5.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
-            this.groupBox5.Name = "groupBox5";
-            this.groupBox5.Padding = new System.Windows.Forms.Padding(3, 2, 3, 2);
-            this.groupBox5.Size = new System.Drawing.Size(431, 306);
-            this.groupBox5.TabIndex = 14;
-            this.groupBox5.TabStop = false;
-            this.groupBox5.Text = "ARP";
+            this.ArpGB.Controls.Add(this.ARPClearButton);
+            this.ArpGB.Controls.Add(this.ARPListView);
+            this.ArpGB.Controls.Add(this.ArpSendButton);
+            this.ArpGB.Controls.Add(this.textBox1);
+            this.ArpGB.Controls.Add(this.radioButton2);
+            this.ArpGB.Controls.Add(this.radioButton1);
+            this.ArpGB.Location = new System.Drawing.Point(364, 12);
+            this.ArpGB.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.ArpGB.Name = "ArpGB";
+            this.ArpGB.Padding = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.ArpGB.Size = new System.Drawing.Size(431, 306);
+            this.ArpGB.TabIndex = 14;
+            this.ArpGB.TabStop = false;
+            this.ArpGB.Text = "ARP";
             // 
             // ARPClearButton
             // 
@@ -624,7 +626,7 @@
             this.ARPListView.ForeColor = System.Drawing.SystemColors.InfoText;
             this.ARPListView.HideSelection = false;
             this.ARPListView.Location = new System.Drawing.Point(7, 22);
-            this.ARPListView.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.ARPListView.Margin = new System.Windows.Forms.Padding(4);
             this.ARPListView.Name = "ARPListView";
             this.ARPListView.Size = new System.Drawing.Size(417, 245);
             this.ARPListView.TabIndex = 33;
@@ -663,7 +665,7 @@
             // textBox1
             // 
             this.textBox1.Location = new System.Drawing.Point(116, 276);
-            this.textBox1.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.textBox1.Margin = new System.Windows.Forms.Padding(4);
             this.textBox1.Name = "textBox1";
             this.textBox1.Size = new System.Drawing.Size(147, 22);
             this.textBox1.TabIndex = 2;
@@ -672,7 +674,7 @@
             // 
             this.radioButton2.AutoSize = true;
             this.radioButton2.Location = new System.Drawing.Point(61, 281);
-            this.radioButton2.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.radioButton2.Margin = new System.Windows.Forms.Padding(4);
             this.radioButton2.Name = "radioButton2";
             this.radioButton2.Size = new System.Drawing.Size(47, 21);
             this.radioButton2.TabIndex = 1;
@@ -684,7 +686,7 @@
             // 
             this.radioButton1.AutoSize = true;
             this.radioButton1.Location = new System.Drawing.Point(7, 281);
-            this.radioButton1.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.radioButton1.Margin = new System.Windows.Forms.Padding(4);
             this.radioButton1.Name = "radioButton1";
             this.radioButton1.Size = new System.Drawing.Size(47, 21);
             this.radioButton1.TabIndex = 0;
@@ -692,17 +694,17 @@
             this.radioButton1.Text = "D1";
             this.radioButton1.UseVisualStyleBackColor = true;
             // 
-            // groupBox6
+            // RoutTabGB
             // 
-            this.groupBox6.Controls.Add(this.RoutingListView);
-            this.groupBox6.Location = new System.Drawing.Point(803, 12);
-            this.groupBox6.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
-            this.groupBox6.Name = "groupBox6";
-            this.groupBox6.Padding = new System.Windows.Forms.Padding(4, 4, 4, 4);
-            this.groupBox6.Size = new System.Drawing.Size(652, 306);
-            this.groupBox6.TabIndex = 15;
-            this.groupBox6.TabStop = false;
-            this.groupBox6.Text = "Routing Table";
+            this.RoutTabGB.Controls.Add(this.RoutingListView);
+            this.RoutTabGB.Location = new System.Drawing.Point(803, 12);
+            this.RoutTabGB.Margin = new System.Windows.Forms.Padding(4);
+            this.RoutTabGB.Name = "RoutTabGB";
+            this.RoutTabGB.Padding = new System.Windows.Forms.Padding(4);
+            this.RoutTabGB.Size = new System.Drawing.Size(652, 306);
+            this.RoutTabGB.TabIndex = 15;
+            this.RoutTabGB.TabStop = false;
+            this.RoutTabGB.Text = "Routing Table";
             // 
             // RoutingListView
             // 
@@ -715,7 +717,7 @@
             this.RoutingListView.ForeColor = System.Drawing.SystemColors.InfoText;
             this.RoutingListView.HideSelection = false;
             this.RoutingListView.Location = new System.Drawing.Point(8, 22);
-            this.RoutingListView.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.RoutingListView.Margin = new System.Windows.Forms.Padding(4);
             this.RoutingListView.Name = "RoutingListView";
             this.RoutingListView.Size = new System.Drawing.Size(632, 245);
             this.RoutingListView.TabIndex = 35;
@@ -742,59 +744,82 @@
             this.NextHopColumn.Text = "Next hop";
             this.NextHopColumn.Width = 102;
             // 
-            // groupBox7
+            // RipGB
             // 
-            this.groupBox7.Location = new System.Drawing.Point(857, 326);
-            this.groupBox7.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
-            this.groupBox7.Name = "groupBox7";
-            this.groupBox7.Padding = new System.Windows.Forms.Padding(4, 4, 4, 4);
-            this.groupBox7.Size = new System.Drawing.Size(597, 258);
-            this.groupBox7.TabIndex = 16;
-            this.groupBox7.TabStop = false;
-            this.groupBox7.Text = "RIPv2";
+            this.RipGB.Location = new System.Drawing.Point(857, 326);
+            this.RipGB.Margin = new System.Windows.Forms.Padding(4);
+            this.RipGB.Name = "RipGB";
+            this.RipGB.Padding = new System.Windows.Forms.Padding(4);
+            this.RipGB.Size = new System.Drawing.Size(597, 258);
+            this.RipGB.TabIndex = 16;
+            this.RipGB.TabStop = false;
+            this.RipGB.Text = "RIPv2";
             // 
-            // groupBox8
+            // ExtraGB
             // 
-            this.groupBox8.Location = new System.Drawing.Point(365, 330);
-            this.groupBox8.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
-            this.groupBox8.Name = "groupBox8";
-            this.groupBox8.Padding = new System.Windows.Forms.Padding(4, 4, 4, 4);
-            this.groupBox8.Size = new System.Drawing.Size(484, 145);
-            this.groupBox8.TabIndex = 17;
-            this.groupBox8.TabStop = false;
-            this.groupBox8.Text = "Extra";
+            this.ExtraGB.Location = new System.Drawing.Point(365, 330);
+            this.ExtraGB.Margin = new System.Windows.Forms.Padding(4);
+            this.ExtraGB.Name = "ExtraGB";
+            this.ExtraGB.Padding = new System.Windows.Forms.Padding(4);
+            this.ExtraGB.Size = new System.Drawing.Size(484, 145);
+            this.ExtraGB.TabIndex = 17;
+            this.ExtraGB.TabStop = false;
+            this.ExtraGB.Text = "Extra";
+            // 
+            // TimeLabel
+            // 
+            this.TimeLabel.AutoSize = true;
+            this.TimeLabel.Location = new System.Drawing.Point(17, 288);
+            this.TimeLabel.Name = "TimeLabel";
+            this.TimeLabel.Size = new System.Drawing.Size(46, 17);
+            this.TimeLabel.TabIndex = 0;
+            this.TimeLabel.Text = "label4";
+            // 
+            // changeButton
+            // 
+            this.changeButton.Location = new System.Drawing.Point(239, 285);
+            this.changeButton.Name = "changeButton";
+            this.changeButton.Size = new System.Drawing.Size(107, 23);
+            this.changeButton.TabIndex = 0;
+            this.changeButton.Text = "JUST TEST";
+            this.changeButton.UseVisualStyleBackColor = true;
+            this.changeButton.Click += new System.EventHandler(this.ChangeButton_Click);
             // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1460, 593);
-            this.Controls.Add(this.groupBox8);
-            this.Controls.Add(this.groupBox7);
-            this.Controls.Add(this.groupBox6);
-            this.Controls.Add(this.groupBox5);
-            this.Controls.Add(this.Timers);
-            this.Controls.Add(this.groupBox4);
-            this.Controls.Add(this.groupBox3);
-            this.Controls.Add(this.groupBox2);
-            this.Controls.Add(this.groupBox1);
+            this.Controls.Add(this.PowerButton);
+            this.Controls.Add(this.changeButton);
+            this.Controls.Add(this.TimeLabel);
+            this.Controls.Add(this.ExtraGB);
+            this.Controls.Add(this.RipGB);
+            this.Controls.Add(this.RoutTabGB);
+            this.Controls.Add(this.ArpGB);
+            this.Controls.Add(this.TimersGB);
+            this.Controls.Add(this.StaticRoutesGB);
+            this.Controls.Add(this.RouterGB);
+            this.Controls.Add(this.Dev2GB);
+            this.Controls.Add(this.Dev1GB);
             this.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.Name = "Form1";
             this.Text = "Form1";
-            this.groupBox1.ResumeLayout(false);
-            this.groupBox1.PerformLayout();
-            this.groupBox2.ResumeLayout(false);
-            this.groupBox2.PerformLayout();
-            this.groupBox3.ResumeLayout(false);
-            this.groupBox3.PerformLayout();
-            this.groupBox4.ResumeLayout(false);
-            this.groupBox4.PerformLayout();
-            this.Timers.ResumeLayout(false);
-            this.Timers.PerformLayout();
-            this.groupBox5.ResumeLayout(false);
-            this.groupBox5.PerformLayout();
-            this.groupBox6.ResumeLayout(false);
+            this.Dev1GB.ResumeLayout(false);
+            this.Dev1GB.PerformLayout();
+            this.Dev2GB.ResumeLayout(false);
+            this.Dev2GB.PerformLayout();
+            this.RouterGB.ResumeLayout(false);
+            this.RouterGB.PerformLayout();
+            this.StaticRoutesGB.ResumeLayout(false);
+            this.StaticRoutesGB.PerformLayout();
+            this.TimersGB.ResumeLayout(false);
+            this.TimersGB.PerformLayout();
+            this.ArpGB.ResumeLayout(false);
+            this.ArpGB.PerformLayout();
+            this.RoutTabGB.ResumeLayout(false);
             this.ResumeLayout(false);
+            this.PerformLayout();
 
         }
 
@@ -803,11 +828,11 @@
         private System.Windows.Forms.Button PowerButton;
         private System.Windows.Forms.Button StartButton;
         private System.Windows.Forms.ComboBox DeviceRouterComboBOx;
-        private System.Windows.Forms.GroupBox groupBox1;
+        private System.Windows.Forms.GroupBox Dev1GB;
         private System.Windows.Forms.Label Dev1Label;
-        private System.Windows.Forms.GroupBox groupBox2;
+        private System.Windows.Forms.GroupBox Dev2GB;
         private System.Windows.Forms.Label Dev2Label;
-        private System.Windows.Forms.GroupBox groupBox3;
+        private System.Windows.Forms.GroupBox RouterGB;
         private System.Windows.Forms.Button ActivateDevButton;
         private System.Windows.Forms.CheckBox Dev1RIPv2CheckBox;
         private System.Windows.Forms.CheckBox Dev2RIPv2CheckBox;
@@ -821,7 +846,7 @@
         private System.Windows.Forms.CheckBox Dev2UsableCHeckBox;
         private System.Windows.Forms.Label Dev1NetworkLabel;
         private System.Windows.Forms.Label Dev2NetworkLabel;
-        private System.Windows.Forms.GroupBox groupBox4;
+        private System.Windows.Forms.GroupBox StaticRoutesGB;
         private System.Windows.Forms.Button StaticRemoveButton;
         private System.Windows.Forms.Button StaticAddButton;
         private System.Windows.Forms.TextBox StaticNextHopTextBox;
@@ -833,7 +858,7 @@
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Label label1;
-        private System.Windows.Forms.GroupBox Timers;
+        private System.Windows.Forms.GroupBox TimersGB;
         private System.Windows.Forms.TextBox TimerHoldTextBox;
         private System.Windows.Forms.TextBox TimerFlushTextBox;
         private System.Windows.Forms.Button TimerHoldButton;
@@ -842,10 +867,10 @@
         private System.Windows.Forms.Button TimerArpButton;
         private System.Windows.Forms.TextBox TimerInvalidTextBox;
         private System.Windows.Forms.TextBox TimerArpTextBox;
-        private System.Windows.Forms.GroupBox groupBox5;
-        private System.Windows.Forms.GroupBox groupBox6;
-        private System.Windows.Forms.GroupBox groupBox7;
-        private System.Windows.Forms.GroupBox groupBox8;
+        private System.Windows.Forms.GroupBox ArpGB;
+        private System.Windows.Forms.GroupBox RoutTabGB;
+        private System.Windows.Forms.GroupBox RipGB;
+        private System.Windows.Forms.GroupBox ExtraGB;
         private System.Windows.Forms.ListView ARPListView;
         private System.Windows.Forms.ColumnHeader ArpIpColumn;
         private System.Windows.Forms.ColumnHeader ArpMacColumn;
@@ -861,6 +886,8 @@
         private System.Windows.Forms.ColumnHeader AdminDistanceColumn;
         private System.Windows.Forms.ColumnHeader DeviceColumn;
         private System.Windows.Forms.ColumnHeader NextHopColumn;
+        private System.Windows.Forms.Label TimeLabel;
+        private System.Windows.Forms.Button changeButton;
     }
 }
 

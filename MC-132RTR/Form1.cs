@@ -2,13 +2,7 @@
 using MC_132RTR.Model.Core;
 using MC_132RTR.Model.Support;
 using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Net;
-using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
@@ -16,21 +10,32 @@ namespace MC_132RTR
 {
     public partial class Form1 : Form
     {
-        private String StartState;
+        // //////////////////
+        // Atributes
+        public static Form1 Instance { private set; get; } = null;
+        private DateTime previousTime = DateTime.Now;
+        private readonly SynchronizationContext synchronizationContext;
+
+        public String StartState { private set; get; }
         public const String START_UP = "START UP";
         public const String STOP = "STOP";
 
-        private String PowerState;
+        public String PowerState { private set; get; }
         public const String POWER_OFF = "POWER OFF";
         public const String POWER_UP = "POWER UP";
 
+        // //////////////////
+        // Constructor
         public Form1()
         {
             InitializeComponent();
             InitializeGui();
-            RefreshEverySecond();
+            Instance = this;
+            synchronizationContext = SynchronizationContext.Current;
         }
 
+        // //////////////////
+        // Init stuff
         public void InitializeGui()
         {
             StartState = START_UP;
@@ -47,22 +52,139 @@ namespace MC_132RTR
             }
 
             DefaultValues();
+            EnableOrDisableElements();
+        }
+        private void DefaultValues()
+        {
+            IPTextBox.Text = "192.168.1.1";
+            MaskTextBox.Text = "255.255.255.0";
+        }
+        private void EnableOrDisableElements()
+        {
+            bool ValueToSet = POWER_UP.Equals(PowerState);
+
+            TimersGB.Enabled = ValueToSet;
+            Dev1GB.Enabled = ValueToSet;
+            Dev2GB.Enabled = ValueToSet;
+            StaticRoutesGB.Enabled = ValueToSet;
+            RouterGB.Enabled = ValueToSet;
+            ArpGB.Enabled = ValueToSet;
+            RoutTabGB.Enabled = ValueToSet;
+            ExtraGB.Enabled = ValueToSet;
+            RipGB.Enabled = ValueToSet;
         }
 
+        // //////////////////
+        // Functions often changed
+        private void Method()
+        {
+            // ARP
+            ARPListView.Items.Clear();
+            Logging.Out("Method");
+            foreach (ListViewItem Item in Middleman.GetListViewItemsARP())
+            {
+                Logging.Out("Adding ARP");
+                ARPListView.Items.Add(Item);
+            }
+
+            // Routing
+            //RoutingListView.Clear();
+
+            //foreach (ListViewItem Item in Middleman.GetListViewItemsROUTE())
+            //{
+            //   RoutingListView.Items.Add(Item);
+            //}
+
+            // RIP
+            //RIPList
+            //ARPListView.Clear();
+
+            //foreach (ListViewItem Item in Middleman.GetListViewItemsRIP())
+            //{
+            //   //Rip ListView.Items.Add(Item);
+            //}
+        }
+
+        
+
+        // //////////////////
+        // Event handlers NOT DONE
+        private void Dev1RipButton_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void Dev2RipButton_Click(object sender, EventArgs e)
+        {
+
+        }
+        private void TimerArpButton_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                Middleman.SetTimer(Middleman.ARP, 0, int.Parse(TimerArpTextBox.Text));
+            }
+            catch (Exception en) { }
+        }
+        private void TimerInvalidButton_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                Middleman.SetTimer(Middleman.RIPv2, Middleman.RIPv2_INVALID, int.Parse(TimerInvalidTextBox.Text));
+                // change in button
+            }
+            catch (Exception en) { }
+        }
+        private void TimerFlushButton_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                Middleman.SetTimer(Middleman.RIPv2, Middleman.RIPv2_FLUSH, int.Parse(TimerFlushTextBox.Text));
+                // change in button
+            }
+            catch (Exception en) { }
+        }
+        private void TimerHoldButton_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                Middleman.SetTimer(Middleman.RIPv2, Middleman.RIPv2_HOLDDOWN, int.Parse(TimerHoldTextBox.Text));
+                // change in button
+            }
+            catch (Exception en) { }
+        }
+
+        // //////////////////
+        // Event handlers FINISHED
+        private void ActivateDevButton_Click(object sender, EventArgs e)
+        {
+            if (String.IsNullOrEmpty(DeviceRouterComboBOx.Text))
+                return;
+
+            Device ChosenDev = (Device)DeviceRouterComboBOx.SelectedItem;
+            DeviceRouterComboBOx.SelectedItem = null;
+
+            Middleman.TryToInitialiazeDevice(ChosenDev, IPTextBox.Text, MaskTextBox.Text);
+            DefaultValues();
+            UpdateDeviceInfo();
+        }
         private void PowerButton_Click(object sender, EventArgs e)
         {
             switch (PowerState)
             {
                 case POWER_OFF:
-
+                    PowerState = POWER_UP;
+                    SafeInvoker(new Action(Middleman.ThreadStart));
                     break;
                 case POWER_UP:
+                    PowerState = POWER_OFF;
                     break;
             }
 
             UpdateDeviceInfo();
+            PowerButton.Text = Middleman.GetPowerState();
+            EnableOrDisableElements();
         }
-
         private void StartButton_Click(object sender, EventArgs e)
         {
             switch (StartState)
@@ -80,52 +202,34 @@ namespace MC_132RTR
             UpdateDeviceInfo();
         }
 
-        private void ActivateDevButton_Click(object sender, EventArgs e)
+        // //////////////////
+        // Small functions
+        private void SafeInvoker(Delegate Meth, params object[] args)
         {
-            if (String.IsNullOrEmpty(DeviceRouterComboBOx.Text))
-                return;
-
-            Device ChosenDev = (Device)DeviceRouterComboBOx.SelectedItem;
-            DeviceRouterComboBOx.SelectedItem = null;
-
-            Middleman.TryToInitialiazeDevice(ChosenDev, IPTextBox.Text, MaskTextBox.Text);
-            DefaultValues();
-            UpdateDeviceInfo();
+            if (this.InvokeRequired)
+            {
+                this.Invoke(new MethodInvoker(delegate
+                {
+                    Meth.DynamicInvoke(args);
+                }));
+            }
+            else
+            {
+                Meth.DynamicInvoke(args);
+            }
+        }
+        public void RefreshEverySecond()
+        {
+            while (PowerState.Equals(POWER_UP))
+            {
+                Logging.Out("RefreshEverySecond() while()");
+                Method();
+                Thread.Sleep(1000);
+            }
         }
 
-        private void DeactivateDevButton_Click(object sender, EventArgs e)
-        {
-            if (String.IsNullOrEmpty(DeviceRouterComboBOx.Text))
-                return;
-
-            Device ChosenDev = (Device)DeviceRouterComboBOx.SelectedItem;
-            DeviceRouterComboBOx.SelectedItem = null;
-
-            Middleman.TryToChangeDevice(ChosenDev, IPTextBox.Text, MaskTextBox.Text);
-            DefaultValues();
-            UpdateDeviceInfo();
-        }
-
-        private void Dev1RipButton_Click(object sender, EventArgs e)
-        {
-
-        }
-
-        private void Dev2RipButton_Click(object sender, EventArgs e)
-        {
-
-        }
-
-        private void Dev2RIPv2CheckBox_CheckedChanged(object sender, EventArgs e)
-        {
-            // wont use
-        }
-
-        private void Dev2StatusCheckBox_CheckedChanged(object sender, EventArgs e)
-        {
-            // wont use
-        }
-
+        // ///////////////////////////////
+        // Fixed usage not checked often
         public void UpdateDeviceInfo()
         {
             ActiveCheckBox.Checked = Device.RouterRunning;
@@ -150,91 +254,76 @@ namespace MC_132RTR
             if (Device.RouterRunning)
             {
                 DeviceRouterComboBOx.Items.Clear();
-                
-                foreach(Device Dev in Device.ListOfDevices)
+
+                foreach (Device Dev in Device.ListOfDevices)
                 {
                     if (Dev.IsUsable())
                         DeviceRouterComboBOx.Items.Add(Dev);
                 }
             }
         }
-
-        private void DefaultValues()
-        {
-            IPTextBox.Text = "192.168.1.1";
-            MaskTextBox.Text = "255.255.255.0";
-        }
-
-        // Timers stuff
-
-        private void TimerArpButton_Click(object sender, EventArgs e)
-        {
-            try {
-                Middleman.SetTimer(Middleman.ARP, 0, int.Parse(TimerArpTextBox.Text));
-            } 
-            catch (Exception en) { }
-        }
-
-        private void TimerInvalidButton_Click(object sender, EventArgs e)
-        {
-            try
-            {
-                Middleman.SetTimer(Middleman.RIPv2, Middleman.RIPv2_INVALID, int.Parse(TimerInvalidTextBox.Text));
-            }
-            catch (Exception en) { }
-        }
-
-        private void TimerFlushButton_Click(object sender, EventArgs e)
-        {
-            try
-            {
-                Middleman.SetTimer(Middleman.RIPv2, Middleman.RIPv2_FLUSH, int.Parse(TimerFlushTextBox.Text));
-            }
-            catch (Exception en) { }
-        }
-
-        private void TimerHoldButton_Click(object sender, EventArgs e)
-        {
-            try
-            {
-                Middleman.SetTimer(Middleman.RIPv2, Middleman.RIPv2_HOLDDOWN, int.Parse(TimerHoldTextBox.Text));
-            }
-            catch (Exception en) { }
-        }
-
-        // Refresh Stuff
+        
 
         
-        private void RefreshEverySecond()
+
+        
+
+        
+
+        
+
+        // ///////////////////////
+        // Useless
+        private void Dev2RIPv2CheckBox_CheckedChanged(object sender, EventArgs e)
         {
-            this.Invoke(new MethodInvoker(delegate
-            {
-                // ARP
-                ARPListView.Clear();
-
-                foreach (ListViewItem Item in Middleman.GetListViewItemsARP())
-                {
-                    ARPListView.Items.Add(Item);
-                }
-
-                // Routing
-                //RoutingListView.Clear();
-
-                //foreach (ListViewItem Item in Middleman.GetListViewItemsROUTE())
-                //{
-                //   RoutingListView.Items.Add(Item);
-                //}
-
-                // RIP
-                //RIPList
-                //ARPListView.Clear();
-
-                //foreach (ListViewItem Item in Middleman.GetListViewItemsRIP())
-                //{
-                //   //Rip ListView.Items.Add(Item);
-                //}
-            }));
-            
+            // wont use
         }
+        private void Dev2StatusCheckBox_CheckedChanged(object sender, EventArgs e)
+        {
+            // wont use
+        }
+        private async void ChangeButton_Click(object sender, EventArgs e)
+        {
+            changeButton.Enabled = false;
+
+            await Task.Run(() =>
+            {
+                int c = 0;
+                while (true)
+                {
+                    UpdateUI(c++);
+                }
+            });
+
+            changeButton.Enabled = true;
+        }
+        private void UpdateUI(int value)
+        {
+            var timeNow = DateTime.Now;
+
+            if ((DateTime.Now - previousTime).Milliseconds <= 250) return;
+
+            synchronizationContext.Post(new SendOrPostCallback(o =>
+            {
+                TimeLabel.Text = @"Ha " + (int)o;
+            }), value);
+
+            previousTime = timeNow;
+        }
+        private void DeactivateDevButton_Click(object sender, EventArgs e)
+        {
+            if (String.IsNullOrEmpty(DeviceRouterComboBOx.Text))
+                return;
+
+            Device ChosenDev = (Device)DeviceRouterComboBOx.SelectedItem;
+            DeviceRouterComboBOx.SelectedItem = null;
+
+            Middleman.TryToChangeDevice(ChosenDev, IPTextBox.Text, MaskTextBox.Text);
+            DefaultValues();
+            UpdateDeviceInfo();
+        }
+
+
+
     }
 }

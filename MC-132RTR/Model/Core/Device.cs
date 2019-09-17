@@ -190,6 +190,7 @@ namespace MC_132RTR.Model.Core
             }
 
             RouterRunning = false;
+            C_Routing.TurnOffListeningOnDevices();
         }
 
         public static void StartRouter()
@@ -205,7 +206,11 @@ namespace MC_132RTR.Model.Core
             }
 
             if (StartedYet >= 2)
+            {
                 RouterRunning = true;
+                C_Routing.TurnOnListeningOnDevices();
+                Logging.Out("Router started");
+            }
         }
 
         public static int CountActiveDevices()

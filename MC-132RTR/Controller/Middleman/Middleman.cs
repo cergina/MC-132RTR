@@ -8,6 +8,7 @@ using System.Linq;
 using System.Net;
 using System.Net.NetworkInformation;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
@@ -42,7 +43,13 @@ namespace MC_132RTR.Controller.Middleman
 
         public static string GetPowerState()
         {
-            return "";
+            if (Form1.Instance == null)
+                return "Initial";
+
+            if (Form1.Instance.PowerState.Equals(Form1.POWER_UP))
+                return Form1.POWER_OFF;
+            else
+                return Form1.POWER_UP;
         }
 
         public static void TryToStartRouter()
@@ -245,6 +252,10 @@ namespace MC_132RTR.Controller.Middleman
             }
         }
 
+        public static void ThreadStart()
+        {
+            new Thread(() => Form1.Instance.RefreshEverySecond()) { IsBackground = true }.Start();
+        }
 
     }
 }
