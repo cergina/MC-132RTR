@@ -1,4 +1,6 @@
-﻿using System;
+﻿using PacketDotNet;
+using SharpPcap;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
@@ -46,6 +48,36 @@ namespace MC_132RTR.Model.Packet
 
             // such Type is not specified
             return null;
+        }
+
+
+        public static PacketDotNet.Packet GetPacket(RawCapture RawCap)
+        {
+            try
+            {
+                return PacketDotNet.Packet.ParsePacket(RawCap.LinkLayerType, RawCap.Data);
+            }
+            catch (Exception exc) { return null; }
+        }
+
+        public static EthernetPacket GetEthPacket(PacketDotNet.Packet Pckt)
+        {
+            return (EthernetPacket)Pckt.Extract(typeof(EthernetPacket));
+        }
+
+        public static IPv4Packet GetIPv4Packet(EthernetPacket EthPacket)
+        {
+            return (IPv4Packet)EthPacket.Extract(typeof(IPv4Packet));
+        }
+
+        public static UdpPacket GetUdpPacket(IPv4Packet Ipv4Pckt)
+        {
+            return (UdpPacket)Ipv4Pckt.Extract(typeof(UdpPacket));
+        }
+
+        public static ARPPacket GetArpPacket(EthernetPacket EthPacket)
+        {
+            return (ARPPacket)EthPacket.Extract(typeof(ARPPacket));
         }
     }
 }

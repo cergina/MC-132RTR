@@ -238,6 +238,51 @@ namespace MC_132RTR.Model.Core
             return TmpUsable;
         }
 
+        public static Device PairDeviceWithIpAddress(IPAddress Ip)
+        {
+            if (Ip == null)
+                return null;
+
+            foreach(Device Dev in ListOfDevices)
+            {
+                if (!Dev.IsUsable())
+                    continue;
+
+                if (Ip.Equals(Dev.Network.Address))
+                    return Dev;
+            }
+
+            return null;
+        }
+
+        public static Device PairDeviceWithMacAdress(PhysicalAddress MacAddress)
+        {
+            if (MacAddress == null)
+                return null;
+
+            foreach(Device Dev in ListOfDevices)
+            {
+                if (MacAddress.Equals(Dev.ICapDev.MacAddress))
+                    return Dev;
+            }
+
+            return null;
+        }
+
+        public static Device PairDeviceWithICaptureDevice(ICaptureDevice ICapDev)
+        {
+            if (ICapDev == null || ICapDev.MacAddress == null)
+                return null;
+
+            foreach(Device Dev in ListOfDevices)
+            {
+                if (ICapDev.MacAddress.Equals(Dev.ICapDev.MacAddress))
+                    return Dev;
+            }
+
+            return null;
+        }
+
         public static Device PairDeviceWithToString(String Name)
         {
             if (String.IsNullOrEmpty(Name))

@@ -16,6 +16,7 @@ namespace MC_132RTR.Controller.Middleman
 {
     public static class Middleman
     {
+        public const int NOTHING = 0;
         public const int ARP = 100;
         public const int RIB = 200;
         public const int RIPv2 = 300;
