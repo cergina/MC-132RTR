@@ -3,11 +3,8 @@ using PacketDotNet;
 using SharpPcap;
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Net;
 using System.Net.NetworkInformation;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace MC_132RTR.Model.Core
 {
@@ -262,6 +259,9 @@ namespace MC_132RTR.Model.Core
 
             foreach(Device Dev in ListOfDevices)
             {
+                if (!Dev.ICapDev.Started)
+                    continue;
+
                 if (MacAddress.Equals(Dev.ICapDev.MacAddress))
                     return Dev;
             }
@@ -276,6 +276,9 @@ namespace MC_132RTR.Model.Core
 
             foreach(Device Dev in ListOfDevices)
             {
+                if (!Dev.ICapDev.Started)
+                    continue;
+
                 if (ICapDev.MacAddress.Equals(Dev.ICapDev.MacAddress))
                     return Dev;
             }

@@ -1,6 +1,6 @@
 ﻿namespace MC_132RTR
 {
-    partial class Form1
+    partial class RouterForm
     {
         /// <summary>
         /// Required designer variable.

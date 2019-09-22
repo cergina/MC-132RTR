@@ -66,7 +66,7 @@ namespace MC_132RTR.Model.Table
 
         public void DisableElement(IPAddress Addr)
         {
-             TP_ARP Tmp = MacToIp(Addr, true);
+            TP_ARP Tmp = MacToIp(Addr, true);
             if (Tmp != null)
             {
                 Tmp.Deactivate();

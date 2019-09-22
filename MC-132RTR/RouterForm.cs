@@ -8,11 +8,11 @@ using System.Windows.Forms;
 
 namespace MC_132RTR
 {
-    public partial class Form1 : Form
+    public partial class RouterForm : Form
     {
         // //////////////////
         // Atributes
-        public static Form1 Instance { private set; get; } = null;
+        public static RouterForm Instance { private set; get; } = null;
         private DateTime previousTime = DateTime.Now;
         private readonly SynchronizationContext synchronizationContext;
 
@@ -26,7 +26,7 @@ namespace MC_132RTR
 
         // //////////////////
         // Constructor
-        public Form1()
+        public RouterForm()
         {
             InitializeComponent();
             InitializeGui();

@@ -1,11 +1,7 @@
 ﻿using MC_132RTR.Model.Table;
 using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Net;
 using System.Net.NetworkInformation;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace MC_132RTR.Model.TablePrimitive

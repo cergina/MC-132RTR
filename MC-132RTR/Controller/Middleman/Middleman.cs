@@ -4,12 +4,9 @@ using MC_132RTR.Model.Table;
 using MC_132RTR.Model.TablePrimitive;
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Net;
 using System.Net.NetworkInformation;
-using System.Text;
 using System.Threading;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace MC_132RTR.Controller.Middleman
@@ -37,20 +34,20 @@ namespace MC_132RTR.Controller.Middleman
         public static string GetStartState()
         {
             if (Device.RouterRunning)
-                return Form1.STOP;
+                return RouterForm.STOP;
             else
-                return Form1.START_UP;
+                return RouterForm.START_UP;
         }
 
         public static string GetPowerState()
         {
-            if (Form1.Instance == null)
+            if (RouterForm.Instance == null)
                 return "Initial";
 
-            if (Form1.Instance.PowerState.Equals(Form1.POWER_UP))
-                return Form1.POWER_OFF;
+            if (RouterForm.Instance.PowerState.Equals(RouterForm.POWER_UP))
+                return RouterForm.POWER_OFF;
             else
-                return Form1.POWER_UP;
+                return RouterForm.POWER_UP;
         }
 
         public static void TryToStartRouter()
@@ -255,7 +252,7 @@ namespace MC_132RTR.Controller.Middleman
 
         public static void ThreadStart()
         {
-            new Thread(() => Form1.Instance.RefreshEverySecond()) { IsBackground = true }.Start();
+            new Thread(() => RouterForm.Instance.RefreshEverySecond()) { IsBackground = true }.Start();
         }
 
     }
