@@ -241,6 +241,7 @@ namespace MC_132RTR
                 Device Tmp = Device.PairDeviceWithToString(Device.Dev1);
                 Dev1UsableCHeckBox.Checked = Tmp.IsUsable();
                 Dev1NetworkLabel.Text = (Tmp.Network != null) ? Tmp.Network.ToString() : "null";
+                Dev1MacLabel.Text = (Tmp.ICapDev != null && Tmp.ICapDev.Started) ? Tmp.ICapDev.MacAddress.ToString() : "null";
             }
 
             if (!String.IsNullOrEmpty(Device.Dev2))
@@ -249,6 +250,7 @@ namespace MC_132RTR
                 Device Tmp = Device.PairDeviceWithToString(Device.Dev2);
                 Dev2UsableCHeckBox.Checked = Tmp.IsUsable();
                 Dev2NetworkLabel.Text = (Tmp.Network != null) ? Tmp.Network.ToString() : "null";
+                Dev2MacLabel.Text = (Tmp.ICapDev != null && Tmp.ICapDev.Started) ? Tmp.ICapDev.MacAddress.ToString() : "null";
             }
 
             if (Device.RouterRunning)

@@ -262,6 +262,8 @@ namespace MC_132RTR.Model.Core
                 if (!Dev.ICapDev.Started)
                     continue;
 
+                Logging.Out("MacAddress: " + MacAddress + " , ICAP: " + Dev.ICapDev.MacAddress);
+
                 if (MacAddress.Equals(Dev.ICapDev.MacAddress))
                     return Dev;
             }

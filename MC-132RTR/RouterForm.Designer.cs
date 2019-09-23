@@ -91,6 +91,8 @@
             this.ExtraGB = new System.Windows.Forms.GroupBox();
             this.TimeLabel = new System.Windows.Forms.Label();
             this.changeButton = new System.Windows.Forms.Button();
+            this.Dev1MacLabel = new System.Windows.Forms.Label();
+            this.Dev2MacLabel = new System.Windows.Forms.Label();
             this.Dev1GB.SuspendLayout();
             this.Dev2GB.SuspendLayout();
             this.RouterGB.SuspendLayout();
@@ -98,6 +100,7 @@
             this.TimersGB.SuspendLayout();
             this.ArpGB.SuspendLayout();
             this.RoutTabGB.SuspendLayout();
+            this.ExtraGB.SuspendLayout();
             this.SuspendLayout();
             // 
             // PowerButton
@@ -105,7 +108,7 @@
             this.PowerButton.BackColor = System.Drawing.Color.Red;
             this.PowerButton.Font = new System.Drawing.Font("Perpetua Titling MT", 10.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.PowerButton.ForeColor = System.Drawing.SystemColors.Control;
-            this.PowerButton.Location = new System.Drawing.Point(12, 479);
+            this.PowerButton.Location = new System.Drawing.Point(12, 514);
             this.PowerButton.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.PowerButton.Name = "PowerButton";
             this.PowerButton.Size = new System.Drawing.Size(194, 103);
@@ -138,6 +141,7 @@
             // 
             // Dev1GB
             // 
+            this.Dev1GB.Controls.Add(this.Dev1MacLabel);
             this.Dev1GB.Controls.Add(this.Dev1NetworkLabel);
             this.Dev1GB.Controls.Add(this.Dev1UsableCHeckBox);
             this.Dev1GB.Controls.Add(this.Dev1RipButton);
@@ -147,7 +151,7 @@
             this.Dev1GB.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.Dev1GB.Name = "Dev1GB";
             this.Dev1GB.Padding = new System.Windows.Forms.Padding(3, 2, 3, 2);
-            this.Dev1GB.Size = new System.Drawing.Size(347, 89);
+            this.Dev1GB.Size = new System.Drawing.Size(347, 116);
             this.Dev1GB.TabIndex = 6;
             this.Dev1GB.TabStop = false;
             this.Dev1GB.Text = "Device 1";
@@ -165,7 +169,7 @@
             // 
             this.Dev1UsableCHeckBox.AutoSize = true;
             this.Dev1UsableCHeckBox.Enabled = false;
-            this.Dev1UsableCHeckBox.Location = new System.Drawing.Point(11, 60);
+            this.Dev1UsableCHeckBox.Location = new System.Drawing.Point(23, 91);
             this.Dev1UsableCHeckBox.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.Dev1UsableCHeckBox.Name = "Dev1UsableCHeckBox";
             this.Dev1UsableCHeckBox.Size = new System.Drawing.Size(74, 21);
@@ -190,7 +194,7 @@
             // 
             this.Dev1RIPv2CheckBox.AutoSize = true;
             this.Dev1RIPv2CheckBox.Enabled = false;
-            this.Dev1RIPv2CheckBox.Location = new System.Drawing.Point(95, 60);
+            this.Dev1RIPv2CheckBox.Location = new System.Drawing.Point(102, 91);
             this.Dev1RIPv2CheckBox.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.Dev1RIPv2CheckBox.Name = "Dev1RIPv2CheckBox";
             this.Dev1RIPv2CheckBox.Size = new System.Drawing.Size(67, 21);
@@ -209,16 +213,17 @@
             // 
             // Dev2GB
             // 
+            this.Dev2GB.Controls.Add(this.Dev2MacLabel);
             this.Dev2GB.Controls.Add(this.Dev2NetworkLabel);
             this.Dev2GB.Controls.Add(this.Dev2UsableCHeckBox);
             this.Dev2GB.Controls.Add(this.Dev2RipButton);
             this.Dev2GB.Controls.Add(this.Dev2RIPv2CheckBox);
             this.Dev2GB.Controls.Add(this.Dev2Label);
-            this.Dev2GB.Location = new System.Drawing.Point(12, 180);
+            this.Dev2GB.Location = new System.Drawing.Point(11, 224);
             this.Dev2GB.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.Dev2GB.Name = "Dev2GB";
             this.Dev2GB.Padding = new System.Windows.Forms.Padding(3, 2, 3, 2);
-            this.Dev2GB.Size = new System.Drawing.Size(347, 90);
+            this.Dev2GB.Size = new System.Drawing.Size(347, 115);
             this.Dev2GB.TabIndex = 8;
             this.Dev2GB.TabStop = false;
             this.Dev2GB.Text = "Device 2";
@@ -236,7 +241,7 @@
             // 
             this.Dev2UsableCHeckBox.AutoSize = true;
             this.Dev2UsableCHeckBox.Enabled = false;
-            this.Dev2UsableCHeckBox.Location = new System.Drawing.Point(11, 58);
+            this.Dev2UsableCHeckBox.Location = new System.Drawing.Point(24, 90);
             this.Dev2UsableCHeckBox.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.Dev2UsableCHeckBox.Name = "Dev2UsableCHeckBox";
             this.Dev2UsableCHeckBox.Size = new System.Drawing.Size(74, 21);
@@ -261,7 +266,7 @@
             // 
             this.Dev2RIPv2CheckBox.AutoSize = true;
             this.Dev2RIPv2CheckBox.Enabled = false;
-            this.Dev2RIPv2CheckBox.Location = new System.Drawing.Point(95, 58);
+            this.Dev2RIPv2CheckBox.Location = new System.Drawing.Point(103, 90);
             this.Dev2RIPv2CheckBox.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.Dev2RIPv2CheckBox.Name = "Dev2RIPv2CheckBox";
             this.Dev2RIPv2CheckBox.Size = new System.Drawing.Size(67, 21);
@@ -288,7 +293,7 @@
             this.RouterGB.Controls.Add(this.DeviceRouterComboBOx);
             this.RouterGB.Controls.Add(this.ActivateDevButton);
             this.RouterGB.Controls.Add(this.StartButton);
-            this.RouterGB.Location = new System.Drawing.Point(211, 479);
+            this.RouterGB.Location = new System.Drawing.Point(212, 515);
             this.RouterGB.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.RouterGB.Name = "RouterGB";
             this.RouterGB.Padding = new System.Windows.Forms.Padding(3, 2, 3, 2);
@@ -363,7 +368,7 @@
             this.StaticRoutesGB.Controls.Add(this.StaticNextHopTextBox);
             this.StaticRoutesGB.Controls.Add(this.StaticMaskTextBox);
             this.StaticRoutesGB.Controls.Add(this.StaticIpTextBox);
-            this.StaticRoutesGB.Location = new System.Drawing.Point(12, 308);
+            this.StaticRoutesGB.Location = new System.Drawing.Point(12, 343);
             this.StaticRoutesGB.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.StaticRoutesGB.Name = "StaticRoutesGB";
             this.StaticRoutesGB.Padding = new System.Windows.Forms.Padding(3, 2, 3, 2);
@@ -750,18 +755,20 @@
             this.RipGB.Margin = new System.Windows.Forms.Padding(4);
             this.RipGB.Name = "RipGB";
             this.RipGB.Padding = new System.Windows.Forms.Padding(4);
-            this.RipGB.Size = new System.Drawing.Size(597, 258);
+            this.RipGB.Size = new System.Drawing.Size(597, 291);
             this.RipGB.TabIndex = 16;
             this.RipGB.TabStop = false;
             this.RipGB.Text = "RIPv2";
             // 
             // ExtraGB
             // 
+            this.ExtraGB.Controls.Add(this.TimeLabel);
+            this.ExtraGB.Controls.Add(this.changeButton);
             this.ExtraGB.Location = new System.Drawing.Point(365, 330);
             this.ExtraGB.Margin = new System.Windows.Forms.Padding(4);
             this.ExtraGB.Name = "ExtraGB";
             this.ExtraGB.Padding = new System.Windows.Forms.Padding(4);
-            this.ExtraGB.Size = new System.Drawing.Size(484, 145);
+            this.ExtraGB.Size = new System.Drawing.Size(484, 186);
             this.ExtraGB.TabIndex = 17;
             this.ExtraGB.TabStop = false;
             this.ExtraGB.Text = "Extra";
@@ -769,7 +776,7 @@
             // TimeLabel
             // 
             this.TimeLabel.AutoSize = true;
-            this.TimeLabel.Location = new System.Drawing.Point(17, 288);
+            this.TimeLabel.Location = new System.Drawing.Point(7, 25);
             this.TimeLabel.Name = "TimeLabel";
             this.TimeLabel.Size = new System.Drawing.Size(46, 17);
             this.TimeLabel.TabIndex = 0;
@@ -777,7 +784,7 @@
             // 
             // changeButton
             // 
-            this.changeButton.Location = new System.Drawing.Point(239, 285);
+            this.changeButton.Location = new System.Drawing.Point(60, 22);
             this.changeButton.Name = "changeButton";
             this.changeButton.Size = new System.Drawing.Size(107, 23);
             this.changeButton.TabIndex = 0;
@@ -785,14 +792,30 @@
             this.changeButton.UseVisualStyleBackColor = true;
             this.changeButton.Click += new System.EventHandler(this.ChangeButton_Click);
             // 
-            // Form1
+            // Dev1MacLabel
+            // 
+            this.Dev1MacLabel.AutoSize = true;
+            this.Dev1MacLabel.Location = new System.Drawing.Point(21, 72);
+            this.Dev1MacLabel.Name = "Dev1MacLabel";
+            this.Dev1MacLabel.Size = new System.Drawing.Size(46, 17);
+            this.Dev1MacLabel.TabIndex = 20;
+            this.Dev1MacLabel.Text = "label1";
+            // 
+            // Dev2MacLabel
+            // 
+            this.Dev2MacLabel.AutoSize = true;
+            this.Dev2MacLabel.Location = new System.Drawing.Point(22, 67);
+            this.Dev2MacLabel.Name = "Dev2MacLabel";
+            this.Dev2MacLabel.Size = new System.Drawing.Size(46, 17);
+            this.Dev2MacLabel.TabIndex = 20;
+            this.Dev2MacLabel.Text = "label1";
+            // 
+            // RouterForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1460, 593);
+            this.ClientSize = new System.Drawing.Size(1460, 628);
             this.Controls.Add(this.PowerButton);
-            this.Controls.Add(this.changeButton);
-            this.Controls.Add(this.TimeLabel);
             this.Controls.Add(this.ExtraGB);
             this.Controls.Add(this.RipGB);
             this.Controls.Add(this.RoutTabGB);
@@ -803,7 +826,7 @@
             this.Controls.Add(this.Dev2GB);
             this.Controls.Add(this.Dev1GB);
             this.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
-            this.Name = "Form1";
+            this.Name = "RouterForm";
             this.Text = "Form1";
             this.Dev1GB.ResumeLayout(false);
             this.Dev1GB.PerformLayout();
@@ -818,8 +841,9 @@
             this.ArpGB.ResumeLayout(false);
             this.ArpGB.PerformLayout();
             this.RoutTabGB.ResumeLayout(false);
+            this.ExtraGB.ResumeLayout(false);
+            this.ExtraGB.PerformLayout();
             this.ResumeLayout(false);
-            this.PerformLayout();
 
         }
 
@@ -888,6 +912,8 @@
         private System.Windows.Forms.ColumnHeader NextHopColumn;
         private System.Windows.Forms.Label TimeLabel;
         private System.Windows.Forms.Button changeButton;
+        private System.Windows.Forms.Label Dev1MacLabel;
+        private System.Windows.Forms.Label Dev2MacLabel;
     }
 }
 
