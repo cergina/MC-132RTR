@@ -1,7 +1,10 @@
 ﻿
 
 using MC_132RTR.Model.Support;
+using PacketDotNet;
 using SharpPcap;
+using System.Net;
+using System.Net.NetworkInformation;
 
 namespace MC_132RTR.Model.Core
 {
@@ -26,6 +29,45 @@ namespace MC_132RTR.Model.Core
         public void Handle(CaptureEventArgs e, Device ReceivalDev)
         {
             Logging.Out("ARP dosol");
+
+            PacketDotNet.Packet Layer0 = Packet.Extractor.GetPacket(e.Packet);
+            EthernetPacket EthPckt = Packet.Extractor.GetEthPacket(Layer0);
+            ARPPacket ArpPckt = Packet.Extractor.GetArpPacket(EthPckt);
+
+            switch(ArpPckt.Operation)
+            {
+                case ARPOperation.Request:
+                    Handle_Request(ArpPckt, ReceivalDev);
+                    break;
+                case ARPOperation.Response:
+                    Handle_Response(ArpPckt, ReceivalDev);
+                    break;
+                default:
+                    break;
+            }
+        }
+
+        // REQUEST STUFF
+        private void Handle_Request(ARPPacket Pckt, Device ReceivalDev)
+        {
+            PhysicalAddress Mac_Sender = Pckt.SenderHardwareAddress;
+            PhysicalAddress Mac_Target = Pckt.TargetHardwareAddress;
+            IPAddress Ip_Target = Pckt.TargetProtocolAddress;
+            IPAddress Ip_Sender = Pckt.SenderProtocolAddress;
+
+
+        }
+
+
+        // RESPONSE STUFF
+        private void Handle_Response(ARPPacket Pckt, Device ReceivalDev)
+        {
+            PhysicalAddress Mac_Sender = Pckt.SenderHardwareAddress;
+            PhysicalAddress Mac_Target = Pckt.TargetHardwareAddress;
+            IPAddress Ip_Target = Pckt.TargetProtocolAddress;
+            IPAddress Ip_Sender = Pckt.SenderProtocolAddress;
+
+
         }
     }
 }
