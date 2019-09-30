@@ -121,21 +121,47 @@ namespace MC_132RTR.Controller.Middleman
             throw new NotImplementedException();
         }
 
-        public static void SendTestArp(Network Net)
+        public static void SendTestArp(String Ip, int DevNum)
         {
-            throw new NotImplementedException();
+            try
+            {
+                if (DevNum == -1 || String.IsNullOrEmpty(Ip))
+                    return;
+
+                IPAddress IpReq = IPAddress.Parse(Ip);
+
+                switch(DevNum)
+                {
+                    case 0:
+                        Model.Packet.P_ARP.SendRequest(Device.PairDeviceWithToString(Device.Dev1), IpReq);
+                        break;
+                    case 1:
+                        Model.Packet.P_ARP.SendRequest(Device.PairDeviceWithToString(Device.Dev2), IpReq);
+                        break;
+                    default:
+                        return;
+                }
+                throw new NotImplementedException();
+            }
+            catch (Exception e) { };
         }
 
         // ROUTING
 
         // STATIC ROUTES
-        public static void TryToAddStaticRoute(Network NetTmp)
+        public static void TryToAddStaticRoute(String Ip, String Mask,
+            String NextHop, int ExitDev)
         {
-            if (!NetTmp.IsCorrect())
-                return;
+            try
+            {
+                Network NetTmp = new Network(IPAddress.Parse(Ip), 
+                    new Model.Support.Mask(IPAddress.Parse(Mask)));
 
+                if (!NetTmp.IsCorrect())
+                    return;
 
-            throw new NotImplementedException();
+                throw new NotImplementedException();
+            } catch (Exception e) { }
         }
 
         public static void RemoveStaticRoute(Network NetTmp)

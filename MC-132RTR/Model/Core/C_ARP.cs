@@ -50,10 +50,10 @@ namespace MC_132RTR.Model.Core
         // REQUEST STUFF
         private void Handle_Request(ARPPacket Pckt, Device ReceivalDev)
         {
-            PhysicalAddress Mac_Sender = Pckt.SenderHardwareAddress;
+            PhysicalAddress Mac_Source = Pckt.SenderHardwareAddress;
             PhysicalAddress Mac_Target = Pckt.TargetHardwareAddress;
             IPAddress Ip_Target = Pckt.TargetProtocolAddress;
-            IPAddress Ip_Sender = Pckt.SenderProtocolAddress;
+            IPAddress Ip_Source = Pckt.SenderProtocolAddress;
 
 
         }
@@ -62,12 +62,15 @@ namespace MC_132RTR.Model.Core
         // RESPONSE STUFF
         private void Handle_Response(ARPPacket Pckt, Device ReceivalDev)
         {
-            PhysicalAddress Mac_Sender = Pckt.SenderHardwareAddress;
+            PhysicalAddress Mac_Source = Pckt.SenderHardwareAddress;
             PhysicalAddress Mac_Target = Pckt.TargetHardwareAddress;
             IPAddress Ip_Target = Pckt.TargetProtocolAddress;
-            IPAddress Ip_Sender = Pckt.SenderProtocolAddress;
+            IPAddress Ip_Source = Pckt.SenderProtocolAddress;
 
+            IPAddress Ip_Desired = Ip_Source;
+            PhysicalAddress Mac_Desired = Mac_Source;
 
+            Table.T_ARP.GetInstance().AttemptAddElement(Ip_Desired, Mac_Desired);
         }
     }
 }

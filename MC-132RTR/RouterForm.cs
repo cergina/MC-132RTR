@@ -80,7 +80,7 @@ namespace MC_132RTR
         {
             // ARP
             ARPListView.Items.Clear();
-            Logging.Out("Method");
+            //Logging.Out("Method");
             foreach (ListViewItem Item in Middleman.GetListViewItemsARP())
             {
                 Logging.Out("Adding ARP");
@@ -105,10 +105,20 @@ namespace MC_132RTR
             //}
         }
 
-        
+
 
         // //////////////////
         // Event handlers NOT DONE
+        private void ArpSendButton_Click(object sender, EventArgs e)
+        {
+            Middleman.SendTestArp(ArpTestTextBox.Text, WhichDevArpIsSelected());
+        }
+
+        private void ARPClearButton_Click(object sender, EventArgs e)
+        {
+            Middleman.Clear(Middleman.ARP);
+        }
+
         private void Dev1RipButton_Click(object sender, EventArgs e)
         {
 
@@ -222,10 +232,20 @@ namespace MC_132RTR
         {
             while (PowerState.Equals(POWER_UP))
             {
-                Logging.Out("RefreshEverySecond() while()");
-                Method();
+                //Logging.Out("RefreshEverySecond() while()");
+                SafeInvoker(new Action(Method));
                 Thread.Sleep(1000);
             }
+        }
+
+        public int WhichDevArpIsSelected()
+        {
+            if (ArpD1RadioButton.Checked)
+                return 0;
+            else if (ArpD2RadioButton.Checked)
+                return 1;
+            else
+                return -1;
         }
 
         // ///////////////////////////////
@@ -324,8 +344,5 @@ namespace MC_132RTR
             DefaultValues();
             UpdateDeviceInfo();
         }
-
-
-
     }
 }

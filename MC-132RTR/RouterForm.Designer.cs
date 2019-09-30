@@ -32,12 +32,14 @@
             this.StartButton = new System.Windows.Forms.Button();
             this.DeviceRouterComboBOx = new System.Windows.Forms.ComboBox();
             this.Dev1GB = new System.Windows.Forms.GroupBox();
+            this.Dev1MacLabel = new System.Windows.Forms.Label();
             this.Dev1NetworkLabel = new System.Windows.Forms.Label();
             this.Dev1UsableCHeckBox = new System.Windows.Forms.CheckBox();
             this.Dev1RipButton = new System.Windows.Forms.Button();
             this.Dev1RIPv2CheckBox = new System.Windows.Forms.CheckBox();
             this.Dev1Label = new System.Windows.Forms.Label();
             this.Dev2GB = new System.Windows.Forms.GroupBox();
+            this.Dev2MacLabel = new System.Windows.Forms.Label();
             this.Dev2NetworkLabel = new System.Windows.Forms.Label();
             this.Dev2UsableCHeckBox = new System.Windows.Forms.CheckBox();
             this.Dev2RipButton = new System.Windows.Forms.Button();
@@ -78,9 +80,9 @@
             this.ArpDevColumn = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.ArpTTLColumn = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.ArpSendButton = new System.Windows.Forms.Button();
-            this.textBox1 = new System.Windows.Forms.TextBox();
-            this.radioButton2 = new System.Windows.Forms.RadioButton();
-            this.radioButton1 = new System.Windows.Forms.RadioButton();
+            this.ArpTestTextBox = new System.Windows.Forms.TextBox();
+            this.ArpD2RadioButton = new System.Windows.Forms.RadioButton();
+            this.ArpD1RadioButton = new System.Windows.Forms.RadioButton();
             this.RoutTabGB = new System.Windows.Forms.GroupBox();
             this.RoutingListView = new System.Windows.Forms.ListView();
             this.NetworkColumn = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
@@ -91,8 +93,6 @@
             this.ExtraGB = new System.Windows.Forms.GroupBox();
             this.TimeLabel = new System.Windows.Forms.Label();
             this.changeButton = new System.Windows.Forms.Button();
-            this.Dev1MacLabel = new System.Windows.Forms.Label();
-            this.Dev2MacLabel = new System.Windows.Forms.Label();
             this.Dev1GB.SuspendLayout();
             this.Dev2GB.SuspendLayout();
             this.RouterGB.SuspendLayout();
@@ -155,6 +155,15 @@
             this.Dev1GB.TabIndex = 6;
             this.Dev1GB.TabStop = false;
             this.Dev1GB.Text = "Device 1";
+            // 
+            // Dev1MacLabel
+            // 
+            this.Dev1MacLabel.AutoSize = true;
+            this.Dev1MacLabel.Location = new System.Drawing.Point(21, 72);
+            this.Dev1MacLabel.Name = "Dev1MacLabel";
+            this.Dev1MacLabel.Size = new System.Drawing.Size(46, 17);
+            this.Dev1MacLabel.TabIndex = 20;
+            this.Dev1MacLabel.Text = "label1";
             // 
             // Dev1NetworkLabel
             // 
@@ -227,6 +236,15 @@
             this.Dev2GB.TabIndex = 8;
             this.Dev2GB.TabStop = false;
             this.Dev2GB.Text = "Device 2";
+            // 
+            // Dev2MacLabel
+            // 
+            this.Dev2MacLabel.AutoSize = true;
+            this.Dev2MacLabel.Location = new System.Drawing.Point(22, 67);
+            this.Dev2MacLabel.Name = "Dev2MacLabel";
+            this.Dev2MacLabel.Size = new System.Drawing.Size(46, 17);
+            this.Dev2MacLabel.TabIndex = 20;
+            this.Dev2MacLabel.Text = "label1";
             // 
             // Dev2NetworkLabel
             // 
@@ -596,9 +614,9 @@
             this.ArpGB.Controls.Add(this.ARPClearButton);
             this.ArpGB.Controls.Add(this.ARPListView);
             this.ArpGB.Controls.Add(this.ArpSendButton);
-            this.ArpGB.Controls.Add(this.textBox1);
-            this.ArpGB.Controls.Add(this.radioButton2);
-            this.ArpGB.Controls.Add(this.radioButton1);
+            this.ArpGB.Controls.Add(this.ArpTestTextBox);
+            this.ArpGB.Controls.Add(this.ArpD2RadioButton);
+            this.ArpGB.Controls.Add(this.ArpD1RadioButton);
             this.ArpGB.Location = new System.Drawing.Point(364, 12);
             this.ArpGB.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.ArpGB.Name = "ArpGB";
@@ -619,6 +637,7 @@
             this.ARPClearButton.TabIndex = 34;
             this.ARPClearButton.Text = "Clear";
             this.ARPClearButton.UseVisualStyleBackColor = false;
+            this.ARPClearButton.Click += new System.EventHandler(this.ARPClearButton_Click);
             // 
             // ARPListView
             // 
@@ -666,38 +685,39 @@
             this.ArpSendButton.TabIndex = 32;
             this.ArpSendButton.Text = "Send";
             this.ArpSendButton.UseVisualStyleBackColor = false;
+            this.ArpSendButton.Click += new System.EventHandler(this.ArpSendButton_Click);
             // 
-            // textBox1
+            // ArpTestTextBox
             // 
-            this.textBox1.Location = new System.Drawing.Point(116, 276);
-            this.textBox1.Margin = new System.Windows.Forms.Padding(4);
-            this.textBox1.Name = "textBox1";
-            this.textBox1.Size = new System.Drawing.Size(147, 22);
-            this.textBox1.TabIndex = 2;
+            this.ArpTestTextBox.Location = new System.Drawing.Point(116, 276);
+            this.ArpTestTextBox.Margin = new System.Windows.Forms.Padding(4);
+            this.ArpTestTextBox.Name = "ArpTestTextBox";
+            this.ArpTestTextBox.Size = new System.Drawing.Size(147, 22);
+            this.ArpTestTextBox.TabIndex = 2;
             // 
-            // radioButton2
+            // ArpD2RadioButton
             // 
-            this.radioButton2.AutoSize = true;
-            this.radioButton2.Location = new System.Drawing.Point(61, 281);
-            this.radioButton2.Margin = new System.Windows.Forms.Padding(4);
-            this.radioButton2.Name = "radioButton2";
-            this.radioButton2.Size = new System.Drawing.Size(47, 21);
-            this.radioButton2.TabIndex = 1;
-            this.radioButton2.TabStop = true;
-            this.radioButton2.Text = "D2";
-            this.radioButton2.UseVisualStyleBackColor = true;
+            this.ArpD2RadioButton.AutoSize = true;
+            this.ArpD2RadioButton.Location = new System.Drawing.Point(61, 281);
+            this.ArpD2RadioButton.Margin = new System.Windows.Forms.Padding(4);
+            this.ArpD2RadioButton.Name = "ArpD2RadioButton";
+            this.ArpD2RadioButton.Size = new System.Drawing.Size(47, 21);
+            this.ArpD2RadioButton.TabIndex = 1;
+            this.ArpD2RadioButton.TabStop = true;
+            this.ArpD2RadioButton.Text = "D2";
+            this.ArpD2RadioButton.UseVisualStyleBackColor = true;
             // 
-            // radioButton1
+            // ArpD1RadioButton
             // 
-            this.radioButton1.AutoSize = true;
-            this.radioButton1.Location = new System.Drawing.Point(7, 281);
-            this.radioButton1.Margin = new System.Windows.Forms.Padding(4);
-            this.radioButton1.Name = "radioButton1";
-            this.radioButton1.Size = new System.Drawing.Size(47, 21);
-            this.radioButton1.TabIndex = 0;
-            this.radioButton1.TabStop = true;
-            this.radioButton1.Text = "D1";
-            this.radioButton1.UseVisualStyleBackColor = true;
+            this.ArpD1RadioButton.AutoSize = true;
+            this.ArpD1RadioButton.Location = new System.Drawing.Point(7, 281);
+            this.ArpD1RadioButton.Margin = new System.Windows.Forms.Padding(4);
+            this.ArpD1RadioButton.Name = "ArpD1RadioButton";
+            this.ArpD1RadioButton.Size = new System.Drawing.Size(47, 21);
+            this.ArpD1RadioButton.TabIndex = 0;
+            this.ArpD1RadioButton.TabStop = true;
+            this.ArpD1RadioButton.Text = "D1";
+            this.ArpD1RadioButton.UseVisualStyleBackColor = true;
             // 
             // RoutTabGB
             // 
@@ -792,24 +812,6 @@
             this.changeButton.UseVisualStyleBackColor = true;
             this.changeButton.Click += new System.EventHandler(this.ChangeButton_Click);
             // 
-            // Dev1MacLabel
-            // 
-            this.Dev1MacLabel.AutoSize = true;
-            this.Dev1MacLabel.Location = new System.Drawing.Point(21, 72);
-            this.Dev1MacLabel.Name = "Dev1MacLabel";
-            this.Dev1MacLabel.Size = new System.Drawing.Size(46, 17);
-            this.Dev1MacLabel.TabIndex = 20;
-            this.Dev1MacLabel.Text = "label1";
-            // 
-            // Dev2MacLabel
-            // 
-            this.Dev2MacLabel.AutoSize = true;
-            this.Dev2MacLabel.Location = new System.Drawing.Point(22, 67);
-            this.Dev2MacLabel.Name = "Dev2MacLabel";
-            this.Dev2MacLabel.Size = new System.Drawing.Size(46, 17);
-            this.Dev2MacLabel.TabIndex = 20;
-            this.Dev2MacLabel.Text = "label1";
-            // 
             // RouterForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
@@ -901,9 +903,9 @@
         private System.Windows.Forms.ColumnHeader ArpDevColumn;
         private System.Windows.Forms.ColumnHeader ArpTTLColumn;
         private System.Windows.Forms.Button ArpSendButton;
-        private System.Windows.Forms.TextBox textBox1;
-        private System.Windows.Forms.RadioButton radioButton2;
-        private System.Windows.Forms.RadioButton radioButton1;
+        private System.Windows.Forms.TextBox ArpTestTextBox;
+        private System.Windows.Forms.RadioButton ArpD2RadioButton;
+        private System.Windows.Forms.RadioButton ArpD1RadioButton;
         private System.Windows.Forms.Button ARPClearButton;
         private System.Windows.Forms.ListView RoutingListView;
         private System.Windows.Forms.ColumnHeader NetworkColumn;

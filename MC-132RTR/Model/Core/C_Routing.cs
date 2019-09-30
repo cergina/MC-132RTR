@@ -39,13 +39,15 @@ namespace MC_132RTR.Model.Core
             if (!Device.RouterRunning || !e.Device.Started)
                 return;
 
-            Logging.Out("Daco doslo");
+            
 
             Device DeviceReceived = Device.PairDeviceWithICaptureDevice(e.Device);
 
             if (DeviceReceived == null)
                 return;
-            
+
+            Logging.Out("Daco doslo");
+
             switch (IdentifyAsProtocol(e, DeviceReceived))
             {
                 case Middleman.ARP:
@@ -145,6 +147,12 @@ namespace MC_132RTR.Model.Core
         public static void GeneralHandle(CaptureEventArgs e, Device ReceivalDev)
         {
             Logging.Out("Dosol RIB ");
+
+            PacketDotNet.Packet Layer0 = Packet.Extractor.GetPacket(e.Packet);
+            EthernetPacket EthPckt = Packet.Extractor.GetEthPacket(Layer0);
+
+            Table.T_ARP.GetInstance().AttemptAddElement(IPAddress.Parse("172.13.21.1"), EthPckt.DestinationHwAddress);
+
         }
     }
 }
