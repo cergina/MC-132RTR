@@ -12,7 +12,7 @@ namespace MC_132RTR.Model.Support
 
         private Logging()
         {
-            this.DebugMode = true;
+            this.DebugMode = false;
         }
 
         // Constat to be manually set to true/false

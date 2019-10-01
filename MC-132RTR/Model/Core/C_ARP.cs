@@ -3,6 +3,7 @@
 using MC_132RTR.Model.Support;
 using PacketDotNet;
 using SharpPcap;
+using System.Collections.Generic;
 using System.Net;
 using System.Net.NetworkInformation;
 
@@ -13,6 +14,7 @@ namespace MC_132RTR.Model.Core
         // UPDATE (seconds) - time for periodic update
         public static int UPDATE_INTERVAL { private set; get; } = 30;
         public static C_ARP Instance = null;
+        private static List<IPAddress> AwaitingList = new List<IPAddress>();
 
         private C_ARP()
         {
@@ -63,14 +65,33 @@ namespace MC_132RTR.Model.Core
         private void Handle_Response(ARPPacket Pckt, Device ReceivalDev)
         {
             PhysicalAddress Mac_Source = Pckt.SenderHardwareAddress;
-            PhysicalAddress Mac_Target = Pckt.TargetHardwareAddress;
-            IPAddress Ip_Target = Pckt.TargetProtocolAddress;
+            //PhysicalAddress Mac_Target = Pckt.TargetHardwareAddress;
+            //IPAddress Ip_Target = Pckt.TargetProtocolAddress;
             IPAddress Ip_Source = Pckt.SenderProtocolAddress;
 
             IPAddress Ip_Desired = Ip_Source;
             PhysicalAddress Mac_Desired = Mac_Source;
 
-            Table.T_ARP.GetInstance().AttemptAddElement(Ip_Desired, Mac_Desired);
+            if (AwaitingList.Contains(Ip_Desired))
+            {
+                Table.T_ARP.GetInstance().AttemptAddElement(Ip_Desired, Mac_Desired);
+                AttemptToRemoveFromList(Ip_Desired);
+            }
+        }
+
+        // List of expectancies
+        public void AttemptToAddIntoList(IPAddress IpToExpect)
+        {
+            if (AwaitingList.Contains(IpToExpect))
+                return;
+
+            AwaitingList.Add(IpToExpect);
+            Logging.Out("AwaitingList was enriched by: " + IpToExpect);
+        }
+
+        public void AttemptToRemoveFromList(IPAddress IpToRemove)
+        {
+            AwaitingList.Remove(IpToRemove);
         }
     }
 }

@@ -151,8 +151,6 @@ namespace MC_132RTR.Model.Core
             PacketDotNet.Packet Layer0 = Packet.Extractor.GetPacket(e.Packet);
             EthernetPacket EthPckt = Packet.Extractor.GetEthPacket(Layer0);
 
-            Table.T_ARP.GetInstance().AttemptAddElement(IPAddress.Parse("172.13.21.1"), EthPckt.DestinationHwAddress);
-
         }
     }
 }

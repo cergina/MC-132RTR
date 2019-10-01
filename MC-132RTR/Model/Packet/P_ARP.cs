@@ -1,4 +1,5 @@
 ﻿using MC_132RTR.Model.Core;
+using MC_132RTR.Model.Support;
 using PacketDotNet;
 using System;
 using System.Net;
@@ -10,6 +11,8 @@ namespace MC_132RTR.Model.Packet
     {
         public static void SendRequest(Device Sender, IPAddress RequestedIp)
         {
+            Logging.OutALWAYS("Paket Request, sent by: " + Sender.ToString() +", ip: " + Sender.Network.Address);
+
             ARPPacket Pckt = new ARPPacket(ARPOperation.Request,
                 PhysicalAddress.Parse("00-00-00-00-00-00"),
                 RequestedIp,
@@ -18,6 +21,8 @@ namespace MC_132RTR.Model.Packet
 
             Sender.SendViaThisDevice(PhysicalAddress.Parse("FF-FF-FF-FF-FF-FF"),
                 EthernetPacketType.Arp, Pckt.Bytes);
+
+            C_ARP.GetInstance().AttemptToAddIntoList(RequestedIp);
         }
 
         //TODO this is fucking bullshit or what
@@ -31,6 +36,8 @@ namespace MC_132RTR.Model.Packet
                 IP_WasSenderIsNowTarget,
                 Sender.ICapDev.MacAddress,
                 AddressToUse);
+
+
 
             Sender.SendViaThisDevice(MAC_WasSenderIsNowTarget, EthernetPacketType.Arp, Pckt.Bytes);
         }

@@ -59,6 +59,14 @@ namespace MC_132RTR
             IPTextBox.Text = "192.168.1.1";
             MaskTextBox.Text = "255.255.255.0";
         }
+
+        private void GuiClearArpTestSend()
+        {
+            ArpTestTextBox.Clear();
+            ArpD1RadioButton.Checked = false;
+            ArpD2RadioButton.Checked = false;
+        }
+
         private void EnableOrDisableElements()
         {
             bool ValueToSet = POWER_UP.Equals(PowerState);
@@ -112,6 +120,7 @@ namespace MC_132RTR
         private void ArpSendButton_Click(object sender, EventArgs e)
         {
             Middleman.SendTestArp(ArpTestTextBox.Text, WhichDevArpIsSelected());
+            GuiClearArpTestSend();
         }
 
         private void ARPClearButton_Click(object sender, EventArgs e)
@@ -343,6 +352,25 @@ namespace MC_132RTR
             Middleman.TryToChangeDevice(ChosenDev, IPTextBox.Text, MaskTextBox.Text);
             DefaultValues();
             UpdateDeviceInfo();
+        }
+
+        private void StaticAddButton_Click(object sender, EventArgs e)
+        {
+            int whichNumberToUse = -1;
+            if (StaticDev1RadioButton.Checked)
+                whichNumberToUse = 0;
+            
+            if (StaticDev2RadioButton.Checked)
+                whichNumberToUse = 1;
+
+            Middleman.TryToAddStaticRoute(StaticIpTextBox.Text,
+                StaticMaskTextBox.Text, StaticNextHopTextBox.Text,
+                whichNumberToUse);
+        }
+
+        private void StaticRemoveButton_Click(object sender, EventArgs e)
+        {
+
         }
     }
 }

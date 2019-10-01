@@ -469,6 +469,7 @@
             this.StaticRemoveButton.TabIndex = 21;
             this.StaticRemoveButton.Text = "-";
             this.StaticRemoveButton.UseVisualStyleBackColor = false;
+            this.StaticRemoveButton.Click += new System.EventHandler(this.StaticRemoveButton_Click);
             // 
             // StaticAddButton
             // 
@@ -481,6 +482,7 @@
             this.StaticAddButton.TabIndex = 20;
             this.StaticAddButton.Text = "+";
             this.StaticAddButton.UseVisualStyleBackColor = false;
+            this.StaticAddButton.Click += new System.EventHandler(this.StaticAddButton_Click);
             // 
             // StaticNextHopTextBox
             // 
@@ -698,7 +700,7 @@
             // ArpD2RadioButton
             // 
             this.ArpD2RadioButton.AutoSize = true;
-            this.ArpD2RadioButton.Location = new System.Drawing.Point(61, 281);
+            this.ArpD2RadioButton.Location = new System.Drawing.Point(65, 276);
             this.ArpD2RadioButton.Margin = new System.Windows.Forms.Padding(4);
             this.ArpD2RadioButton.Name = "ArpD2RadioButton";
             this.ArpD2RadioButton.Size = new System.Drawing.Size(47, 21);
@@ -710,7 +712,7 @@
             // ArpD1RadioButton
             // 
             this.ArpD1RadioButton.AutoSize = true;
-            this.ArpD1RadioButton.Location = new System.Drawing.Point(7, 281);
+            this.ArpD1RadioButton.Location = new System.Drawing.Point(11, 276);
             this.ArpD1RadioButton.Margin = new System.Windows.Forms.Padding(4);
             this.ArpD1RadioButton.Name = "ArpD1RadioButton";
             this.ArpD1RadioButton.Size = new System.Drawing.Size(47, 21);
