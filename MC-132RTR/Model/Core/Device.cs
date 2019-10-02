@@ -252,6 +252,17 @@ namespace MC_132RTR.Model.Core
             return null;
         }
 
+        public static Device PairDeviceWithNumber(int number)
+        {
+            if (number == 0)
+                return PairDeviceWithToString(Dev1);
+
+            if (number == 1)
+                return PairDeviceWithToString(Dev2);
+
+            return null;
+        }
+
         public static Device PairDeviceWithMacAdress(PhysicalAddress MacAddress)
         {
             if (MacAddress == null)

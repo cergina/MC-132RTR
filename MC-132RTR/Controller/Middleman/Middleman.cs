@@ -157,10 +157,17 @@ namespace MC_132RTR.Controller.Middleman
                 Network NetTmp = new Network(IPAddress.Parse(Ip), 
                     new Model.Support.Mask(IPAddress.Parse(Mask)));
 
+                IPAddress NextHopIp;
+
+                try
+                {
+                    NextHopIp = IPAddress.Parse(NextHop);
+                } catch (Exception x) { NextHopIp = null; }
+
                 if (!NetTmp.IsCorrect())
                     return;
 
-                throw new NotImplementedException();
+                T_Routing.GetInstance().AttemtToAdd_Static(NetTmp, NextHopIp, ExitDev);
             } catch (Exception e) { }
         }
 
