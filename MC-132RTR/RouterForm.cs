@@ -96,12 +96,12 @@ namespace MC_132RTR
             }
 
             // Routing
-            //RoutingListView.Clear();
+            RoutingListView.Items.Clear();
 
-            //foreach (ListViewItem Item in Middleman.GetListViewItemsROUTE())
-            //{
-            //   RoutingListView.Items.Add(Item);
-            //}
+            foreach (ListViewItem Item in Middleman.GetListViewItemsROUTE())
+            {
+               RoutingListView.Items.Add(Item);
+            }
 
             // RIP
             //RIPList

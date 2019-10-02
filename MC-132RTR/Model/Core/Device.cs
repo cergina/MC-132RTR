@@ -1,4 +1,5 @@
 ﻿using MC_132RTR.Model.Support;
+using MC_132RTR.Model.Table;
 using PacketDotNet;
 using SharpPcap;
 using System;
@@ -35,6 +36,7 @@ namespace MC_132RTR.Model.Core
         private void SetWhenRouterOff(Network TmpNet, string DevName)
         {
             Network = TmpNet;
+            Logging.OutALWAYS("Setting, " + TmpNet.ToString());
 
             if (Dev1 == null || Dev1.Equals(DevName)) {
                 Dev1 = DevName;
@@ -199,7 +201,10 @@ namespace MC_132RTR.Model.Core
             foreach(var TmpDev in ListOfDevices)
             {
                 if (TmpDev.TurnOn())
+                {
                     ++StartedYet;
+                    T_Routing.GetInstance().AttemtToAdd_Connected(TmpDev);
+                }
             }
 
             if (StartedYet >= 2)

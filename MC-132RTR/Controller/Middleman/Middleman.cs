@@ -242,6 +242,10 @@ namespace MC_132RTR.Controller.Middleman
         {
             List<ListViewItem> ListTmp = new List<ListViewItem>();
 
+            foreach (TP_Routing TPR in T_Routing.GetInstance().GetListForView())
+            {
+                ListTmp.Add(TPR.ToListViewItem());
+            }
             
 
             return ListTmp;
