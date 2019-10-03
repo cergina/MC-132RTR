@@ -60,6 +60,16 @@ namespace MC_132RTR
             MaskTextBox.Text = "255.255.255.0";
         }
 
+        private void GuiClearStatic()
+        {
+            StaticNoDevRadioButton.Checked = false;
+            StaticDev1RadioButton.Checked = false;
+            StaticDev2RadioButton.Checked = false;
+            StaticIpTextBox.Clear();
+            StaticNextHopTextBox.Clear();
+            StaticMaskTextBox.Clear();
+        }
+
         private void GuiClearArpTestSend()
         {
             ArpTestTextBox.Clear();
@@ -104,7 +114,7 @@ namespace MC_132RTR
             }
 
             // RIP
-            //RIPList
+            //RIPListView
             //ARPListView.Clear();
 
             //foreach (ListViewItem Item in Middleman.GetListViewItemsRIP())
@@ -366,6 +376,8 @@ namespace MC_132RTR
             Middleman.TryToAddStaticRoute(StaticIpTextBox.Text,
                 StaticMaskTextBox.Text, StaticNextHopTextBox.Text,
                 whichNumberToUse);
+
+            GuiClearStatic();
         }
 
         private void StaticRemoveButton_Click(object sender, EventArgs e)

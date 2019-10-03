@@ -164,8 +164,11 @@ namespace MC_132RTR.Controller.Middleman
                     NextHopIp = IPAddress.Parse(NextHop);
                 } catch (Exception x) { NextHopIp = null; }
 
-                if (!NetTmp.IsCorrect())
+                if ((!NetTmp.IsCorrect()) || (NextHopIp == null && ExitDev == -1))
+                {
+                    Logging.Out("Nepridam");
                     return;
+                }
 
                 T_Routing.GetInstance().AttemtToAdd_Static(NetTmp, NextHopIp, ExitDev);
             } catch (Exception e) { }
@@ -247,14 +250,13 @@ namespace MC_132RTR.Controller.Middleman
                 ListTmp.Add(TPR.ToListViewItem());
             }
             
-
             return ListTmp;
         }
 
         public static List<ListViewItem> GetListViewItemsRIP()
         {
             List<ListViewItem> ListTmp = new List<ListViewItem>();
-
+            
             return ListTmp;
         }
 

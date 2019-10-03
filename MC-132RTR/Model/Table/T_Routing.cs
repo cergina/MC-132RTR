@@ -18,14 +18,14 @@ namespace MC_132RTR.Model.Table
         {
             Device ExitDev = Device.PairDeviceWithNumber(ExitDevNumber);
 
-            AddToRoutes(new TP_Routing(TP_Routing.STATIC, ExitDev, SubNet, Nh));
+            AddToRoutes(new TP_Routing(TP_Routing.STATIC, ExitDev, new Network(SubNet.GetNetworkAddress(), SubNet.MaskAddress), Nh));
         }
 
-        public void AttemtToAdd_Connected(Device ExitDev)
+        public bool AttemtToAdd_Connected(Device ExitDev)
         {
             Network SubnetToUse = new Network(ExitDev.Network.GetNetworkAddress(), ExitDev.Network.MaskAddress);
 
-            AddToRoutes(new TP_Routing(TP_Routing.DIRECT, ExitDev, SubnetToUse, null));
+            return AddToRoutes(new TP_Routing(TP_Routing.DIRECT, ExitDev, SubnetToUse, null));
         }
 
         public void AttemtToAdd_Dynamic()
@@ -41,13 +41,19 @@ namespace MC_132RTR.Model.Table
             return Instance;
         }
 
-        public void AddToRoutes(TP_Routing TPR)
+        public bool AddToRoutes(TP_Routing TPR)
         {
+            //TODO sprav check aby sa directly connected nedavali duplicitne nazaciatku
             if (!TPR.Subnet.IsCorrect())
-                return;
+                return false;
 
             if (IsSubnetInRoutes(TPR.Subnet) == null)
+            {
                 Routes.Add(TPR);
+                return true;
+            }
+
+            return false;
         }
 
         /*
@@ -55,13 +61,18 @@ namespace MC_132RTR.Model.Table
          */
         public TP_Routing IsSubnetInRoutes(Network Net)
         {
-            foreach (TP_Routing TPR in Routes)
+            foreach (TP_Routing TPR in Routes.ToList())
             {
-                if (TPR.Subnet.IsInSameSubnet(Net))
+                if (TPR.Subnet.Equals(Net))
                     return TPR;
             }
 
             return null;
+        }
+
+        public void ClearAllRoutes()
+        {
+            Routes.Clear();
         }
 
         public List<TP_Routing> GetListForView()

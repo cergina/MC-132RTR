@@ -180,16 +180,21 @@ namespace MC_132RTR.Model.Core
             if (!RouterRunning)
                 return;
 
-            foreach(var TmpDev in ListOfDevices)
+            ShutDownAllDevices();
+
+            RouterRunning = false;
+            C_Routing.TurnOffListeningOnDevices();
+        }
+
+        public static void ShutDownAllDevices()
+        {
+            foreach (var TmpDev in ListOfDevices)
             {
                 if (!TmpDev.DEV_Disabled)
                 {
                     TmpDev.TurnOff();
                 }
             }
-
-            RouterRunning = false;
-            C_Routing.TurnOffListeningOnDevices();
         }
 
         public static void StartRouter()
@@ -198,12 +203,13 @@ namespace MC_132RTR.Model.Core
                 return;
 
             int StartedYet = 0;
-            foreach(var TmpDev in ListOfDevices)
+            ShutDownAllDevices();
+            foreach (var TmpDev in ListOfDevices)
             {
                 if (TmpDev.TurnOn())
                 {
-                    ++StartedYet;
-                    T_Routing.GetInstance().AttemtToAdd_Connected(TmpDev);
+                    if (T_Routing.GetInstance().AttemtToAdd_Connected(TmpDev))
+                        ++StartedYet;
                 }
             }
 
@@ -211,7 +217,11 @@ namespace MC_132RTR.Model.Core
             {
                 RouterRunning = true;
                 C_Routing.TurnOnListeningOnDevices();
-                Logging.Out("Router started");
+                Logging.OutALWAYS("Router started");
+            } else
+            {
+                ShutDownAllDevices();
+                T_Routing.GetInstance().ClearAllRoutes();
             }
         }
 
