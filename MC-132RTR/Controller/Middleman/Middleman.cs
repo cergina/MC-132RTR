@@ -248,7 +248,6 @@ namespace MC_132RTR.Controller.Middleman
 
             foreach (TP_Routing TPR in T_Routing.GetInstance().GetListForView())
             {
-                Logging.OutALWAYS("je tu: " + TPR.Subnet);
                 ListTmp.Add(TPR.ToListViewItem());
             }
             

@@ -36,7 +36,6 @@ namespace MC_132RTR.Model.Core
         private void SetWhenRouterOff(Network TmpNet, string DevName)
         {
             Network = TmpNet;
-            Logging.OutALWAYS("Setting, " + TmpNet.ToString());
 
             if (Dev1 == null || Dev1.Equals(DevName)) {
                 Dev1 = DevName;
@@ -155,8 +154,6 @@ namespace MC_132RTR.Model.Core
 
         private string GetDescription(bool UseShorterDescription)
         {
-            Logging.OutALWAYS("this is[" + ICapDev.Description + "]");
-
             if (UseShorterDescription)
             {
                 //return ICapDev.Description.Split('\'')[0].Substring(14);

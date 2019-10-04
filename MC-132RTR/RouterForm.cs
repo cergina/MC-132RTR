@@ -110,7 +110,6 @@ namespace MC_132RTR
 
             foreach (ListViewItem Item in Middleman.GetListViewItemsROUTE())
             {
-                Logging.OutALWAYS("Adding route");
                 RoutingListView.Items.Add(Item);
             }
 
@@ -252,7 +251,6 @@ namespace MC_132RTR
         {
             while (PowerState.Equals(POWER_UP))
             {
-                Logging.OutALWAYS("RefreshEverySecond() while()");
                 SafeInvoker(new Action(Method));
                 Thread.Sleep(1000);
             }
