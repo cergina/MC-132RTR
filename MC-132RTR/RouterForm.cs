@@ -98,7 +98,7 @@ namespace MC_132RTR
         {
             // ARP
             ARPListView.Items.Clear();
-            //Logging.Out("Method");
+            Logging.Out("Method");
             foreach (ListViewItem Item in Middleman.GetListViewItemsARP())
             {
                 Logging.Out("Adding ARP");
@@ -110,7 +110,8 @@ namespace MC_132RTR
 
             foreach (ListViewItem Item in Middleman.GetListViewItemsROUTE())
             {
-               RoutingListView.Items.Add(Item);
+                Logging.OutALWAYS("Adding route");
+                RoutingListView.Items.Add(Item);
             }
 
             // RIP
@@ -251,7 +252,7 @@ namespace MC_132RTR
         {
             while (PowerState.Equals(POWER_UP))
             {
-                //Logging.Out("RefreshEverySecond() while()");
+                Logging.OutALWAYS("RefreshEverySecond() while()");
                 SafeInvoker(new Action(Method));
                 Thread.Sleep(1000);
             }
@@ -351,7 +352,8 @@ namespace MC_132RTR
 
             previousTime = timeNow;
         }
-        private void DeactivateDevButton_Click(object sender, EventArgs e)
+
+        /*private void DeactivateDevButton_Click(object sender, EventArgs e)
         {
             if (String.IsNullOrEmpty(DeviceRouterComboBOx.Text))
                 return;
@@ -362,7 +364,7 @@ namespace MC_132RTR
             Middleman.TryToChangeDevice(ChosenDev, IPTextBox.Text, MaskTextBox.Text);
             DefaultValues();
             UpdateDeviceInfo();
-        }
+        }*/
 
         private void StaticAddButton_Click(object sender, EventArgs e)
         {

@@ -49,31 +49,37 @@ namespace MC_132RTR.Model.Core
             }
         }
 
-        private void SetWhenRouterOn(Network TmpNet)
+        private void SetWhenRouterOn(Network NewProposedNet)
         {
-            // guarantee that correct network is about to change
-            SendInfoAboutChange(TmpNet);
-            Network = TmpNet;
+            if (T_Routing.GetInstance().IsSubnetInRoutes(NewProposedNet.GetNetworkGeneral()) == null)
+            {
+                Network CurrentNetwork = Network;
+                Network = NewProposedNet;
+
+                T_Routing.GetInstance().UpdateConnected(CurrentNetwork, NewProposedNet.GetNetworkGeneral());
+                SendInfoAboutChange(CurrentNetwork.GetNetworkGeneral(), NewProposedNet.GetNetworkGeneral());
+            }
         }
 
         public void Set(IPAddress TmpIp, IPAddress TmpMask)
         {
-            Network TmpNet = new Network(TmpIp, new Mask(TmpMask));
-            if (!TmpNet.IsCorrect())
+            Network NewProposedNet = new Network(TmpIp, new Mask(TmpMask));
+            
+            if (!NewProposedNet.IsCorrect())
                 return;
 
             if (RouterRunning)
-                SetWhenRouterOn(TmpNet);
+                SetWhenRouterOn(NewProposedNet);
             else
-                SetWhenRouterOff(TmpNet, ToString());
+                SetWhenRouterOff(NewProposedNet, ToString());
         }
 
-        public static void SendInfoAboutChange(Network NewNetwork)
+        public static void SendInfoAboutChange(Network CurrentNetwork, Network NewProposedNet)
         {
             if (!RouterRunning)
                 return;
 
-            throw new NotImplementedException();
+            Logging.OutALWAYS("Send info about change not implemented yet");
         }
 
         // This function's used to send directly ethernet, from upper layers or ARP

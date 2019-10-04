@@ -74,19 +74,20 @@ namespace MC_132RTR.Controller.Middleman
 
             try
             {
-                Dev.Set(IPAddress.Parse(Ip), IPAddress.Parse(Mask));
+                Network Net = new Network(IPAddress.Parse(Ip), new Mask(IPAddress.Parse(Mask)));
+                Dev.Set(Net.Address, Net.MaskAddress.SubnetMask);
             } catch (Exception exc)
             {
             }
         }
 
-        public static void TryToChangeDevice(Device Dev, String Ip, String Mask)
+        /*public static void TryToChangeDevice(Device Dev, String Ip, String Mask)
         {
             if (Dev == null || String.IsNullOrEmpty(Ip) || String.IsNullOrEmpty(Mask))
                 return;
 
             throw new NotImplementedException();
-        }
+        }*/
 
         public static Device GetDeviceByICapture(SharpPcap.ICaptureDevice ICapDev)
         {
@@ -247,6 +248,7 @@ namespace MC_132RTR.Controller.Middleman
 
             foreach (TP_Routing TPR in T_Routing.GetInstance().GetListForView())
             {
+                Logging.OutALWAYS("je tu: " + TPR.Subnet);
                 ListTmp.Add(TPR.ToListViewItem());
             }
             

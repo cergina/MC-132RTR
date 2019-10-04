@@ -18,12 +18,12 @@ namespace MC_132RTR.Model.Table
         {
             Device ExitDev = Device.PairDeviceWithNumber(ExitDevNumber);
 
-            AddToRoutes(new TP_Routing(TP_Routing.STATIC, ExitDev, new Network(SubNet.GetNetworkAddress(), SubNet.MaskAddress), Nh));
+            AddToRoutes(new TP_Routing(TP_Routing.STATIC, ExitDev, SubNet.GetNetworkGeneral(), Nh));
         }
 
         public bool AttemtToAdd_Connected(Device ExitDev)
         {
-            Network SubnetToUse = new Network(ExitDev.Network.GetNetworkAddress(), ExitDev.Network.MaskAddress);
+            Network SubnetToUse = ExitDev.Network.GetNetworkGeneral();
 
             return AddToRoutes(new TP_Routing(TP_Routing.DIRECT, ExitDev, SubnetToUse, null));
         }
@@ -54,6 +54,18 @@ namespace MC_132RTR.Model.Table
             }
 
             return false;
+        }
+
+        public void UpdateConnected(Network CurrentNetwork, Network NewProposedNet)
+        {
+            foreach (TP_Routing TPR in Routes)
+            {
+                if (TPR.Type == TP_Routing.DIRECT && TPR.Subnet.Equals(CurrentNetwork.GetNetworkGeneral()))
+                {
+                    TPR.UpdateNetwork(NewProposedNet);
+                    return;
+                }
+            }
         }
 
         /*

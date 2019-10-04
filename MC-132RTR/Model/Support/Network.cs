@@ -62,6 +62,13 @@ namespace MC_132RTR.Model.Support
             return new IPAddress(networkAddress);
         }
 
+        /***
+         * Created because too many references to general network were used
+         */
+        public Network GetNetworkGeneral()
+        {
+            return new Network(GetNetworkAddress(), MaskAddress);
+        }
 
         /***
          * STATUS: FINAL

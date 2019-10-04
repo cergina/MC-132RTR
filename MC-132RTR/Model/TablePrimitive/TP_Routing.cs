@@ -41,5 +41,11 @@ namespace MC_132RTR.Model.TablePrimitive
 
             return new ListViewItem(new string[] { NetworkColumn, AdminDistanceColumn, DeviceColumn, NextHopColumn });
         }
+
+        // Updates
+        public void UpdateNetwork(Network NetworkNew)
+        {
+            Subnet = NetworkNew;
+        }
     }
 }
