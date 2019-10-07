@@ -82,6 +82,20 @@ namespace MC_132RTR.Model.Table
             return null;
         }
 
+        // used to obtain a route with specific stuff, ...
+        public TP_Routing SpecificSearch()
+        {
+            throw new NotImplementedException();
+            return null;
+        }
+
+        // used to obtain a route 
+        public TP_Routing RegularSearch(IPAddress Ip_Target)
+        {
+            return null;
+        }
+
+
         public void ClearAllRoutes()
         {
             Routes.Clear();
