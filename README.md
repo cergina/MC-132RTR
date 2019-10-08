@@ -16,7 +16,7 @@ TODO list of Router project for WANT in Summer semester, 2019/2020 at FIIT STU.
 - ProxyARP: implemented | cca 90% | not tested
 - RIPv2: in diaper | cca 10% | not tested
 - Routing: in progress | cca 40% | not tested
-- Static Routing: implemented | cca 100% | tested manually
+- Static Routing: implemented | cca 90% | tested manually (removal of static routes yet)
 
  **Extra functionality:**
  - unknown
