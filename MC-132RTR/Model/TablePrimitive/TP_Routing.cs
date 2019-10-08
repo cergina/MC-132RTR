@@ -47,5 +47,33 @@ namespace MC_132RTR.Model.TablePrimitive
         {
             Subnet = NetworkNew;
         }
+
+        public Boolean Equals(TP_Routing TPR)
+        {
+            // MANDATORY
+            if (this.Type != TPR.Type)
+                return false;
+
+            if (!this.Subnet.Equals(TPR.Subnet))
+                return false;
+
+            // OPTIONAL
+            bool OkNH = false;
+            if (NextHopIp == null && TPR.NextHopIp == null)
+                OkNH = true;
+            else if (NextHopIp != null && NextHopIp.Equals(TPR.NextHopIp))
+                OkNH = true;
+            else
+                return false;
+
+            bool OkDev = false;
+            if (ExitDevice == null && TPR.ExitDevice == null)
+                OkDev = true;
+            else if (ExitDevice != null && ExitDevice.Equals(TPR.ExitDevice))
+                OkDev = true;
+            else return false;
+
+            return true;
+        }
     }
 }

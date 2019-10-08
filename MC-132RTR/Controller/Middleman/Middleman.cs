@@ -175,10 +175,36 @@ namespace MC_132RTR.Controller.Middleman
             } catch (Exception e) { }
         }
 
-        public static void RemoveStaticRoute(Network NetTmp)
+        public static void RemoveStaticRoute(String Ip, String Mask, String NextHop, int ExitDev)
         {
+            try
+            {
+                Network NetTmp = new Network(IPAddress.Parse(Ip),
+                    new Model.Support.Mask(IPAddress.Parse(Mask)));
+
+                IPAddress NextHopIp;
+
+                try
+                {
+                    NextHopIp = IPAddress.Parse(NextHop);
+                }
+                catch (Exception x) { NextHopIp = null; }
+
+                if ((!NetTmp.IsCorrect()) || (NextHopIp == null && ExitDev == -1))
+                {
+                    Logging.Out("Nevykonam search for static route, incorrect");
+                    return;
+                }
+
+                TP_Routing TPR = T_Routing.GetInstance().SpecificSearch(IPAddress.Parse(Ip), new Model.Support.Mask(IPAddress.Parse(Mask)),
+                Device.PairDeviceWithNumber(ExitDev), NextHopIp, TP_Routing.STATIC);
+
+                if (TPR != null)
+                    T_Routing.GetInstance().RemoveFromRoutes(TPR);
+            }
+            catch (Exception e) { }
+
             
-            throw new NotImplementedException();
         }
 
 

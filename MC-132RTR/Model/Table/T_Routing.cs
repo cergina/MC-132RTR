@@ -56,6 +56,11 @@ namespace MC_132RTR.Model.Table
             return false;
         }
 
+        public void RemoveFromRoutes(TP_Routing TPR)
+        {
+            Routes.Remove(TPR);
+        }
+
         public void UpdateConnected(Network CurrentNetwork, Network NewProposedNet)
         {
             foreach (TP_Routing TPR in Routes)
@@ -83,9 +88,16 @@ namespace MC_132RTR.Model.Table
         }
 
         // used to obtain a route with specific stuff, ...
-        public TP_Routing SpecificSearch()
+        public TP_Routing SpecificSearch(IPAddress Ip, Mask MaskIp, Device ExitDev, IPAddress NextHopIp, int Type)
         {
-            throw new NotImplementedException();
+            TP_Routing CompareTPR = new TP_Routing(Type, ExitDev, new Network(Ip, MaskIp), NextHopIp);
+
+            foreach (TP_Routing TPR in Routes)
+            {
+                if (TPR.Equals(CompareTPR))
+                    return TPR;
+            }
+
             return null;
         }
 

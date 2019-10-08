@@ -366,23 +366,32 @@ namespace MC_132RTR
 
         private void StaticAddButton_Click(object sender, EventArgs e)
         {
-            int whichNumberToUse = -1;
-            if (StaticDev1RadioButton.Checked)
-                whichNumberToUse = 0;
-            
-            if (StaticDev2RadioButton.Checked)
-                whichNumberToUse = 1;
-
             Middleman.TryToAddStaticRoute(StaticIpTextBox.Text,
                 StaticMaskTextBox.Text, StaticNextHopTextBox.Text,
-                whichNumberToUse);
+                WhichNumberToUseStatic());
 
             GuiClearStatic();
         }
 
         private void StaticRemoveButton_Click(object sender, EventArgs e)
         {
+            Middleman.RemoveStaticRoute(StaticIpTextBox.Text,
+                StaticMaskTextBox.Text, StaticNextHopTextBox.Text,
+                WhichNumberToUseStatic());
 
+            GuiClearStatic();
+        }
+
+        // utils
+        private int WhichNumberToUseStatic() {
+            int whichNumberToUse = -1;
+            if (StaticDev1RadioButton.Checked)
+                whichNumberToUse = 0;
+
+            if (StaticDev2RadioButton.Checked)
+                whichNumberToUse = 1;
+
+            return whichNumberToUse;
         }
     }
 }
