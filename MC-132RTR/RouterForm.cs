@@ -53,11 +53,20 @@ namespace MC_132RTR
 
             DefaultValues();
             EnableOrDisableElements();
+            GuiTImersInit();
         }
         private void DefaultValues()
         {
             IPTextBox.Text = "192.168.1.1";
             MaskTextBox.Text = "255.255.255.0";
+        }
+
+        private void GuiTImersInit()
+        {
+            TimerArpTextBox.Text = "[" + Middleman.GetTimer(Middleman.ARP, 0).ToString() + "] sec";
+            TimerInvalidTextBox.Text = "[" + Middleman.GetTimer(Middleman.RIPv2, Middleman.RIPv2_INVALID).ToString() + "] sec";
+            TimerFlushTextBox.Text = "[" + Middleman.GetTimer(Middleman.RIPv2, Middleman.RIPv2_FLUSH).ToString() + "] sec";
+            TimerHoldTextBox.Text = "[" + Middleman.GetTimer(Middleman.RIPv2, Middleman.RIPv2_HOLDDOWN).ToString() + "] sec";
         }
 
         private void GuiClearStatic()
@@ -140,18 +149,29 @@ namespace MC_132RTR
 
         private void Dev1RipButton_Click(object sender, EventArgs e)
         {
+            if (Dev1RIPv2CheckBox.Checked)
+                Middleman.DisableRIPv2OnDevice(Device.Dev1);
+            else
+                Middleman.EnableRIPv2OnDevice(Device.Dev1);
 
+            UpdateDeviceInfo();
         }
 
         private void Dev2RipButton_Click(object sender, EventArgs e)
         {
+            if (Dev2RIPv2CheckBox.Checked)
+                Middleman.DisableRIPv2OnDevice(Device.Dev2);
+            else
+                Middleman.EnableRIPv2OnDevice(Device.Dev2);
 
+            UpdateDeviceInfo();
         }
         private void TimerArpButton_Click(object sender, EventArgs e)
         {
             try
             {
                 Middleman.SetTimer(Middleman.ARP, 0, int.Parse(TimerArpTextBox.Text));
+                GuiTImersInit();
             }
             catch (Exception en) { }
         }
@@ -160,7 +180,7 @@ namespace MC_132RTR
             try
             {
                 Middleman.SetTimer(Middleman.RIPv2, Middleman.RIPv2_INVALID, int.Parse(TimerInvalidTextBox.Text));
-                // change in button
+                GuiTImersInit();
             }
             catch (Exception en) { }
         }
@@ -169,7 +189,7 @@ namespace MC_132RTR
             try
             {
                 Middleman.SetTimer(Middleman.RIPv2, Middleman.RIPv2_FLUSH, int.Parse(TimerFlushTextBox.Text));
-                // change in button
+                GuiTImersInit();
             }
             catch (Exception en) { }
         }
@@ -178,7 +198,7 @@ namespace MC_132RTR
             try
             {
                 Middleman.SetTimer(Middleman.RIPv2, Middleman.RIPv2_HOLDDOWN, int.Parse(TimerHoldTextBox.Text));
-                // change in button
+                GuiTImersInit();
             }
             catch (Exception en) { }
         }
@@ -280,6 +300,7 @@ namespace MC_132RTR
                 Dev1UsableCHeckBox.Checked = Tmp.IsUsable();
                 Dev1NetworkLabel.Text = (Tmp.Network != null) ? Tmp.Network.ToString() : "null";
                 Dev1MacLabel.Text = (Tmp.ICapDev != null && Tmp.ICapDev.Started) ? Tmp.ICapDev.MacAddress.ToString() : "null";
+                Dev1RIPv2CheckBox.Checked = !Tmp.DEV_DisabledRIPv2;
             }
 
             if (!String.IsNullOrEmpty(Device.Dev2))
@@ -289,6 +310,7 @@ namespace MC_132RTR
                 Dev2UsableCHeckBox.Checked = Tmp.IsUsable();
                 Dev2NetworkLabel.Text = (Tmp.Network != null) ? Tmp.Network.ToString() : "null";
                 Dev2MacLabel.Text = (Tmp.ICapDev != null && Tmp.ICapDev.Started) ? Tmp.ICapDev.MacAddress.ToString() : "null";
+                Dev2RIPv2CheckBox.Checked = !Tmp.DEV_DisabledRIPv2;
             }
 
             if (Device.RouterRunning)
@@ -302,15 +324,44 @@ namespace MC_132RTR
                 }
             }
         }
-        
 
-        
+        private void StaticAddButton_Click(object sender, EventArgs e)
+        {
+            Middleman.TryToAddStaticRoute(StaticIpTextBox.Text,
+                StaticMaskTextBox.Text, StaticNextHopTextBox.Text,
+                WhichNumberToUseStatic());
 
-        
+            GuiClearStatic();
+        }
 
-        
+        private void StaticRemoveButton_Click(object sender, EventArgs e)
+        {
+            Middleman.RemoveStaticRoute(StaticIpTextBox.Text,
+                StaticMaskTextBox.Text, StaticNextHopTextBox.Text,
+                WhichNumberToUseStatic());
 
-        
+            GuiClearStatic();
+        }
+
+        // utils
+        private int WhichNumberToUseStatic()
+        {
+            int whichNumberToUse = -1;
+            if (StaticDev1RadioButton.Checked)
+                whichNumberToUse = 0;
+
+            if (StaticDev2RadioButton.Checked)
+                whichNumberToUse = 1;
+
+            return whichNumberToUse;
+        }
+
+
+
+
+
+
+
 
         // ///////////////////////
         // Useless
@@ -363,35 +414,5 @@ namespace MC_132RTR
             DefaultValues();
             UpdateDeviceInfo();
         }*/
-
-        private void StaticAddButton_Click(object sender, EventArgs e)
-        {
-            Middleman.TryToAddStaticRoute(StaticIpTextBox.Text,
-                StaticMaskTextBox.Text, StaticNextHopTextBox.Text,
-                WhichNumberToUseStatic());
-
-            GuiClearStatic();
-        }
-
-        private void StaticRemoveButton_Click(object sender, EventArgs e)
-        {
-            Middleman.RemoveStaticRoute(StaticIpTextBox.Text,
-                StaticMaskTextBox.Text, StaticNextHopTextBox.Text,
-                WhichNumberToUseStatic());
-
-            GuiClearStatic();
-        }
-
-        // utils
-        private int WhichNumberToUseStatic() {
-            int whichNumberToUse = -1;
-            if (StaticDev1RadioButton.Checked)
-                whichNumberToUse = 0;
-
-            if (StaticDev2RadioButton.Checked)
-                whichNumberToUse = 1;
-
-            return whichNumberToUse;
-        }
     }
 }

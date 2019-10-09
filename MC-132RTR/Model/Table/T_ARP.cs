@@ -80,7 +80,7 @@ namespace MC_132RTR.Model.Table
 
         public void ChangeTimeout(int Adept)
         {
-            if (!(Adept > 0))
+            if (Adept <= 0)
                 return;
 
             TIMEOUT = Adept;

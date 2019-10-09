@@ -100,14 +100,24 @@ namespace MC_132RTR.Controller.Middleman
         }
 
         // RIPv2
-        public static void EnableRIPv2OnDevice(Device Dev)
+        public static void EnableRIPv2OnDevice(string DevS)
         {
-            Dev.EnableRIPv2();
+            if (String.IsNullOrEmpty(DevS))
+                return;
+
+            Device Dev = Device.PairDeviceWithToString(DevS);
+            if (Dev != null)
+                Dev.EnableRIPv2();
         }
 
-        public static void DisableRIPv2OnDevice(Device Dev)
+        public static void DisableRIPv2OnDevice(string DevS)
         {
-            Dev.DisableRIPv2();
+            if (String.IsNullOrEmpty(DevS))
+                return;
+
+            Device Dev = Device.PairDeviceWithToString(DevS);
+            if (Dev != null)
+                Dev.DisableRIPv2();
         }
 
         public static void SendTestRIPv2(Device Dev)
@@ -240,11 +250,11 @@ namespace MC_132RTR.Controller.Middleman
                     switch (Name)
                     {
                         case RIPv2_FLUSH:
-                            return T_RIPv2.GetInstance().FLUSH;
+                            return T_RIPv2.FLUSH;
                         case RIPv2_INVALID:
-                            return T_RIPv2.GetInstance().INVALID;
+                            return T_RIPv2.INVALID;
                         case RIPv2_HOLDDOWN:
-                            return T_RIPv2.GetInstance().HOLDDOWN;
+                            return T_RIPv2.HOLDDOWN;
                         case RIPv2_INTERVAL:
                             return C_RIPv2.UPDATE_INTERVAL;
                         default:
