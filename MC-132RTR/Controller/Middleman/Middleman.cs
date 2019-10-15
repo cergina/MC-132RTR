@@ -126,10 +126,14 @@ namespace MC_132RTR.Controller.Middleman
         }
 
         // ARP
-        public static PhysicalAddress ResolveMacForIp()
+        public static PhysicalAddress ResolveMacForIp(IPAddress key)
         {
+            TP_ARP TPA = T_ARP.GetInstance().IpToMac(key, false);
 
-            throw new NotImplementedException();
+            if (TPA != null)
+                return (TPA.Mac);
+            else
+                return null;
         }
 
         public static void SendTestArp(String Ip, int DevNum)
@@ -144,15 +148,12 @@ namespace MC_132RTR.Controller.Middleman
                 switch(DevNum)
                 {
                     case 0:
-                        Model.Packet.P_ARP.SendRequest(Device.PairDeviceWithToString(Device.Dev1), IpReq);
-                        break;
                     case 1:
-                        Model.Packet.P_ARP.SendRequest(Device.PairDeviceWithToString(Device.Dev2), IpReq);
+                        C_ARP.GetInstance().ExplorationVia(IpReq, DevNum, false);
                         break;
                     default:
                         return;
                 }
-                throw new NotImplementedException();
             }
             catch (Exception e) { };
         }

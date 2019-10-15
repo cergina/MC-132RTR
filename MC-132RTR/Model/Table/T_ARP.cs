@@ -1,4 +1,5 @@
 ﻿using MC_132RTR.Model.Core;
+using MC_132RTR.Model.Packet;
 using MC_132RTR.Model.TablePrimitive;
 using System.Collections.Generic;
 using System.Linq;
@@ -29,7 +30,7 @@ namespace MC_132RTR.Model.Table
             return tmp;
         }
 
-        public TP_ARP MacToIp(IPAddress key, bool Always)
+        public TP_ARP IpToMac(IPAddress key, bool Always)
         {
             TP_ARP value;
             if (Dict.TryGetValue(key, out value))
@@ -39,6 +40,8 @@ namespace MC_132RTR.Model.Table
                     return value;
                 }
             }
+
+            C_ARP.GetInstance().ExplorationVia(key, -1, true);
             return null;
         }
 
@@ -56,20 +59,6 @@ namespace MC_132RTR.Model.Table
 
             // not necessary to detect when to insert in other cases
             return false;
-        }
-
-        public bool RemoveElemenet(IPAddress Addr)
-        {
-            return Dict.Remove(Addr);
-        }
-
-        public void DisableElement(IPAddress Addr)
-        {
-            TP_ARP Tmp = MacToIp(Addr, true);
-            if (Tmp != null)
-            {
-                Tmp.Deactivate();
-            }
         }
 
         public void RemoveAllElements()

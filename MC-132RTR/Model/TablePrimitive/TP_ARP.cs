@@ -9,9 +9,9 @@ namespace MC_132RTR.Model.TablePrimitive
 {
     public class TP_ARP
     {
-        private PhysicalAddress Mac = null;
-        private Device LearnedViaDev = null;
-        private IPAddress Ip = null;
+        public PhysicalAddress Mac { get; private set; } = null;
+        public Device LearnedViaDev { get; private set; } = null;
+        public IPAddress Ip { get; private set; } = null;
         private int Validity;
 
         public TP_ARP(IPAddress Ip, PhysicalAddress Mac, Device LearnedViaDev)
@@ -51,11 +51,6 @@ namespace MC_132RTR.Model.TablePrimitive
                 return true;
             else
                 return false;
-        }
-
-        public PhysicalAddress GetMAC()
-        {
-            return this.Mac;
         }
 
         public ListViewItem ToListViewItem()

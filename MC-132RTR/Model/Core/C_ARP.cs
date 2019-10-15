@@ -31,6 +31,15 @@ namespace MC_132RTR.Model.Core
             return Instance;
         }
 
+        public void ExplorationVia(IPAddress IpToExplore, int DevNum, bool All)
+        {
+            if (DevNum == 0 || All)
+                P_ARP.SendRequest(Device.PairDeviceWithToString(Device.Dev1), IpToExplore);
+
+            if (DevNum == 1 || All)
+                P_ARP.SendRequest(Device.PairDeviceWithToString(Device.Dev2), IpToExplore);
+        }
+
         public void Handle(CaptureEventArgs e, Device ReceivalDev)
         {
             Logging.Out("ARP dosol");
