@@ -1,15 +1,10 @@
 ﻿using MC_132RTR.Model.Core;
-using MC_132RTR.Model.Support;
 using MC_132RTR.Model.TablePrimitive;
-using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using System.Net.NetworkInformation;
-using System.Text;
 using System.Threading;
-using System.Threading.Tasks;
 
 namespace MC_132RTR.Model.Table
 {
@@ -47,12 +42,16 @@ namespace MC_132RTR.Model.Table
             return null;
         }
 
-        public bool AttemptAddElement(IPAddress key, PhysicalAddress value)
+        public bool AttemptAddElement(IPAddress key, PhysicalAddress value, Device ReceivalDev)
         {
+            // If doesn't contain just add
             if (!Dict.ContainsKey(key))
             {
-                Dict.Add(key, new TP_ARP(key, value));
+                Dict.Add(key, new TP_ARP(key, value, ReceivalDev));
                 return true;
+            } else
+            {
+                Dict[key].Renew(value, ReceivalDev);
             }
 
             // not necessary to detect when to insert in other cases
@@ -94,17 +93,7 @@ namespace MC_132RTR.Model.Table
             return Instance;
         }
 
-        // THREAD
-        public void ARP_Thread()
-        {
-            Thread t = new Thread(Thread_Operation);
-
-            t.Start();
-
-            t.Join();
-        }
-
-        private void Thread_Operation()
+        public void Thread_Operation()
         {
             while (true)
             {
@@ -113,23 +102,19 @@ namespace MC_132RTR.Model.Table
 
                 if (Device.RouterRunning)
                 {
-
-                } else
-                {
-                    //test
                     int c = Dict.Count();
-                    if (c == 0)
-                    {
-                        Dict.Add(IPAddress.Parse("192.168.1.1"), new TP_ARP(IPAddress.Parse("192.168.1.1"), PhysicalAddress.Parse("BB:BB:BB:CC:CC:CC")));
-                    } else
+                    if (c > 0)
                     {
                         List<IPAddress> keys = new List<IPAddress>(Dict.Keys);
                         foreach (IPAddress ip in keys)
                         {
-                            Dict[ip].RegularDecrement();
+                            if (Dict[ip].IsPassable())
+                                Dict[ip].RegularOperation();
+                            else
+                                Dict.Remove(ip);
                         }
                     }
-                }
+                } 
 
                 Thread.Sleep(1000);
             }

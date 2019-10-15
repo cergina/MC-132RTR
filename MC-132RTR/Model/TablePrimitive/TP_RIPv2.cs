@@ -9,16 +9,14 @@ namespace MC_132RTR.Model.TablePrimitive
         public uint Metric;
         public Device OriginDevice = null;
 
-        private int testParam;
 
         public TP_RIPv2()
         {
-            this.testParam = 0;
         }
 
         private void RegularStuff()
         {
-            ++testParam;
+
         }
     }
 }

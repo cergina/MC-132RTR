@@ -109,8 +109,8 @@ namespace MC_132RTR.Model.Core
 
             if (AwaitingList.Contains(Ip_Desired))
             { 
-                Table.T_ARP.GetInstance().AttemptAddElement(Ip_Desired, Mac_Desired);
                 AttemptToRemoveFromList(Ip_Desired);
+                Table.T_ARP.GetInstance().AttemptAddElement(Ip_Desired, Mac_Desired, ReceivalDev);
             }
         }
 

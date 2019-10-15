@@ -328,7 +328,18 @@ namespace MC_132RTR.Controller.Middleman
 
         public static void ThreadStart()
         {
+            /* Frontend */
+            // GUI Thread
             new Thread(() => RouterForm.Instance.RefreshEverySecond()) { IsBackground = true }.Start();
+
+            /* Backend */
+            // ARP
+            new Thread(() => T_ARP.GetInstance().Thread_Operation()) { IsBackground = true }.Start();
+
+            // RIPv2
+
+            // Routing
+
         }
 
     }

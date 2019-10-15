@@ -39,14 +39,10 @@ namespace MC_132RTR.Model.Core
             if (!Device.RouterRunning || !e.Device.Started)
                 return;
 
-            
-
             Device DeviceReceived = Device.PairDeviceWithICaptureDevice(e.Device);
 
             if (DeviceReceived == null)
                 return;
-
-            Logging.Out("Daco doslo");
 
             switch (IdentifyAsProtocol(e, DeviceReceived))
             {

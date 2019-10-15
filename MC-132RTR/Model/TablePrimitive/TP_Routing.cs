@@ -12,7 +12,6 @@ namespace MC_132RTR.Model.TablePrimitive
         public static readonly int STATIC = 1;
         public static readonly int RIP = 120;
 
-        private int testParam;
         public Device ExitDevice { private set; get; }
         public Network Subnet { private set; get; }
         public IPAddress NextHopIp { private set; get; }
@@ -20,7 +19,6 @@ namespace MC_132RTR.Model.TablePrimitive
 
         public TP_Routing(int Type, Device ExitDev, Network SubNet, IPAddress NextHop)
         {
-            this.testParam = 0;
             this.ExitDevice = ExitDev;
             this.NextHopIp = NextHop;
             this.Type = Type;
@@ -29,7 +27,7 @@ namespace MC_132RTR.Model.TablePrimitive
 
         private void RegularStuff()
         {
-            ++testParam;
+            
         }
 
         public ListViewItem ToListViewItem()
