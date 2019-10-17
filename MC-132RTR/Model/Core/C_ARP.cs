@@ -40,6 +40,7 @@ namespace MC_132RTR.Model.Core
                 P_ARP.SendRequest(Device.PairDeviceWithToString(Device.Dev2), IpToExplore);
         }
 
+
         public void Handle(CaptureEventArgs e, Device ReceivalDev)
         {
             Logging.Out("ARP dosol");

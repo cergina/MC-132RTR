@@ -14,6 +14,11 @@ namespace MC_132RTR.Model.Table
 
         private static List<TP_Routing> Routes = new List<TP_Routing>();
 
+        private T_Routing()
+        {
+
+        }
+
         public void AttemtToAdd_Static(Network SubNet, IPAddress Nh, int ExitDevNumber)
         {
             Device ExitDev = Device.PairDeviceWithNumber(ExitDevNumber);
@@ -103,6 +108,9 @@ namespace MC_132RTR.Model.Table
         // used to obtain a route 
         public TP_Routing RegularSearch(IPAddress Ip_Target)
         {
+            if (Ip_Target == null)
+                return null;
+
             return null;
         }
 

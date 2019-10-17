@@ -17,6 +17,7 @@ namespace MC_132RTR.Model.TablePrimitive
         public IPAddress NextHopIp { private set; get; }
         public int Type { private set; get; }
 
+
         public TP_Routing(int Type, Device ExitDev, Network SubNet, IPAddress NextHop)
         {
             this.ExitDevice = ExitDev;

@@ -5,6 +5,8 @@ using PacketDotNet;
 using SharpPcap;
 using System.Net;
 using System.Net.NetworkInformation;
+using MC_132RTR.Model.Table;
+using MC_132RTR.Model.TablePrimitive;
 
 namespace MC_132RTR.Model.Core
 {
@@ -151,11 +153,16 @@ namespace MC_132RTR.Model.Core
 
             P_Routing PR = new P_Routing(Ipv4);
 
-            PR.UponArrivalTTL();
+            if (!P_Routing.UponArrivalTTL(PR))
+                return;
 
-            PR.BeforeSend();
+            TP_Routing TPR = T_Routing.GetInstance().RegularSearch(PR.Ipv4.DestinationAddress);
+            if (TPR == null || TPR.ExitDevice == null)
+                return;
 
+            P_Routing.BeforeSend(PR);
 
+            P_Routing.Send(PR, TPR);
         }
     }
 }
