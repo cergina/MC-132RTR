@@ -109,7 +109,7 @@
             this.PowerButton.Font = new System.Drawing.Font("Perpetua Titling MT", 10.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.PowerButton.ForeColor = System.Drawing.SystemColors.Control;
             this.PowerButton.Location = new System.Drawing.Point(9, 418);
-            this.PowerButton.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.PowerButton.Margin = new System.Windows.Forms.Padding(2);
             this.PowerButton.Name = "PowerButton";
             this.PowerButton.Size = new System.Drawing.Size(146, 84);
             this.PowerButton.TabIndex = 0;
@@ -122,7 +122,7 @@
             this.StartButton.BackColor = System.Drawing.SystemColors.Window;
             this.StartButton.Font = new System.Drawing.Font("Perpetua Titling MT", 10.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.StartButton.Location = new System.Drawing.Point(6, 45);
-            this.StartButton.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.StartButton.Margin = new System.Windows.Forms.Padding(2);
             this.StartButton.Name = "StartButton";
             this.StartButton.Size = new System.Drawing.Size(259, 29);
             this.StartButton.TabIndex = 1;
@@ -134,7 +134,7 @@
             // 
             this.DeviceRouterComboBOx.FormattingEnabled = true;
             this.DeviceRouterComboBOx.Location = new System.Drawing.Point(6, 20);
-            this.DeviceRouterComboBOx.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.DeviceRouterComboBOx.Margin = new System.Windows.Forms.Padding(2);
             this.DeviceRouterComboBOx.Name = "DeviceRouterComboBOx";
             this.DeviceRouterComboBOx.Size = new System.Drawing.Size(189, 21);
             this.DeviceRouterComboBOx.TabIndex = 3;
@@ -148,9 +148,9 @@
             this.Dev1GB.Controls.Add(this.Dev1RIPv2CheckBox);
             this.Dev1GB.Controls.Add(this.Dev1Label);
             this.Dev1GB.Location = new System.Drawing.Point(9, 71);
-            this.Dev1GB.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.Dev1GB.Margin = new System.Windows.Forms.Padding(2);
             this.Dev1GB.Name = "Dev1GB";
-            this.Dev1GB.Padding = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.Dev1GB.Padding = new System.Windows.Forms.Padding(2);
             this.Dev1GB.Size = new System.Drawing.Size(260, 94);
             this.Dev1GB.TabIndex = 6;
             this.Dev1GB.TabStop = false;
@@ -181,7 +181,7 @@
             this.Dev1UsableCHeckBox.AutoSize = true;
             this.Dev1UsableCHeckBox.Enabled = false;
             this.Dev1UsableCHeckBox.Location = new System.Drawing.Point(17, 74);
-            this.Dev1UsableCHeckBox.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.Dev1UsableCHeckBox.Margin = new System.Windows.Forms.Padding(2);
             this.Dev1UsableCHeckBox.Name = "Dev1UsableCHeckBox";
             this.Dev1UsableCHeckBox.Size = new System.Drawing.Size(59, 17);
             this.Dev1UsableCHeckBox.TabIndex = 17;
@@ -193,7 +193,7 @@
             this.Dev1RipButton.BackColor = System.Drawing.SystemColors.Window;
             this.Dev1RipButton.Font = new System.Drawing.Font("Perpetua Titling MT", 10.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.Dev1RipButton.Location = new System.Drawing.Point(170, 38);
-            this.Dev1RipButton.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.Dev1RipButton.Margin = new System.Windows.Forms.Padding(2);
             this.Dev1RipButton.Name = "Dev1RipButton";
             this.Dev1RipButton.Size = new System.Drawing.Size(86, 28);
             this.Dev1RipButton.TabIndex = 16;
@@ -206,7 +206,7 @@
             this.Dev1RIPv2CheckBox.AutoSize = true;
             this.Dev1RIPv2CheckBox.Enabled = false;
             this.Dev1RIPv2CheckBox.Location = new System.Drawing.Point(76, 74);
-            this.Dev1RIPv2CheckBox.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.Dev1RIPv2CheckBox.Margin = new System.Windows.Forms.Padding(2);
             this.Dev1RIPv2CheckBox.Name = "Dev1RIPv2CheckBox";
             this.Dev1RIPv2CheckBox.Size = new System.Drawing.Size(56, 17);
             this.Dev1RIPv2CheckBox.TabIndex = 11;
@@ -232,9 +232,9 @@
             this.Dev2GB.Controls.Add(this.Dev2RIPv2CheckBox);
             this.Dev2GB.Controls.Add(this.Dev2Label);
             this.Dev2GB.Location = new System.Drawing.Point(8, 182);
-            this.Dev2GB.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.Dev2GB.Margin = new System.Windows.Forms.Padding(2);
             this.Dev2GB.Name = "Dev2GB";
-            this.Dev2GB.Padding = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.Dev2GB.Padding = new System.Windows.Forms.Padding(2);
             this.Dev2GB.Size = new System.Drawing.Size(260, 93);
             this.Dev2GB.TabIndex = 8;
             this.Dev2GB.TabStop = false;
@@ -265,7 +265,7 @@
             this.Dev2UsableCHeckBox.AutoSize = true;
             this.Dev2UsableCHeckBox.Enabled = false;
             this.Dev2UsableCHeckBox.Location = new System.Drawing.Point(18, 73);
-            this.Dev2UsableCHeckBox.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.Dev2UsableCHeckBox.Margin = new System.Windows.Forms.Padding(2);
             this.Dev2UsableCHeckBox.Name = "Dev2UsableCHeckBox";
             this.Dev2UsableCHeckBox.Size = new System.Drawing.Size(59, 17);
             this.Dev2UsableCHeckBox.TabIndex = 18;
@@ -277,7 +277,7 @@
             this.Dev2RipButton.BackColor = System.Drawing.SystemColors.Window;
             this.Dev2RipButton.Font = new System.Drawing.Font("Perpetua Titling MT", 10.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.Dev2RipButton.Location = new System.Drawing.Point(170, 39);
-            this.Dev2RipButton.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.Dev2RipButton.Margin = new System.Windows.Forms.Padding(2);
             this.Dev2RipButton.Name = "Dev2RipButton";
             this.Dev2RipButton.Size = new System.Drawing.Size(86, 28);
             this.Dev2RipButton.TabIndex = 15;
@@ -290,7 +290,7 @@
             this.Dev2RIPv2CheckBox.AutoSize = true;
             this.Dev2RIPv2CheckBox.Enabled = false;
             this.Dev2RIPv2CheckBox.Location = new System.Drawing.Point(77, 73);
-            this.Dev2RIPv2CheckBox.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.Dev2RIPv2CheckBox.Margin = new System.Windows.Forms.Padding(2);
             this.Dev2RIPv2CheckBox.Name = "Dev2RIPv2CheckBox";
             this.Dev2RIPv2CheckBox.Size = new System.Drawing.Size(56, 17);
             this.Dev2RIPv2CheckBox.TabIndex = 9;
@@ -318,9 +318,9 @@
             this.RouterGB.Controls.Add(this.ActivateDevButton);
             this.RouterGB.Controls.Add(this.StartButton);
             this.RouterGB.Location = new System.Drawing.Point(159, 418);
-            this.RouterGB.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.RouterGB.Margin = new System.Windows.Forms.Padding(2);
             this.RouterGB.Name = "RouterGB";
-            this.RouterGB.Padding = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.RouterGB.Padding = new System.Windows.Forms.Padding(2);
             this.RouterGB.Size = new System.Drawing.Size(479, 83);
             this.RouterGB.TabIndex = 11;
             this.RouterGB.TabStop = false;
@@ -329,7 +329,7 @@
             // MaskTextBox
             // 
             this.MaskTextBox.Location = new System.Drawing.Point(349, 21);
-            this.MaskTextBox.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.MaskTextBox.Margin = new System.Windows.Forms.Padding(2);
             this.MaskTextBox.Name = "MaskTextBox";
             this.MaskTextBox.Size = new System.Drawing.Size(125, 20);
             this.MaskTextBox.TabIndex = 19;
@@ -337,7 +337,7 @@
             // IPTextBox
             // 
             this.IPTextBox.Location = new System.Drawing.Point(199, 21);
-            this.IPTextBox.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.IPTextBox.Margin = new System.Windows.Forms.Padding(2);
             this.IPTextBox.Name = "IPTextBox";
             this.IPTextBox.Size = new System.Drawing.Size(147, 20);
             this.IPTextBox.TabIndex = 18;
@@ -346,8 +346,8 @@
             // 
             this.ActiveCheckBox.AutoSize = true;
             this.ActiveCheckBox.Enabled = false;
-            this.ActiveCheckBox.Location = new System.Drawing.Point(269, 57);
-            this.ActiveCheckBox.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.ActiveCheckBox.Location = new System.Drawing.Point(269, 61);
+            this.ActiveCheckBox.Margin = new System.Windows.Forms.Padding(2);
             this.ActiveCheckBox.Name = "ActiveCheckBox";
             this.ActiveCheckBox.Size = new System.Drawing.Size(64, 17);
             this.ActiveCheckBox.TabIndex = 17;
@@ -358,8 +358,8 @@
             // 
             this.PowerCheckBox.AutoSize = true;
             this.PowerCheckBox.Enabled = false;
-            this.PowerCheckBox.Location = new System.Drawing.Point(269, 41);
-            this.PowerCheckBox.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.PowerCheckBox.Location = new System.Drawing.Point(269, 45);
+            this.PowerCheckBox.Margin = new System.Windows.Forms.Padding(2);
             this.PowerCheckBox.Name = "PowerCheckBox";
             this.PowerCheckBox.Size = new System.Drawing.Size(67, 17);
             this.PowerCheckBox.TabIndex = 16;
@@ -371,7 +371,7 @@
             this.ActivateDevButton.BackColor = System.Drawing.SystemColors.Window;
             this.ActivateDevButton.Font = new System.Drawing.Font("Perpetua Titling MT", 10.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.ActivateDevButton.Location = new System.Drawing.Point(343, 42);
-            this.ActivateDevButton.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.ActivateDevButton.Margin = new System.Windows.Forms.Padding(2);
             this.ActivateDevButton.Name = "ActivateDevButton";
             this.ActivateDevButton.Size = new System.Drawing.Size(130, 32);
             this.ActivateDevButton.TabIndex = 15;
@@ -393,10 +393,10 @@
             this.StaticRoutesGB.Controls.Add(this.StaticMaskTextBox);
             this.StaticRoutesGB.Controls.Add(this.StaticIpTextBox);
             this.StaticRoutesGB.Location = new System.Drawing.Point(9, 279);
-            this.StaticRoutesGB.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.StaticRoutesGB.Margin = new System.Windows.Forms.Padding(2);
             this.StaticRoutesGB.Name = "StaticRoutesGB";
-            this.StaticRoutesGB.Padding = new System.Windows.Forms.Padding(2, 2, 2, 2);
-            this.StaticRoutesGB.Size = new System.Drawing.Size(260, 136);
+            this.StaticRoutesGB.Padding = new System.Windows.Forms.Padding(2);
+            this.StaticRoutesGB.Size = new System.Drawing.Size(260, 135);
             this.StaticRoutesGB.TabIndex = 12;
             this.StaticRoutesGB.TabStop = false;
             this.StaticRoutesGB.Text = "Static Routes";
@@ -435,7 +435,7 @@
             // 
             this.StaticDev2RadioButton.AutoSize = true;
             this.StaticDev2RadioButton.Location = new System.Drawing.Point(3, 51);
-            this.StaticDev2RadioButton.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.StaticDev2RadioButton.Margin = new System.Windows.Forms.Padding(2);
             this.StaticDev2RadioButton.Name = "StaticDev2RadioButton";
             this.StaticDev2RadioButton.Size = new System.Drawing.Size(80, 17);
             this.StaticDev2RadioButton.TabIndex = 24;
@@ -446,8 +446,8 @@
             // StaticDev1RadioButton
             // 
             this.StaticDev1RadioButton.AutoSize = true;
-            this.StaticDev1RadioButton.Location = new System.Drawing.Point(3, 31);
-            this.StaticDev1RadioButton.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.StaticDev1RadioButton.Location = new System.Drawing.Point(3, 35);
+            this.StaticDev1RadioButton.Margin = new System.Windows.Forms.Padding(2);
             this.StaticDev1RadioButton.Name = "StaticDev1RadioButton";
             this.StaticDev1RadioButton.Size = new System.Drawing.Size(80, 17);
             this.StaticDev1RadioButton.TabIndex = 23;
@@ -458,8 +458,8 @@
             // StaticNoDevRadioButton
             // 
             this.StaticNoDevRadioButton.AutoSize = true;
-            this.StaticNoDevRadioButton.Location = new System.Drawing.Point(3, 14);
-            this.StaticNoDevRadioButton.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.StaticNoDevRadioButton.Location = new System.Drawing.Point(3, 17);
+            this.StaticNoDevRadioButton.Margin = new System.Windows.Forms.Padding(2);
             this.StaticNoDevRadioButton.Name = "StaticNoDevRadioButton";
             this.StaticNoDevRadioButton.Size = new System.Drawing.Size(117, 17);
             this.StaticNoDevRadioButton.TabIndex = 22;
@@ -472,7 +472,7 @@
             this.StaticRemoveButton.BackColor = System.Drawing.SystemColors.Window;
             this.StaticRemoveButton.Font = new System.Drawing.Font("Perpetua Titling MT", 10.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.StaticRemoveButton.Location = new System.Drawing.Point(129, 41);
-            this.StaticRemoveButton.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.StaticRemoveButton.Margin = new System.Windows.Forms.Padding(2);
             this.StaticRemoveButton.Name = "StaticRemoveButton";
             this.StaticRemoveButton.Size = new System.Drawing.Size(126, 28);
             this.StaticRemoveButton.TabIndex = 21;
@@ -485,7 +485,7 @@
             this.StaticAddButton.BackColor = System.Drawing.SystemColors.Window;
             this.StaticAddButton.Font = new System.Drawing.Font("Perpetua Titling MT", 10.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.StaticAddButton.Location = new System.Drawing.Point(129, 10);
-            this.StaticAddButton.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.StaticAddButton.Margin = new System.Windows.Forms.Padding(2);
             this.StaticAddButton.Name = "StaticAddButton";
             this.StaticAddButton.Size = new System.Drawing.Size(126, 28);
             this.StaticAddButton.TabIndex = 20;
@@ -496,23 +496,23 @@
             // StaticNextHopTextBox
             // 
             this.StaticNextHopTextBox.Location = new System.Drawing.Point(93, 114);
-            this.StaticNextHopTextBox.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.StaticNextHopTextBox.Margin = new System.Windows.Forms.Padding(2);
             this.StaticNextHopTextBox.Name = "StaticNextHopTextBox";
             this.StaticNextHopTextBox.Size = new System.Drawing.Size(164, 20);
             this.StaticNextHopTextBox.TabIndex = 2;
             // 
             // StaticMaskTextBox
             // 
-            this.StaticMaskTextBox.Location = new System.Drawing.Point(93, 93);
-            this.StaticMaskTextBox.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.StaticMaskTextBox.Location = new System.Drawing.Point(93, 92);
+            this.StaticMaskTextBox.Margin = new System.Windows.Forms.Padding(2);
             this.StaticMaskTextBox.Name = "StaticMaskTextBox";
             this.StaticMaskTextBox.Size = new System.Drawing.Size(164, 20);
             this.StaticMaskTextBox.TabIndex = 1;
             // 
             // StaticIpTextBox
             // 
-            this.StaticIpTextBox.Location = new System.Drawing.Point(92, 72);
-            this.StaticIpTextBox.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.StaticIpTextBox.Location = new System.Drawing.Point(93, 71);
+            this.StaticIpTextBox.Margin = new System.Windows.Forms.Padding(2);
             this.StaticIpTextBox.Name = "StaticIpTextBox";
             this.StaticIpTextBox.Size = new System.Drawing.Size(164, 20);
             this.StaticIpTextBox.TabIndex = 0;
@@ -528,9 +528,9 @@
             this.TimersGB.Controls.Add(this.TimerInvalidTextBox);
             this.TimersGB.Controls.Add(this.TimerArpTextBox);
             this.TimersGB.Location = new System.Drawing.Point(9, 2);
-            this.TimersGB.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.TimersGB.Margin = new System.Windows.Forms.Padding(2);
             this.TimersGB.Name = "TimersGB";
-            this.TimersGB.Padding = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.TimersGB.Padding = new System.Windows.Forms.Padding(2);
             this.TimersGB.Size = new System.Drawing.Size(256, 64);
             this.TimersGB.TabIndex = 13;
             this.TimersGB.TabStop = false;
@@ -539,7 +539,7 @@
             // TimerHoldTextBox
             // 
             this.TimerHoldTextBox.Location = new System.Drawing.Point(141, 40);
-            this.TimerHoldTextBox.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.TimerHoldTextBox.Margin = new System.Windows.Forms.Padding(2);
             this.TimerHoldTextBox.Name = "TimerHoldTextBox";
             this.TimerHoldTextBox.Size = new System.Drawing.Size(54, 20);
             this.TimerHoldTextBox.TabIndex = 33;
@@ -547,7 +547,7 @@
             // TimerFlushTextBox
             // 
             this.TimerFlushTextBox.Location = new System.Drawing.Point(141, 17);
-            this.TimerFlushTextBox.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.TimerFlushTextBox.Margin = new System.Windows.Forms.Padding(2);
             this.TimerFlushTextBox.Name = "TimerFlushTextBox";
             this.TimerFlushTextBox.Size = new System.Drawing.Size(54, 20);
             this.TimerFlushTextBox.TabIndex = 32;
@@ -557,7 +557,7 @@
             this.TimerHoldButton.BackColor = System.Drawing.SystemColors.Window;
             this.TimerHoldButton.Font = new System.Drawing.Font("Perpetua Titling MT", 7.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.TimerHoldButton.Location = new System.Drawing.Point(199, 40);
-            this.TimerHoldButton.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.TimerHoldButton.Margin = new System.Windows.Forms.Padding(2);
             this.TimerHoldButton.Name = "TimerHoldButton";
             this.TimerHoldButton.Size = new System.Drawing.Size(52, 20);
             this.TimerHoldButton.TabIndex = 31;
@@ -570,7 +570,7 @@
             this.TimerFlushButton.BackColor = System.Drawing.SystemColors.Window;
             this.TimerFlushButton.Font = new System.Drawing.Font("Perpetua Titling MT", 7.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.TimerFlushButton.Location = new System.Drawing.Point(199, 13);
-            this.TimerFlushButton.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.TimerFlushButton.Margin = new System.Windows.Forms.Padding(2);
             this.TimerFlushButton.Name = "TimerFlushButton";
             this.TimerFlushButton.Size = new System.Drawing.Size(52, 24);
             this.TimerFlushButton.TabIndex = 30;
@@ -583,7 +583,7 @@
             this.TimerInvalidButton.BackColor = System.Drawing.SystemColors.Window;
             this.TimerInvalidButton.Font = new System.Drawing.Font("Perpetua Titling MT", 7.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.TimerInvalidButton.Location = new System.Drawing.Point(64, 40);
-            this.TimerInvalidButton.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.TimerInvalidButton.Margin = new System.Windows.Forms.Padding(2);
             this.TimerInvalidButton.Name = "TimerInvalidButton";
             this.TimerInvalidButton.Size = new System.Drawing.Size(63, 20);
             this.TimerInvalidButton.TabIndex = 29;
@@ -596,7 +596,7 @@
             this.TimerArpButton.BackColor = System.Drawing.SystemColors.Window;
             this.TimerArpButton.Font = new System.Drawing.Font("Perpetua Titling MT", 7.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.TimerArpButton.Location = new System.Drawing.Point(64, 15);
-            this.TimerArpButton.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.TimerArpButton.Margin = new System.Windows.Forms.Padding(2);
             this.TimerArpButton.Name = "TimerArpButton";
             this.TimerArpButton.Size = new System.Drawing.Size(63, 22);
             this.TimerArpButton.TabIndex = 28;
@@ -607,7 +607,7 @@
             // TimerInvalidTextBox
             // 
             this.TimerInvalidTextBox.Location = new System.Drawing.Point(6, 41);
-            this.TimerInvalidTextBox.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.TimerInvalidTextBox.Margin = new System.Windows.Forms.Padding(2);
             this.TimerInvalidTextBox.Name = "TimerInvalidTextBox";
             this.TimerInvalidTextBox.Size = new System.Drawing.Size(55, 20);
             this.TimerInvalidTextBox.TabIndex = 1;
@@ -615,7 +615,7 @@
             // TimerArpTextBox
             // 
             this.TimerArpTextBox.Location = new System.Drawing.Point(6, 17);
-            this.TimerArpTextBox.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.TimerArpTextBox.Margin = new System.Windows.Forms.Padding(2);
             this.TimerArpTextBox.Name = "TimerArpTextBox";
             this.TimerArpTextBox.Size = new System.Drawing.Size(54, 20);
             this.TimerArpTextBox.TabIndex = 0;
@@ -629,9 +629,9 @@
             this.ArpGB.Controls.Add(this.ArpD2RadioButton);
             this.ArpGB.Controls.Add(this.ArpD1RadioButton);
             this.ArpGB.Location = new System.Drawing.Point(273, 10);
-            this.ArpGB.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.ArpGB.Margin = new System.Windows.Forms.Padding(2);
             this.ArpGB.Name = "ArpGB";
-            this.ArpGB.Padding = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.ArpGB.Padding = new System.Windows.Forms.Padding(2);
             this.ArpGB.Size = new System.Drawing.Size(323, 249);
             this.ArpGB.TabIndex = 14;
             this.ArpGB.TabStop = false;
@@ -642,7 +642,7 @@
             this.ARPClearButton.BackColor = System.Drawing.SystemColors.Window;
             this.ARPClearButton.Font = new System.Drawing.Font("Perpetua Titling MT", 7.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.ARPClearButton.Location = new System.Drawing.Point(259, 225);
-            this.ARPClearButton.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.ARPClearButton.Margin = new System.Windows.Forms.Padding(2);
             this.ARPClearButton.Name = "ARPClearButton";
             this.ARPClearButton.Size = new System.Drawing.Size(60, 20);
             this.ARPClearButton.TabIndex = 34;
@@ -692,7 +692,7 @@
             this.ArpSendButton.BackColor = System.Drawing.SystemColors.Window;
             this.ArpSendButton.Font = new System.Drawing.Font("Perpetua Titling MT", 7.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.ArpSendButton.Location = new System.Drawing.Point(203, 224);
-            this.ArpSendButton.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.ArpSendButton.Margin = new System.Windows.Forms.Padding(2);
             this.ArpSendButton.Name = "ArpSendButton";
             this.ArpSendButton.Size = new System.Drawing.Size(52, 20);
             this.ArpSendButton.TabIndex = 32;
@@ -809,7 +809,7 @@
             // changeButton
             // 
             this.changeButton.Location = new System.Drawing.Point(45, 18);
-            this.changeButton.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.changeButton.Margin = new System.Windows.Forms.Padding(2);
             this.changeButton.Name = "changeButton";
             this.changeButton.Size = new System.Drawing.Size(80, 19);
             this.changeButton.TabIndex = 0;
@@ -832,7 +832,7 @@
             this.Controls.Add(this.RouterGB);
             this.Controls.Add(this.Dev2GB);
             this.Controls.Add(this.Dev1GB);
-            this.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.Margin = new System.Windows.Forms.Padding(2);
             this.Name = "RouterForm";
             this.Text = "Form1";
             this.Dev1GB.ResumeLayout(false);

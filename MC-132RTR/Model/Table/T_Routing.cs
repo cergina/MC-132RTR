@@ -30,7 +30,6 @@ namespace MC_132RTR.Model.Table
 
         public void AttemtToAdd_Dynamic()
         {
-
         }
 
         public static T_Routing GetInstance()

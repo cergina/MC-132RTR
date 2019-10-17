@@ -1,5 +1,6 @@
 ﻿using MC_132RTR.Controller.Middleman;
 using MC_132RTR.Model.Support;
+using MC_132RTR.Model.Packet;
 using PacketDotNet;
 using SharpPcap;
 using System.Net;
@@ -67,14 +68,14 @@ namespace MC_132RTR.Model.Core
         public static int IdentifyAsProtocol(CaptureEventArgs e, Device DeviceReceived)
         {
             //
-            PacketDotNet.Packet Layer0 = Packet.Extractor.GetPacket(e.Packet);
+            PacketDotNet.Packet Layer0 = Extractor.GetPacket(e.Packet);
             if (Layer0 == null) {
                 Logging.Out("Layer0 == null");
                 return Middleman.NOTHING;
             }
 
             //
-            EthernetPacket EthPckt = Packet.Extractor.GetEthPacket(Layer0);
+            EthernetPacket EthPckt = Extractor.GetEthPacket(Layer0);
             if (EthPckt == null) {
                 Logging.Out("EthPckt == null");
                 return Middleman.NOTHING;
@@ -88,21 +89,21 @@ namespace MC_132RTR.Model.Core
             }
 
             //
-            ARPPacket ArpPckt = Packet.Extractor.GetArpPacket(EthPckt);
+            ARPPacket ArpPckt = Extractor.GetArpPacket(EthPckt);
             if (ArpPckt != null) {
                 Logging.Out("ArpPckt != null: ret ARP");
                 return Middleman.ARP;
             }
 
             //
-            IPv4Packet Ipv4 = Packet.Extractor.GetIPv4Packet(EthPckt);
+            IPv4Packet Ipv4 = Extractor.GetIPv4Packet(EthPckt);
             if (Ipv4 == null || !Ipv4.ValidChecksum) {
                 Logging.Out("Ipv4 == null || !Ipv4.ValidChecksum");
                 return Middleman.NOTHING;
             }
 
             // Check if it is RIP, hence it has to be UDP first
-            UdpPacket Udp = Packet.Extractor.GetUdpPacket(Ipv4);
+            UdpPacket Udp = Extractor.GetUdpPacket(Ipv4);
             if (Udp != null)
             {
                 Logging.Out("Udp != null");
@@ -144,8 +145,16 @@ namespace MC_132RTR.Model.Core
         {
             Logging.Out("Dosol RIB ");
 
-            PacketDotNet.Packet Layer0 = Packet.Extractor.GetPacket(e.Packet);
-            EthernetPacket EthPckt = Packet.Extractor.GetEthPacket(Layer0);
+            PacketDotNet.Packet Layer0 = Extractor.GetPacket(e.Packet);
+            EthernetPacket EthPckt = Extractor.GetEthPacket(Layer0);
+            IPv4Packet Ipv4 = Extractor.GetIPv4Packet(EthPckt);
+
+            P_Routing PR = new P_Routing(Ipv4);
+
+            PR.UponArrivalTTL();
+
+            PR.BeforeSend();
+
 
         }
     }

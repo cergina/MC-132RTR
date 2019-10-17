@@ -71,6 +71,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Controller\Middleman\Middleman.cs" />
+    <Compile Include="Model\Packet\P_Routing.cs" />
     <Compile Include="RouterForm.cs">
       <SubType>Form</SubType>
     </Compile>
