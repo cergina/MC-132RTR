@@ -57,7 +57,7 @@ namespace MC_132RTR
         }
         private void DefaultValues()
         {
-            IPTextBox.Text = "192.168.1.1";
+            IPTextBox.Text = "10.10.10.1";
             MaskTextBox.Text = "255.255.255.0";
         }
 

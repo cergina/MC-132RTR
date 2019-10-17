@@ -1,5 +1,6 @@
 ﻿using MC_132RTR.Model.Support;
 using MC_132RTR.Model.Table;
+using MC_132RTR.Model.TablePrimitive;
 using PacketDotNet;
 using SharpPcap;
 using System;
@@ -50,13 +51,19 @@ namespace MC_132RTR.Model.Core
 
         private void SetWhenRouterOn(Network NewProposedNet)
         {
-            if (T_Routing.GetInstance().IsSubnetInRoutes(NewProposedNet.GetNetworkGeneral()) == null)
+            TP_Routing TPR = T_Routing.GetInstance().IsSubnetInRoutes(NewProposedNet.GetNetworkGeneral());
+            if (TPR == null)
             {
+                // Network like this is not in table
                 Network CurrentNetwork = Network;
                 Network = NewProposedNet;
 
                 T_Routing.GetInstance().UpdateConnected(CurrentNetwork, NewProposedNet.GetNetworkGeneral());
                 SendInfoAboutChange(CurrentNetwork.GetNetworkGeneral(), NewProposedNet.GetNetworkGeneral());
+            } else if (Network.IsInSameSubnet(NewProposedNet))
+            {
+                // if just IP address changed 
+                Network = NewProposedNet;
             }
         }
 
