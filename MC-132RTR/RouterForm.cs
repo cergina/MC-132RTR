@@ -293,25 +293,8 @@ namespace MC_132RTR
             ActiveCheckBox.Checked = Device.RouterRunning;
             PowerCheckBox.Checked = true;
 
-            if (!String.IsNullOrEmpty(Device.Dev1))
-            {
-                Dev1Label.Text = Device.Dev1;
-                Device Tmp = Device.PairDeviceWithToString(Device.Dev1);
-                Dev1UsableCHeckBox.Checked = Tmp.IsUsable();
-                Dev1NetworkLabel.Text = (Tmp.Network != null) ? Tmp.Network.ToString() : "null";
-                Dev1MacLabel.Text = (Tmp.ICapDev != null && Tmp.ICapDev.Started) ? Tmp.ICapDev.MacAddress.ToString() : "null";
-                Dev1RIPv2CheckBox.Checked = !Tmp.DEV_DisabledRIPv2;
-            }
-
-            if (!String.IsNullOrEmpty(Device.Dev2))
-            {
-                Dev2Label.Text = Device.Dev2;
-                Device Tmp = Device.PairDeviceWithToString(Device.Dev2);
-                Dev2UsableCHeckBox.Checked = Tmp.IsUsable();
-                Dev2NetworkLabel.Text = (Tmp.Network != null) ? Tmp.Network.ToString() : "null";
-                Dev2MacLabel.Text = (Tmp.ICapDev != null && Tmp.ICapDev.Started) ? Tmp.ICapDev.MacAddress.ToString() : "null";
-                Dev2RIPv2CheckBox.Checked = !Tmp.DEV_DisabledRIPv2;
-            }
+            ProcessDeviceFE(Device.Dev1, Dev1Label, Dev1NetworkLabel, Dev1MacLabel, Dev1UsableCHeckBox, Dev1RIPv2CheckBox);
+            ProcessDeviceFE(Device.Dev2, Dev2Label, Dev2NetworkLabel, Dev2MacLabel, Dev2UsableCHeckBox, Dev2RIPv2CheckBox);
 
             if (Device.RouterRunning)
             {
@@ -323,6 +306,19 @@ namespace MC_132RTR
                         DeviceRouterComboBOx.Items.Add(Dev);
                 }
             }
+        }
+
+        private void ProcessDeviceFE(String DevNO, Label DevLabel, Label NetworkLabel, Label MacLabel, CheckBox UsableCheckBox, CheckBox RIPv2CheckBox)
+        {
+            if (String.IsNullOrEmpty(DevNO))
+                return;
+
+            DevLabel.Text = DevNO;
+            Device Tmp = Device.PairDeviceWithToString(DevNO);
+            NetworkLabel.Text = Tmp.IpToString();
+            MacLabel.Text = Tmp.MacToString();
+            UsableCheckBox.Checked = Tmp.IsUsable();
+            RIPv2CheckBox.Checked = !Tmp.DEV_DisabledRIPv2;
         }
 
         private void StaticAddButton_Click(object sender, EventArgs e)

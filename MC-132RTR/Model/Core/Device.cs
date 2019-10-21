@@ -338,6 +338,23 @@ namespace MC_132RTR.Model.Core
             return null;
         }
 
+        public string IpToString()
+        {
+            //(Tmp.Network != null) ? "IP: " + Tmp.Network.ToString() : "null";
+            if (Network != null)
+                return "IP: " + Network.ToString();
+
+            return "IP is null";
+        }
+
+        public string MacToString()
+        {
+            if (ICapDev != null && ICapDev.Started)
+                return "MAC: " + BitConverter.ToString(ICapDev.MacAddress.GetAddressBytes());
+            
+            return "MAC is null";
+        }
+
         override
         public string ToString()
         {
