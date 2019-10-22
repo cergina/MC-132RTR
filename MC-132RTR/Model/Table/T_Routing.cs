@@ -10,6 +10,7 @@ namespace MC_132RTR.Model.Table
 {
     public class T_Routing
     {
+        private static short MAX_ITERATIONS = 20;
         private static T_Routing Instance = null;
 
         private static List<TP_Routing> Routes = new List<TP_Routing>();
@@ -116,40 +117,30 @@ namespace MC_132RTR.Model.Table
             return null;
         }
 
-        // used to obtain a route 
         public TP_Routing RegularSearch(IPAddress Ip_Target)
         {
-            if (Ip_Target == null)
-                return null;
-
-            // find something
             TP_Routing TPR = null;
-            DeepestMatchingSearch(Ip_Target, out TPR);
 
-            if (TPR == null)
-                return null; // Nothing in RoutingTable
-            
-            // Let's see if TPR can be used 
-            if (TPR.CanBeRoutedDirectlyViaNextHop())
+            for (short iteration = 0; iteration < MAX_ITERATIONS && Ip_Target != null; ++iteration)
             {
-                
+                DeepestMatchingSearch(Ip_Target, out TPR);
+                if (TPR == null)
+                    return null;
+
+                if (TPR.CanBeRoutedDirectlyViaNextHop())
+                {
+                    return TPR;
+                } else if (TPR.CanBeRoutedDirectly())
+                {
+                    return new TP_Routing(TPR.Type, TPR.ExitDevice, TPR.Subnet, Ip_Target);
+                } else
+                {
+                    Ip_Target = TPR.NextHopIp;
+                }
             }
-            else if (TPR.CanBeRoutedDirectly())
-            {
-
-            } else if (TPR.HasAtLeastNetHop())
-            {
-
-            } else
-            {
-                // Nothing to route trough
-                return null;
-            }
-
 
             return null;
         }
-
 
         public void ClearAllRoutes()
         {
