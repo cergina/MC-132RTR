@@ -74,5 +74,66 @@ namespace MC_132RTR.Model.TablePrimitive
 
             return true;
         }
+
+        public bool CanBeRoutedDirectlyViaNextHop()
+        {
+            if (CanBeRoutedDirectly() && NextHopIp != null)
+                return true;
+
+            return false;
+        }
+
+        public bool CanBeRoutedDirectly()
+        {
+            if (ExitDevice != null && ExitDevice.IsUsable())
+                return true;
+
+            return false;
+        }
+
+        public bool HasAtLeastNetHop()
+        {
+            if (NextHopIp == null)
+                return false;
+
+            return true;
+        }
+
+        /***
+         * Two TP_Routing TPR's have to be passed, and at least one has 
+         * to be matching before it.
+         */
+        public static void ChooseDeeperMatch(IPAddress IpToSearch, TP_Routing TPR1, TP_Routing TPR2, out TP_Routing Chosen)
+        {
+            // If one is null, the other one is deeper if exists
+            Chosen = null;
+            if (TPR1 == null || TPR2 == null)
+            {
+                if (TPR1 != null)
+                    Chosen = TPR1;
+
+                if (TPR2 != null)
+                    Chosen = TPR2;
+
+                return;
+            }
+
+            // Compare which mask is deeper
+            if (TPR1.Subnet.MaskAddress.IsGreaterThan(TPR2.Subnet.MaskAddress))
+                Chosen = TPR1;
+
+            if (TPR2.Subnet.MaskAddress.IsGreaterThan(TPR1.Subnet.MaskAddress))
+                Chosen = TPR2;
+
+            if (Chosen != null)
+                return;
+
+            // Masks are equal (so DC is better than SR and SR is better than DYN)
+            if (TPR1.Type < TPR2.Type)
+                Chosen = TPR1;
+
+            if (TPR2.Type < TPR1.Type)
+                Chosen = TPR2;
+        }
     }
 }

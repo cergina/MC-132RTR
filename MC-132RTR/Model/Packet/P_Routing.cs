@@ -40,22 +40,33 @@ namespace MC_132RTR.Model.Packet
             return true;
         }
 
-        public static bool UponArrivalTTL(P_Routing PR)
+        public static void UponArrivalTTL(P_Routing PR, out bool okay)
         {
             if (!Validate(PR))
-                return false;
+            {
+                okay = false;
+                return;
+            }
 
             --PR.Ipv4.TimeToLive;
-            return true;
+
+            if (PR.Ipv4.TimeToLive == 0)
+                okay = false;
+
+            okay = true;
         }
 
-        public static void BeforeSend(P_Routing PR)
+        public static void BeforeSend(P_Routing PR, out bool Ok)
         {
             if (!Validate(PR))
+            {
+                Ok = false;
                 return;
+            }
 
             PR.Ipv4.UpdateCalculatedValues();
             PR.Ipv4.UpdateIPChecksum();
+            Ok = true;
         }
 
         public static void Send(P_Routing PR, TP_Routing TPR)

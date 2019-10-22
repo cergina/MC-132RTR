@@ -91,6 +91,17 @@ namespace MC_132RTR.Model.Table
             return null;
         }
 
+        public void DeepestMatchingSearch(IPAddress IpToSearch, out TP_Routing Chosen)
+        {
+            Chosen = null;
+
+            foreach (TP_Routing TPR in Routes)
+            {
+                if (TPR.Subnet.IsWithinNetworkRange(IpToSearch))
+                    TP_Routing.ChooseDeeperMatch(IpToSearch, TPR, Chosen, out Chosen);
+            }
+        }
+
         // used to obtain a route with specific stuff, ...
         public TP_Routing SpecificSearch(IPAddress Ip, Mask MaskIp, Device ExitDev, IPAddress NextHopIp, int Type)
         {
@@ -110,6 +121,31 @@ namespace MC_132RTR.Model.Table
         {
             if (Ip_Target == null)
                 return null;
+
+            // find something
+            TP_Routing TPR = null;
+            DeepestMatchingSearch(Ip_Target, out TPR);
+
+            if (TPR == null)
+                return null; // Nothing in RoutingTable
+            
+            // Let's see if TPR can be used 
+            if (TPR.CanBeRoutedDirectlyViaNextHop())
+            {
+                
+            }
+            else if (TPR.CanBeRoutedDirectly())
+            {
+
+            } else if (TPR.HasAtLeastNetHop())
+            {
+
+            } else
+            {
+                // Nothing to route trough
+                return null;
+            }
+
 
             return null;
         }

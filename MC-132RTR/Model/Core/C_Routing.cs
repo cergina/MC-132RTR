@@ -145,7 +145,8 @@ namespace MC_132RTR.Model.Core
 
         public static void GeneralHandle(CaptureEventArgs e, Device ReceivalDev)
         {
-            Logging.Out("Dosol RIB ");
+            Logging.OutALWAYS("Dosol RIB ");
+            bool Okay = true;
 
             PacketDotNet.Packet Layer0 = Extractor.GetPacket(e.Packet);
             EthernetPacket EthPckt = Extractor.GetEthPacket(Layer0);
@@ -153,16 +154,18 @@ namespace MC_132RTR.Model.Core
 
             P_Routing PR = new P_Routing(Ipv4);
 
-            if (!P_Routing.UponArrivalTTL(PR))
+            P_Routing.UponArrivalTTL(PR, out Okay);
+            if (!Okay)
                 return;
 
             TP_Routing TPR = T_Routing.GetInstance().RegularSearch(PR.Ipv4.DestinationAddress);
             if (TPR == null || TPR.ExitDevice == null)
                 return;
 
-            P_Routing.BeforeSend(PR);
-
-            P_Routing.Send(PR, TPR);
+            P_Routing.BeforeSend(PR, out Okay);
+            
+            if (Okay)
+                P_Routing.Send(PR, TPR);
         }
     }
 }
