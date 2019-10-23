@@ -81,6 +81,7 @@ namespace MC_132RTR.Model.Core
             if (RequestThatIKnow(ReceivalDev, Ip_Target))
             {
                 P_ARP.SendResponse(ReceivalDev, Mac_Source, Ip_Source, Ip_Target, true);
+                return;
             }
 
             List<Device> ListDev = Device.GetListOfUsableDevicesExceptOf(ReceivalDev);
@@ -108,7 +109,7 @@ namespace MC_132RTR.Model.Core
             if (AvoidThisDevice.Equals(TPR.ExitDevice))
                 return false;
 
-            return false;
+            return true;
         }
 
         // RESPONSE STUFF
