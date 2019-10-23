@@ -152,18 +152,26 @@ namespace MC_132RTR.Model.Core
             EthernetPacket EthPckt = Extractor.GetEthPacket(Layer0);
             IPv4Packet Ipv4 = Extractor.GetIPv4Packet(EthPckt);
 
+            Logging.OutALWAYS("RIB 0 ");
+
             P_Routing PR = new P_Routing(Ipv4);
 
             P_Routing.UponArrivalTTL(PR, out Okay);
             if (!Okay)
                 return;
 
+            Logging.OutALWAYS("RIB 1");
+
             TP_Routing TPR = T_Routing.GetInstance().RegularSearch(PR.Ipv4.DestinationAddress);
             if (TPR == null || TPR.ExitDevice == null)
                 return;
 
+            Logging.OutALWAYS("RIB 2");
+
             P_Routing.BeforeSend(PR, out Okay);
-            
+
+            Logging.OutALWAYS("RIB 3");
+
             if (Okay)
                 P_Routing.Send(PR, TPR);
         }

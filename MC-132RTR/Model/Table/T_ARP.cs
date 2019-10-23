@@ -30,6 +30,19 @@ namespace MC_132RTR.Model.Table
             return tmp;
         }
 
+        public TP_ARP IpToMac(IPAddress key, Device ExitDev)
+        {
+            TP_ARP value = null;
+            if (Dict.TryGetValue(key, out value))
+            {
+                if (value.IsPassable())
+                    return value;
+            }
+
+            P_ARP.SendRequest(ExitDev, key);
+            return null;
+        }
+
         public TP_ARP IpToMac(IPAddress key, bool Always)
         {
             TP_ARP value;

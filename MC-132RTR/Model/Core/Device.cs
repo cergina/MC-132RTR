@@ -34,6 +34,19 @@ namespace MC_132RTR.Model.Core
             this.Id = Id;
         }
 
+        public static List<Device> GetListOfUsableDevicesExceptOf(Device DevT)
+        {
+            List<Device> L_Dev = new List<Device>();
+
+            foreach (Device T_Dev in ListOfDevices)
+            {
+                if (T_Dev.IsUsable() && (DevT.Equals(T_Dev)))
+                    L_Dev.Add(T_Dev);
+            }
+
+            return L_Dev;
+        }
+
         private void SetWhenRouterOff(Network TmpNet, string DevName)
         {
             Network = TmpNet;
@@ -108,7 +121,7 @@ namespace MC_132RTR.Model.Core
                 return;
 
             IpPckt.UpdateIPChecksum();
-
+            Logging.OutALWAYS("Checksum updatetnuty ");
             SendViaThisDevice(MAC_Dst, EthernetPacketType.IpV4, IpPckt.Bytes);
         }
 

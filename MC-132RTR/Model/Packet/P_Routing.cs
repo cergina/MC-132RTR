@@ -1,4 +1,5 @@
 ﻿using MC_132RTR.Model.Core;
+using MC_132RTR.Model.Support;
 using MC_132RTR.Model.Table;
 using MC_132RTR.Model.TablePrimitive;
 using PacketDotNet;
@@ -31,12 +32,15 @@ namespace MC_132RTR.Model.Packet
 
         private static bool ValidateBeforeSend(P_Routing PR)
         {
+            Logging.OutALWAYS("Validujem pred poslanim");
             if (!Validate(PR))
                 return false;
 
+            /*Logging.OutALWAYS("Validacia 2");
             if (PR.Mac == null)
-                return false;
+                return false;*/
 
+            Logging.OutALWAYS("validacia pred poslanim ok");
             return true;
         }
 
@@ -71,12 +75,26 @@ namespace MC_132RTR.Model.Packet
 
         public static void Send(P_Routing PR, TP_Routing TPR)
         {
+            Logging.OutALWAYS("RIB Sending");
+
             if (!ValidateBeforeSend(PR) || TPR == null || TPR.ExitDevice == null)
+            {
+                if (TPR == null)
+                    Logging.OutALWAYS("TPR je null");
+
+                if (TPR.ExitDevice == null)
+                    Logging.OutALWAYS("TPR exit dev je null");
+
                 return;
-            
-            TP_ARP TPA = T_ARP.GetInstance().IpToMac(TPR.NextHopIp, false);
+            }
+
+            Logging.OutALWAYS("Sending 1");
+
+            TP_ARP TPA = T_ARP.GetInstance().IpToMac(TPR.NextHopIp, TPR.ExitDevice);
             if (TPA == null)
                 return;
+
+            Logging.OutALWAYS("Sending 2");
 
             TPR.ExitDevice.SendViaThisDevice(TPA.Mac ,PR.Ipv4);
         }

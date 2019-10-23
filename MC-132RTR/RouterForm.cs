@@ -57,7 +57,7 @@ namespace MC_132RTR
         }
         private void DefaultValues()
         {
-            IPTextBox.Text = "10.10.10.1";
+            IPTextBox.Text = "10.10.10.2";
             MaskTextBox.Text = "255.255.255.0";
         }
 
@@ -215,6 +215,8 @@ namespace MC_132RTR
 
             Middleman.TryToInitialiazeDevice(ChosenDev, IPTextBox.Text, MaskTextBox.Text);
             DefaultValues();
+            // TODO temporary
+            IPTextBox.Text = "11.11.11.2";
             UpdateDeviceInfo();
         }
         private void PowerButton_Click(object sender, EventArgs e)
