@@ -11,11 +11,11 @@ TODO list of Router project for WANT in Summer semester, 2019/2020 at FIIT STU.
 
 - GUI: implemented | cca 90% | tested manually (missing ripv2)
 - Interfaces OfflineChanging: implemented | 100% | tested manually
-- Interfaces OnlineChanging: implemented | 90% | tested manually (missing send info to other networks)
-- ARP: implemented | cca 100% | not tested
-- ProxyARP: implemented | cca 90% | not tested
+- Interfaces OnlineChanging: implemented | 90% | tested manually (missing send info in RIPv2 to other networks)
+- ARP: implemented | cca 100% | tested manually
+- ProxyARP: implemented | cca 100% | tested manually
 - RIPv2: in diaper | cca 12% | not tested
-- Routing: in progress | cca 40% | not tested
+- Routing: implemented | cca 100% | tested, but not thoroughly
 - Static Routing: implemented | cca 100% | tested manually
 
  **Extra functionality:**

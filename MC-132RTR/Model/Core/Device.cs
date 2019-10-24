@@ -40,7 +40,7 @@ namespace MC_132RTR.Model.Core
 
             foreach (Device T_Dev in ListOfDevices)
             {
-                if (T_Dev.IsUsable() && (DevT.Equals(T_Dev)))
+                if (T_Dev.IsUsable() && (!DevT.Equals(T_Dev)))
                     L_Dev.Add(T_Dev);
             }
 
