@@ -60,9 +60,9 @@ namespace MC_132RTR.Model.Packet
             okay = true;
         }
 
-        public static void BeforeSend(P_Routing PR, out bool Ok)
+        public static void BeforeSend(Device CameFromDev, TP_Routing TPR, P_Routing PR, out bool Ok)
         {
-            if (!Validate(PR))
+            if (TPR == null || TPR.ExitDevice == null || CameFromDev.MacToString().Equals(TPR.ExitDevice.MacToString()) || (!Validate(PR)))
             {
                 Ok = false;
                 return;

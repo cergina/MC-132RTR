@@ -145,7 +145,6 @@ namespace MC_132RTR.Model.Core
 
         public static void GeneralHandle(CaptureEventArgs e, Device ReceivalDev)
         {
-            //Todo never send something to the same MAC adress you optionaly received it from.
             Logging.OutALWAYS("Dosol RIB ");
             bool Okay = true;
 
@@ -153,25 +152,15 @@ namespace MC_132RTR.Model.Core
             EthernetPacket EthPckt = Extractor.GetEthPacket(Layer0);
             IPv4Packet Ipv4 = Extractor.GetIPv4Packet(EthPckt);
 
-            Logging.OutALWAYS("RIB 0 ");
-
             P_Routing PR = new P_Routing(Ipv4);
 
             P_Routing.UponArrivalTTL(PR, out Okay);
             if (!Okay)
                 return;
 
-            Logging.OutALWAYS("RIB 1");
-
             TP_Routing TPR = T_Routing.GetInstance().RegularSearch(PR.Ipv4.DestinationAddress);
-            if (TPR == null || TPR.ExitDevice == null)
-                return;
 
-            Logging.OutALWAYS("RIB 2");
-
-            P_Routing.BeforeSend(PR, out Okay);
-
-            Logging.OutALWAYS("RIB 3");
+            P_Routing.BeforeSend(ReceivalDev, TPR, PR, out Okay);
 
             if (Okay)
                 P_Routing.Send(PR, TPR);
