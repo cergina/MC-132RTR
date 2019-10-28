@@ -145,6 +145,7 @@ namespace MC_132RTR.Model.Core
 
         public static void GeneralHandle(CaptureEventArgs e, Device ReceivalDev)
         {
+            //Todo never send something to the same MAC adress you optionaly received it from.
             Logging.OutALWAYS("Dosol RIB ");
             bool Okay = true;
 

@@ -83,11 +83,6 @@ namespace MC_132RTR.Model.Core
                 P_ARP.SendResponse(ReceivalDev, Mac_Source, Ip_Source, Ip_Target, true);
                 return;
             }
-
-            List<Device> ListDev = Device.GetListOfUsableDevicesExceptOf(ReceivalDev);
-            Logging.OutALWAYS("list ma velkost: " + ListDev.Count);
-            foreach(Device D in ListDev)
-                P_ARP.SendRequest(D, Ip_Target);
         }
 
         private bool RequestForMyself(Device ForThisDevice, IPAddress Ip_Target)
