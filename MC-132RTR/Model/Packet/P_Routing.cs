@@ -24,9 +24,9 @@ namespace MC_132RTR.Model.Packet
 
         public static bool Validate(P_Routing PR)
         {
-            if (PR == null || PR.Ipv4 == null || PR.Ipv4.TimeToLive == 0)
+            if (PR == null || (!IPv4_Checking.Check(PR.Ipv4)))
                 return false;
-
+            
             return true;
         }
 
@@ -44,20 +44,15 @@ namespace MC_132RTR.Model.Packet
             return true;
         }
 
-        public static void UponArrivalTTL(P_Routing PR, out bool okay)
+        public static void UponArrival(P_Routing PR, out bool okay)
         {
+            okay = false;
+
             if (!Validate(PR))
-            {
-                okay = false;
                 return;
-            }
 
-            --PR.Ipv4.TimeToLive;
-
-            if (PR.Ipv4.TimeToLive == 0)
-                okay = false;
-
-            okay = true;
+            if (IPv4_Checking.CheckUponArrival(PR.Ipv4))
+                okay = true;
         }
 
         public static void BeforeSend(Device CameFromDev, TP_Routing TPR, P_Routing PR, out bool Ok)

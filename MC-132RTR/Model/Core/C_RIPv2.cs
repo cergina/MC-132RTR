@@ -1,4 +1,6 @@
-﻿using MC_132RTR.Model.Support;
+﻿using MC_132RTR.Model.Packet;
+using MC_132RTR.Model.Support;
+using PacketDotNet;
 using SharpPcap;
 using System;
 using System.Collections.Generic;
@@ -34,7 +36,12 @@ namespace MC_132RTR.Model.Core
 
         public void Handle(CaptureEventArgs e, Device ReceivalDev)
         {
-            Logging.Out("RIPv2 doslo");
+            PacketDotNet.Packet Layer0 = Extractor.GetPacket(e.Packet);
+            EthernetPacket EthPckt = Extractor.GetEthPacket(Layer0);
+            IPv4Packet Ipv4 = Extractor.GetIPv4Packet(EthPckt);
+            UdpPacket Udp = Extractor.GetUdpPacket(Ipv4);
+
+            P_RIPv2 PR = new P_RIPv2();
         }
     }
 }

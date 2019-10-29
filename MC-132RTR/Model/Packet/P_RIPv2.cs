@@ -13,6 +13,27 @@ using System.Threading.Tasks;
 
 namespace MC_132RTR.Model.Packet
 {
+    /*
+    * |===========================================================|
+    * |0(0)         7|8(1)        15|16(2)                      31|
+    * | Command Type |   Version =2 |          MBZ = 0            | 
+    * |===========================================================|
+    * |32(4)                      47|48(6)                        |
+    * |          ID   =       2     | ROUTE TAG   =     0         |
+    * |___________________________________________________________|
+    * |64(8)                                                      |
+    * |                        SUBNET ADDRESS                     |
+    * |___________________________________________________________|
+    * |96(12)                                                     |
+    * |                       SUBNET MASK                         |   <=  Route Table Entry
+    * |___________________________________________________________|
+    * |128(16)                                                    |
+    * |                         NEXT HOP                          |
+    * |___________________________________________________________|
+    * |160(20)                                                    |
+    * |                          METRIC                           |
+    * |===========================================================|   <=  5x32 bites = 5x4 Bytes = 20 Bytes
+    */
     public class P_RIPv2
     {
         public static int HEADER_BYTES = 4;
@@ -38,15 +59,45 @@ namespace MC_132RTR.Model.Packet
         }
 
         // basic header validation
-        public bool ValidateHeader()
+        public static bool ValidateHeader(P_RIPv2 PR)
         {
-            if (CT == 0 || Ver != 2 || MBZ != 0)
+            if (PR.CT == 0 || PR.Ver != 2 || PR.MBZ != 0)
                 return false;
 
             return true;
         }
 
-        public bool IsPartOfThisProtocol(Device Dev_Received, EthernetPacket Pckt_Eth, IPv4Packet Pckt)
+        public static bool Validate(P_RIPv2 PR)
+        {
+            if (!ValidateHeader(PR))
+                return false;
+
+            return true;
+        }
+
+        public static void UponArrival(P_RIPv2 PR, out bool Okay)
+        {
+            Okay = false;
+            
+            if (!Validate(PR))
+                return;
+
+            if (IPv4_Checking.CheckUponArrival(PR.Pckt_IPv4))
+                Okay = true;
+        }
+
+        public static void BeforeSend(P_RIPv2 PR, out bool Ok)
+        {
+            if (!Validate(PR))
+            {
+                Ok = false;
+                return;
+            }
+
+            Ok = true;
+        }
+
+        /*public bool IsPartOfThisProtocol(Device Dev_Received, EthernetPacket Pckt_Eth, IPv4Packet Pckt)
         {
             this.Pckt_Eth = Pckt_Eth;
             this.Pckt_IPv4 = Pckt;
@@ -79,7 +130,7 @@ namespace MC_132RTR.Model.Packet
                 return true;
 
             return false;
-        }
+        }*/
 
         public int GetNumberOfRoutesInside()
         {

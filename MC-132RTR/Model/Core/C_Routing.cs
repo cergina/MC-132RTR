@@ -154,7 +154,7 @@ namespace MC_132RTR.Model.Core
 
             P_Routing PR = new P_Routing(Ipv4);
 
-            P_Routing.UponArrivalTTL(PR, out Okay);
+            P_Routing.UponArrival(PR, out Okay);
             if (!Okay)
                 return;
 
