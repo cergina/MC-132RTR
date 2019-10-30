@@ -41,7 +41,14 @@ namespace MC_132RTR.Model.Core
             IPv4Packet Ipv4 = Extractor.GetIPv4Packet(EthPckt);
             UdpPacket Udp = Extractor.GetUdpPacket(Ipv4);
 
-            P_RIPv2 PR = new P_RIPv2();
+            P_RIPv2 PR = new P_RIPv2(Udp.PayloadData);
+
+            P_RIPv2.UponArrival(PR, out bool Ok);
+
+            if (!Ok)
+                return;
+
+            // TODO
         }
     }
 }

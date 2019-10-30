@@ -53,9 +53,12 @@ namespace MC_132RTR.Model.Packet
         IPv4Packet Pckt_IPv4 = null;
         UdpPacket Pckt_Udp = null;
 
-        private P_RIPv2()
+        public P_RIPv2(byte[] BytesFromOutside)
         {
-            Bytes = new byte[HEADER_BYTES];
+            if (BytesFromOutside == null)
+                Bytes = new byte[HEADER_BYTES];
+            else;
+                FromBytesFillObject(BytesFromOutside);
         }
 
         // basic header validation
@@ -85,6 +88,16 @@ namespace MC_132RTR.Model.Packet
             if (IPv4_Checking.CheckUponArrival(PR.Pckt_IPv4))
                 Okay = true;
         }
+
+        // GENERAL
+
+        // PARSING 
+        public void FromBytesFillObject(byte[] BytesFromOutside)
+        {
+            // TODO
+        }
+
+        // CRAFTING
 
         public static void BeforeSend(P_RIPv2 PR, out bool Ok)
         {
@@ -155,7 +168,7 @@ namespace MC_132RTR.Model.Packet
 
         public static P_RIPv2 CraftRequest()
         {
-            P_RIPv2 Pckt = new P_RIPv2();
+            P_RIPv2 Pckt = new P_RIPv2(null);
             Pckt.InitializeRIPv2(true);
 
             throw new NotSupportedException();
@@ -169,7 +182,7 @@ namespace MC_132RTR.Model.Packet
             // init list to return for this specific device
             List<P_RIPv2> ListToReturn = new List<P_RIPv2>();
 
-            P_RIPv2 Pckt = new P_RIPv2();
+            P_RIPv2 Pckt = new P_RIPv2(null);
             Pckt.InitializeRIPv2(false);
 
             int Curr_RouteIndex = 0;
@@ -184,7 +197,7 @@ namespace MC_132RTR.Model.Packet
                 {
                     ListToReturn.Add(Pckt);
 
-                    Pckt = new P_RIPv2();
+                    Pckt = new P_RIPv2(null);
                     Pckt.InitializeRIPv2(false);
                     Curr_RouteIndex = 0;
                 }
@@ -208,7 +221,7 @@ namespace MC_132RTR.Model.Packet
             if (NetNew == null)
                 return null;
 
-            P_RIPv2 Pckt = new P_RIPv2();
+            P_RIPv2 Pckt = new P_RIPv2(null);
             Pckt.InitializeRIPv2(false);
 
             int StartB = HEADER_BYTES + (0 * ENTRY_BYTES);
@@ -226,7 +239,7 @@ namespace MC_132RTR.Model.Packet
 
         public static P_RIPv2 CraftImmediateResponse(Network Net, uint Metrics)
         {
-            P_RIPv2 Pckt = new P_RIPv2();
+            P_RIPv2 Pckt = new P_RIPv2(null);
             Pckt.InitializeRIPv2(false);
 
             throw new NotSupportedException();
