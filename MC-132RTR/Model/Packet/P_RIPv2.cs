@@ -7,9 +7,6 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
-using System.Net.NetworkInformation;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace MC_132RTR.Model.Packet
 {
@@ -48,6 +45,7 @@ namespace MC_132RTR.Model.Packet
         // must be zero
         public ushort MBZ { get; private set; }
 
+        public int EntriesCount { get; private set; }
         public byte[] Bytes = null;
         EthernetPacket Pckt_Eth = null;
         IPv4Packet Pckt_IPv4 = null;
@@ -57,8 +55,10 @@ namespace MC_132RTR.Model.Packet
         {
             if (BytesFromOutside == null)
                 Bytes = new byte[HEADER_BYTES];
-            else;
+            else
                 FromBytesFillObject(BytesFromOutside);
+
+            UpdateCountsOfEntries();
         }
 
         // basic header validation
@@ -90,12 +90,18 @@ namespace MC_132RTR.Model.Packet
         }
 
         // GENERAL
+        private void UpdateCountsOfEntries()
+        {
+            EntriesCount = (Bytes.Length - HEADER_BYTES) / ENTRY_BYTES;
+        }
 
         // PARSING 
         public void FromBytesFillObject(byte[] BytesFromOutside)
         {
+            Bytes = BytesFromOutside;
             // TODO
         }
+
 
         // CRAFTING
 

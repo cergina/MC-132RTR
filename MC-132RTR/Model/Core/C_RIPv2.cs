@@ -1,12 +1,6 @@
 ﻿using MC_132RTR.Model.Packet;
-using MC_132RTR.Model.Support;
 using PacketDotNet;
 using SharpPcap;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace MC_132RTR.Model.Core
 {
@@ -48,7 +42,33 @@ namespace MC_132RTR.Model.Core
             if (!Ok)
                 return;
 
-            // TODO
+            switch(PR.CT)
+            {
+                case 1:
+                    ProcessRequest(PR, ReceivalDev);
+                    break;
+                case 2:
+                    ProcessResponse(PR, ReceivalDev);
+                    break;
+                default:
+                    break;
+            }
+        }
+
+        private void ProcessRequest(P_RIPv2 PR, Device RecDev)
+        {
+            for (int i=0; i< PR.EntriesCount; i++)
+            {
+                // TODO
+            }
+        }
+
+        private void ProcessResponse(P_RIPv2 PR, Device RecDev)
+        {
+            for (int i = 0; i < PR.EntriesCount; i++)
+            {
+                // TODO
+            }
         }
     }
 }
