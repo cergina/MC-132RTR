@@ -102,9 +102,9 @@ namespace MC_132RTR.Model.Core
                     // TODO not supported yet, will be tested?
 
                     // Multicast RIP case
-                    if ((IPAddress.Parse("224.0.0.9").Equals(Ipv4.DestinationAddress))
+                    if ((C_RIPv2.IP_RIPv2.Equals(Ipv4.DestinationAddress))
                         &&
-                        (PhysicalAddress.Parse("01-00-5E-00-00-09").Equals(EthPckt.DestinationHwAddress))                        
+                        (C_RIPv2.MAC_RIPv2.Equals(EthPckt.DestinationHwAddress))                        
                         )
                         return (DeviceReceived.DEV_DisabledRIPv2) ? Middleman.NOTHING : Middleman.RIPv2;
                 }

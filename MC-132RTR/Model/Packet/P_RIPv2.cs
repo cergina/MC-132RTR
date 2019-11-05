@@ -8,6 +8,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
+using System.Net.NetworkInformation;
 
 namespace MC_132RTR.Model.Packet
 {
@@ -48,11 +49,7 @@ namespace MC_132RTR.Model.Packet
 
         public int EntriesCount { get; private set; }
         public byte[] Bytes = null;
-        EthernetPacket Pckt_Eth = null;
-        IPv4Packet Pckt_IPv4 = null;
-        UdpPacket Pckt_Udp = null;
-
-
+        
         /*                   CONSTRUCTOR                        */
         public P_RIPv2(byte[] BytesFromOutside)
         {
@@ -73,6 +70,35 @@ namespace MC_132RTR.Model.Packet
                 Ok = true;
         }
 
+        public static void SendList(Device ExitDev, List<P_RIPv2> LPR, IPAddress IP_Target, PhysicalAddress MAC)
+        {
+            foreach(P_RIPv2 PR in LPR)
+            {
+                Send(ExitDev, PR, IP_Target, MAC);
+            }
+        }
+
+        public static void Send(Device ExitDev, P_RIPv2 PR, IPAddress IP_Target, PhysicalAddress MAC)
+        {
+            bool Ok;
+            BeforeSend(PR, out Ok);
+
+            if (!Ok || ExitDev.DEV_DisabledRIPv2)
+                return;
+
+            UdpPacket Udp = new UdpPacket(520, 520);
+            Udp.PayloadData = PR.Bytes;
+
+            IPv4Packet IP4 = new IPv4Packet(ExitDev.Network.Address, IP_Target);
+            IP4.PayloadData = Udp.Bytes;
+            IP4.TimeToLive = 1;
+            IP4.Protocol = IPProtocolType.UDP;
+            IP4.PayloadLength = (ushort)Udp.Length;
+            IP4.UpdateIPChecksum();
+
+            ExitDev.SendViaThisDevice(MAC, EthernetPacketType.IpV4, IP4.Bytes);
+        }
+
         public static int CalculateStartByte(int order)
         {
             return P_RIPv2.HEADER_BYTES + (order * P_RIPv2.ENTRY_BYTES);
@@ -87,15 +113,14 @@ namespace MC_132RTR.Model.Packet
         }
 
         // PARSING
-        public static void UponArrival(P_RIPv2 PR, out bool Okay)
+        public static IPv4Packet UponArrival(P_RIPv2 PR, IPv4Packet IPv4, out bool Okay)
         {
             Okay = false;
             
-            if (!Validate(PR))
-                return;
-
-            if (IPv4_Checking.CheckUponArrival(PR.Pckt_IPv4))
+            if (Validate(PR) && IPv4_Checking.CheckUponArrival(IPv4))
                 Okay = true;
+
+            return IPv4;
         }
 
 
@@ -105,7 +130,7 @@ namespace MC_132RTR.Model.Packet
             P_RIPv2 Pckt = new P_RIPv2(null);
             Pckt.InitializeRIPv2(true);
 
-            IPAddress AllZero = IPAddress.Parse("0.0.0.0");
+            IPAddress AllZero = C_RIPv2.IP_NH_THIS;
 
             P_RIPv2.InsertEntry(Pckt, 0, new I_RIPv2(NetworkIp, AllZero, AllZero, 0));
 
@@ -143,7 +168,7 @@ namespace MC_132RTR.Model.Packet
                 uint MetricToUse = (TPR.Metric >= 16) ? (uint)16 : TPR.Metric + 1;
 
                 // insert
-                I_RIPv2 IR = new I_RIPv2(TPR.Net.GetNetworkAddress(), TPR.Net.MaskAddress.SubnetMask, IPAddress.Parse("0.0.0.0"), MetricToUse);
+                I_RIPv2 IR = new I_RIPv2(TPR.Net.GetNetworkAddress(), TPR.Net.MaskAddress.SubnetMask, C_RIPv2.IP_NH_THIS, MetricToUse);
                 Pckt = P_RIPv2.InsertEntry(Pckt, Curr_RouteIndex++, IR);
             }
 
@@ -164,11 +189,11 @@ namespace MC_132RTR.Model.Packet
 
             if (NetOld != null)
             {
-                I_RIPv2 IR_Old = new I_RIPv2(NetOld.GetNetworkAddress(), NetOld.GetMaskIpAddress(), IPAddress.Parse("0.0.0.0"), 16);
+                I_RIPv2 IR_Old = new I_RIPv2(NetOld.GetNetworkAddress(), NetOld.GetMaskIpAddress(), C_RIPv2.IP_NH_THIS, 16);
                 P_RIPv2.InsertEntry(Pckt, order++, IR_Old);
             }
 
-            I_RIPv2 IR_New = new I_RIPv2(NetNew.GetNetworkAddress(), NetNew.GetMaskIpAddress(), IPAddress.Parse("0.0.0.0"), 0);
+            I_RIPv2 IR_New = new I_RIPv2(NetNew.GetNetworkAddress(), NetNew.GetMaskIpAddress(), C_RIPv2.IP_NH_THIS, 0);
             P_RIPv2.InsertEntry(Pckt, order, IR_New);
 
             return Pckt;
@@ -182,7 +207,7 @@ namespace MC_132RTR.Model.Packet
             P_RIPv2 Pckt = new P_RIPv2(null);
             Pckt.InitializeRIPv2(false);
 
-            I_RIPv2 IR = new I_RIPv2(Net.GetNetworkAddress(), Net.GetMaskIpAddress(), IPAddress.Parse("0.0.0.0"), Metrics);
+            I_RIPv2 IR = new I_RIPv2(Net.GetNetworkAddress(), Net.GetMaskIpAddress(), C_RIPv2.IP_NH_THIS, Metrics);
             P_RIPv2.InsertEntry(Pckt, 0, IR);
 
             return Pckt;

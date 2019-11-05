@@ -61,8 +61,10 @@ namespace MC_132RTR.Model.Packet.Items
 
         private void DetermineUsability()
         {
-            if (Ip == null || Mask == null || NextHop == null || 
-                Metric == uint.MaxValue || Id != 2 || RouteTag != 0)
+            if (Ip == null || Mask == null 
+                || NextHop == null || Metric == uint.MaxValue
+                || (Id != 2 && Id != 0) || RouteTag != 0
+                )
                 Usable = false;
             else
                 Usable = true;
