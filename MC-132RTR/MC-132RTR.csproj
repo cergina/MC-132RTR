@@ -72,6 +72,7 @@
   <ItemGroup>
     <Compile Include="Controller\Middleman\Middleman.cs" />
     <Compile Include="Model\Packet\IPv4_Checking.cs" />
+    <Compile Include="Model\Packet\Items\I_RIPv2.cs" />
     <Compile Include="Model\Packet\P_Routing.cs" />
     <Compile Include="RouterForm.cs">
       <SubType>Form</SubType>

@@ -1,4 +1,5 @@
 ﻿using MC_132RTR.Model.Packet;
+using MC_132RTR.Model.Packet.Items;
 using PacketDotNet;
 using SharpPcap;
 
@@ -59,6 +60,11 @@ namespace MC_132RTR.Model.Core
         {
             for (int i=0; i< PR.EntriesCount; i++)
             {
+                I_RIPv2 IR = new I_RIPv2(i, PR);
+
+                if (!IR.Usable)
+                    continue;
+                
                 // TODO
             }
         }
@@ -67,6 +73,11 @@ namespace MC_132RTR.Model.Core
         {
             for (int i = 0; i < PR.EntriesCount; i++)
             {
+                I_RIPv2 IR = new I_RIPv2(i, PR);
+
+                if (!IR.Usable)
+                    continue;
+
                 // TODO
             }
         }
