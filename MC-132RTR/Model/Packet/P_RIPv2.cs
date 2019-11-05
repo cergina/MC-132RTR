@@ -52,6 +52,8 @@ namespace MC_132RTR.Model.Packet
         IPv4Packet Pckt_IPv4 = null;
         UdpPacket Pckt_Udp = null;
 
+
+        /*                   CONSTRUCTOR                        */
         public P_RIPv2(byte[] BytesFromOutside)
         {
             if (BytesFromOutside == null)
@@ -62,13 +64,18 @@ namespace MC_132RTR.Model.Packet
             UpdateCountsOfEntries();
         }
 
-        // basic header validation
-        public static bool ValidateHeader(P_RIPv2 PR)
+        /*                      PUBLIC                          */
+        public static void BeforeSend(P_RIPv2 PR, out bool Ok)
         {
-            if (PR.CT == 0 || PR.Ver != 2 || PR.MBZ != 0)
-                return false;
+            Ok = false;
 
-            return true;
+            if (Validate(PR))
+                Ok = true;
+        }
+
+        public static int CalculateStartByte(int order)
+        {
+            return P_RIPv2.HEADER_BYTES + (order * P_RIPv2.ENTRY_BYTES);
         }
 
         public static bool Validate(P_RIPv2 PR)
@@ -79,6 +86,7 @@ namespace MC_132RTR.Model.Packet
             return true;
         }
 
+        // PARSING
         public static void UponArrival(P_RIPv2 PR, out bool Okay)
         {
             Okay = false;
@@ -90,60 +98,18 @@ namespace MC_132RTR.Model.Packet
                 Okay = true;
         }
 
-        // GENERAL
-        private void UpdateCountsOfEntries()
-        {
-            EntriesCount = (Bytes.Length - HEADER_BYTES) / ENTRY_BYTES;
-        }
-
-        // PARSING 
-        public void FromBytesFillObject(byte[] BytesFromOutside)
-        {
-            Bytes = BytesFromOutside;
-            // TODO
-        }
-
 
         // CRAFTING
-
-        public static void BeforeSend(P_RIPv2 PR, out bool Ok)
-        {
-            if (!Validate(PR))
-            {
-                Ok = false;
-                return;
-            }
-
-            Ok = true;
-        }
-
-        public int GetNumberOfRoutesInside()
-        {
-            if (Bytes == null)
-                return -1;
-
-            return (Bytes.Length - HEADER_BYTES) / ENTRY_BYTES;
-        }
-
-
-        public void InitializeRIPv2(bool Request_or_Reply)
-        {
-            CT = (Request_or_Reply == true) ? (byte)1 : (byte)2;
-            Ver = 2;
-            MBZ = 0;
-
-            // Insert into packet
-            Packet.Insertor.Insert(Bytes, 0, CT);
-            Packet.Insertor.Insert(Bytes, 1, Ver);
-            Packet.Insertor.Insert(Bytes, 2, MBZ);
-        }
-
-        public static P_RIPv2 CraftRequest()
+        public static P_RIPv2 CraftRequest(IPAddress NetworkIp)
         {
             P_RIPv2 Pckt = new P_RIPv2(null);
             Pckt.InitializeRIPv2(true);
 
-            throw new NotSupportedException();
+            IPAddress AllZero = IPAddress.Parse("0.0.0.0");
+
+            P_RIPv2.InsertEntry(Pckt, 0, new I_RIPv2(NetworkIp, AllZero, AllZero, 0));
+
+            return Pckt;
         }
 
         public static List<P_RIPv2> CraftPeriodicResponses(Device ForThisDevice)
@@ -184,7 +150,6 @@ namespace MC_132RTR.Model.Packet
             if (Pckt.GetNumberOfRoutesInside() > 0)
                 ListToReturn.Add(Pckt);
 
-
             return ListToReturn;
         }
 
@@ -211,13 +176,50 @@ namespace MC_132RTR.Model.Packet
 
         public static P_RIPv2 CraftImmediateResponse(Network Net, uint Metrics)
         {
+            if (Net == null)
+                return null;
+
             P_RIPv2 Pckt = new P_RIPv2(null);
             Pckt.InitializeRIPv2(false);
 
-            throw new NotSupportedException();
+            I_RIPv2 IR = new I_RIPv2(Net.GetNetworkAddress(), Net.GetMaskIpAddress(), IPAddress.Parse("0.0.0.0"), Metrics);
+            P_RIPv2.InsertEntry(Pckt, 0, IR);
+
+            return Pckt;
+        }
+        
+        /*                   PRIVATE                          */
+        private void FromBytesFillObject(byte[] BytesFromOutside)
+        {
+            Bytes = BytesFromOutside;
         }
 
-        public static P_RIPv2 InsertEntry(P_RIPv2 PR, int order, I_RIPv2 IR)
+        private void InitializeRIPv2(bool Request_or_Reply)
+        {
+            CT = (Request_or_Reply == true) ? (byte)1 : (byte)2;
+            Ver = 2;
+            MBZ = 0;
+
+            // Insert into packet
+            Packet.Insertor.Insert(Bytes, 0, CT);
+            Packet.Insertor.Insert(Bytes, 1, Ver);
+            Packet.Insertor.Insert(Bytes, 2, MBZ);
+        }
+
+        private static bool ValidateHeader(P_RIPv2 PR)
+        {
+            if (PR.CT == 0 || PR.Ver != 2 || PR.MBZ != 0)
+                return false;
+
+            return true;
+        }
+
+        private void UpdateCountsOfEntries()
+        {
+            EntriesCount = (Bytes.Length - HEADER_BYTES) / ENTRY_BYTES;
+        }
+
+        private static P_RIPv2 InsertEntry(P_RIPv2 PR, int order, I_RIPv2 IR)
         {
             int StartB = CalculateStartByte(order);
             int TypesYet = 0;
@@ -233,14 +235,26 @@ namespace MC_132RTR.Model.Packet
             Insertor.Insert(PR.Bytes, StartB + TypesYet, IR.NextHop); // NextHop
             TypesYet += 4;
             Insertor.Insert(PR.Bytes, StartB + TypesYet, IR.Metric); // Metric
-            
+
             return PR;
         }
 
-        public static int CalculateStartByte(int order)
+        private int GetNumberOfRoutesInside()
         {
-            return P_RIPv2.HEADER_BYTES + (order * P_RIPv2.ENTRY_BYTES);
+            if (Bytes == null)
+                return -1;
+
+            return (Bytes.Length - HEADER_BYTES) / ENTRY_BYTES;
         }
+
+
+
+
+
+
+
+
+
 
         /*public bool IsPartOfThisProtocol(Device Dev_Received, EthernetPacket Pckt_Eth, IPv4Packet Pckt)
         {
@@ -276,7 +290,5 @@ namespace MC_132RTR.Model.Packet
 
             return false;
         }*/
-
-
     }
 }
