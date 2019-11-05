@@ -26,7 +26,7 @@ namespace MC_132RTR.Model.Packet.Items
         {
             try
             {
-                int StartByte = P_RIPv2.HEADER_BYTES + (order * P_RIPv2.ENTRY_BYTES);
+                int StartByte = P_RIPv2.CalculateStartByte(order);
                 int TypesYet = 0;
 
                 Id = (ushort)Extractor.Extract(PR.Bytes, StartByte + TypesYet, typeof(ushort));
@@ -67,5 +67,7 @@ namespace MC_132RTR.Model.Packet.Items
             else
                 Usable = true;
         }
+
+
     }
 }

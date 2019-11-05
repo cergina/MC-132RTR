@@ -1,4 +1,5 @@
 ﻿using MC_132RTR.Model.Core;
+using MC_132RTR.Model.Packet.Items;
 using MC_132RTR.Model.Support;
 using MC_132RTR.Model.Table;
 using MC_132RTR.Model.TablePrimitive;
@@ -116,41 +117,6 @@ namespace MC_132RTR.Model.Packet
             Ok = true;
         }
 
-        /*public bool IsPartOfThisProtocol(Device Dev_Received, EthernetPacket Pckt_Eth, IPv4Packet Pckt)
-        {
-            this.Pckt_Eth = Pckt_Eth;
-            this.Pckt_IPv4 = Pckt;
-
-            if (Pckt_Eth == null || Pckt_IPv4 == null)
-                return false;
-
-            if (Pckt_IPv4.Checksum == Pckt_IPv4.CalculateIPChecksum())
-                return false;
-
-            this.Pckt_Udp = (UdpPacket)Pckt_IPv4.Extract(typeof(UdpPacket));
-
-            if (Pckt_Udp == null || (Pckt_Udp.SourcePort != 520 && Pckt_Udp.DestinationPort != 520))
-                return false;
-
-            // it also has to match format of IP and MAC {unicast || multicast}
-            Byte[] Pckt_DestIp = Pckt_IPv4.DestinationAddress.GetAddressBytes();
-            Byte[] Pckt_DestMac = Pckt_Eth.DestinationHwAddress.GetAddressBytes();
-
-            Byte[] DestIp_MUL = IPAddress.Parse("224.0.0.9").GetAddressBytes();
-            Byte[] DestMac_MUL = PhysicalAddress.Parse("01-00-5E-00-00-09").GetAddressBytes();
-
-            byte[] IP_Dev = Dev_Received.Network.GetNetworkAddress().GetAddressBytes();
-            byte[] MAC_Dev = Dev_Received.ICapDev.MacAddress.GetAddressBytes();
-
-            if (Pckt_DestIp.SequenceEqual(IP_Dev))
-                return true;
-
-            if (Pckt_DestIp.SequenceEqual(DestIp_MUL) && Pckt_DestMac.SequenceEqual(DestMac_MUL))
-                return true;
-
-            return false;
-        }*/
-
         public int GetNumberOfRoutesInside()
         {
             if (Bytes == null)
@@ -208,11 +174,11 @@ namespace MC_132RTR.Model.Packet
                     Curr_RouteIndex = 0;
                 }
 
-                int StartB = HEADER_BYTES + (Curr_RouteIndex++ * ENTRY_BYTES);
                 uint MetricToUse = (TPR.Metric >= 16) ? (uint)16 : TPR.Metric + 1;
 
                 // insert
-                Pckt = P_RIPv2.InsertEntry(Pckt, StartB, TPR.Net, MetricToUse);
+                I_RIPv2 IR = new I_RIPv2(TPR.Net.GetNetworkAddress(), TPR.Net.MaskAddress.SubnetMask, IPAddress.Parse("0.0.0.0"), MetricToUse);
+                Pckt = P_RIPv2.InsertEntry(Pckt, Curr_RouteIndex++, IR);
             }
 
             if (Pckt.GetNumberOfRoutesInside() > 0)
@@ -229,16 +195,16 @@ namespace MC_132RTR.Model.Packet
 
             P_RIPv2 Pckt = new P_RIPv2(null);
             Pckt.InitializeRIPv2(false);
-
-            int StartB = HEADER_BYTES + (0 * ENTRY_BYTES);
+            int order = 0;
 
             if (NetOld != null)
             {
-                InsertEntry(Pckt, StartB, NetOld, (uint)16);
-                StartB += ENTRY_BYTES;
+                I_RIPv2 IR_Old = new I_RIPv2(NetOld.GetNetworkAddress(), NetOld.GetMaskIpAddress(), IPAddress.Parse("0.0.0.0"), 16);
+                P_RIPv2.InsertEntry(Pckt, order++, IR_Old);
             }
 
-            InsertEntry(Pckt, StartB, NetNew, (uint)0);
+            I_RIPv2 IR_New = new I_RIPv2(NetNew.GetNetworkAddress(), NetNew.GetMaskIpAddress(), IPAddress.Parse("0.0.0.0"), 0);
+            P_RIPv2.InsertEntry(Pckt, order, IR_New);
 
             return Pckt;
         }
@@ -251,29 +217,66 @@ namespace MC_132RTR.Model.Packet
             throw new NotSupportedException();
         }
 
-        public static P_RIPv2 InsertEntry(P_RIPv2 Pckt, int StartB, Network Net, uint MetricToUse)
+        public static P_RIPv2 InsertEntry(P_RIPv2 PR, int order, I_RIPv2 IR)
         {
-            Insertor.Insert(Pckt.Bytes,
-                    StartB + 0,
-                    (ushort)2); // AFI
-            Insertor.Insert(Pckt.Bytes,
-                StartB + sizeof(ushort),
-                (ushort)0); // RouteTag
-            Insertor.Insert(Pckt.Bytes,
-                StartB + 2 * sizeof(ushort),
-                Net.GetNetworkAddress()); // IP
-            Insertor.Insert(Pckt.Bytes,
-                StartB + 2 * sizeof(ushort) + 4,
-                Net.MaskAddress.SubnetMask); // Mask
-            Insertor.Insert(Pckt.Bytes,
-                StartB + 2 * sizeof(ushort) + 2 * 4,
-                IPAddress.Parse("0.0.0.0")); // Mark this as next hop
-            Insertor.Insert(Pckt.Bytes,
-                StartB + 2 * sizeof(ushort) + 3 * 4,
-                MetricToUse);
+            int StartB = CalculateStartByte(order);
+            int TypesYet = 0;
 
-            return Pckt;
+            Insertor.Insert(PR.Bytes, StartB + TypesYet, IR.Id); // AFI
+            TypesYet += sizeof(ushort);
+            Insertor.Insert(PR.Bytes, StartB + TypesYet, IR.RouteTag); // RouteTag
+            TypesYet += sizeof(ushort);
+            Insertor.Insert(PR.Bytes, StartB + TypesYet, IR.Ip); // Ip
+            TypesYet += 4;
+            Insertor.Insert(PR.Bytes, StartB + TypesYet, IR.Mask); // Mask
+            TypesYet += 4;
+            Insertor.Insert(PR.Bytes, StartB + TypesYet, IR.NextHop); // NextHop
+            TypesYet += 4;
+            Insertor.Insert(PR.Bytes, StartB + TypesYet, IR.Metric); // Metric
+            
+            return PR;
         }
+
+        public static int CalculateStartByte(int order)
+        {
+            return P_RIPv2.HEADER_BYTES + (order * P_RIPv2.ENTRY_BYTES);
+        }
+
+        /*public bool IsPartOfThisProtocol(Device Dev_Received, EthernetPacket Pckt_Eth, IPv4Packet Pckt)
+        {
+            this.Pckt_Eth = Pckt_Eth;
+            this.Pckt_IPv4 = Pckt;
+
+            if (Pckt_Eth == null || Pckt_IPv4 == null)
+                return false;
+
+            if (Pckt_IPv4.Checksum == Pckt_IPv4.CalculateIPChecksum())
+                return false;
+
+            this.Pckt_Udp = (UdpPacket)Pckt_IPv4.Extract(typeof(UdpPacket));
+
+            if (Pckt_Udp == null || (Pckt_Udp.SourcePort != 520 && Pckt_Udp.DestinationPort != 520))
+                return false;
+
+            // it also has to match format of IP and MAC {unicast || multicast}
+            Byte[] Pckt_DestIp = Pckt_IPv4.DestinationAddress.GetAddressBytes();
+            Byte[] Pckt_DestMac = Pckt_Eth.DestinationHwAddress.GetAddressBytes();
+
+            Byte[] DestIp_MUL = IPAddress.Parse("224.0.0.9").GetAddressBytes();
+            Byte[] DestMac_MUL = PhysicalAddress.Parse("01-00-5E-00-00-09").GetAddressBytes();
+
+            byte[] IP_Dev = Dev_Received.Network.GetNetworkAddress().GetAddressBytes();
+            byte[] MAC_Dev = Dev_Received.ICapDev.MacAddress.GetAddressBytes();
+
+            if (Pckt_DestIp.SequenceEqual(IP_Dev))
+                return true;
+
+            if (Pckt_DestIp.SequenceEqual(DestIp_MUL) && Pckt_DestMac.SequenceEqual(DestMac_MUL))
+                return true;
+
+            return false;
+        }*/
+
 
     }
 }

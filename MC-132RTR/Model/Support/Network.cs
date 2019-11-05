@@ -62,6 +62,11 @@ namespace MC_132RTR.Model.Support
             return new IPAddress(networkAddress);
         }
 
+        public IPAddress GetMaskIpAddress()
+        {
+            return MaskAddress.SubnetMask;
+        }
+
         /***
          * Created because too many references to general network were used
          */

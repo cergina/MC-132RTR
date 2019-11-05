@@ -58,7 +58,7 @@ namespace MC_132RTR.Model.Core
 
         private void ProcessRequest(P_RIPv2 PR, Device RecDev)
         {
-            for (int i=0; i< PR.EntriesCount; i++)
+            for (int i=0; i < PR.EntriesCount; i++)
             {
                 I_RIPv2 IR = new I_RIPv2(i, PR);
 
@@ -66,6 +66,7 @@ namespace MC_132RTR.Model.Core
                     continue;
                 
                 // TODO
+
             }
         }
 
@@ -79,6 +80,7 @@ namespace MC_132RTR.Model.Core
                     continue;
 
                 // TODO
+
             }
         }
     }
