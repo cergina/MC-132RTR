@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
 using System.Text;
 using System.Threading.Tasks;
 using MC_132RTR.Controller.Middleman;
@@ -22,6 +23,19 @@ namespace MC_132RTR.Model.Table
 
         // entries of 
         public List<TP_RIPv2> Table = new List<TP_RIPv2>(); 
+
+        /*                Table stuff                   */
+        public uint MetricsForRoute(IPAddress SubnetIp, IPAddress MaskIp)
+        {
+            Network Subnet = new Network(SubnetIp, new Mask(MaskIp));
+            
+            if (Subnet.IsCorrect())
+                foreach (TP_RIPv2 TPR in Table.ToList())
+                    if (TPR.Net.Equals(Subnet))
+                        return TPR.Metric;
+
+            return TP_RIPv2.INFINITY;
+        }
 
         // generic stuff
         public static T_RIPv2 GetInstance()

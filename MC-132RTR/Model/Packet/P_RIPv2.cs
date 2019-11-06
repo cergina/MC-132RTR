@@ -199,6 +199,24 @@ namespace MC_132RTR.Model.Packet
             return Pckt;
         }
 
+        public static P_RIPv2 CraftResponseUponRequest(P_RIPv2 PR_Req)
+        {
+            P_RIPv2 PR_New = new P_RIPv2(null);
+            PR_New.InitializeRIPv2(false);
+            
+            for (int i_req = 0; i_req < PR_Req.EntriesCount; i_req++)
+            {
+                I_RIPv2 IR = new I_RIPv2(i_req, PR_Req);
+
+                I_RIPv2 IR_New = new I_RIPv2(IR.Ip, IR.Mask, C_RIPv2.IP_NH_THIS,
+                    T_RIPv2.GetInstance().MetricsForRoute(IR.Ip, IR.Mask));
+
+                P_RIPv2.InsertEntry(PR_New, i_req, IR_New);
+            }
+
+            return PR_New;
+        }
+
         public static P_RIPv2 CraftImmediateResponse(Network Net, uint Metrics)
         {
             if (Net == null)

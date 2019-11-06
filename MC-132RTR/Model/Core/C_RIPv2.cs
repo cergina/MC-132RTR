@@ -1,5 +1,6 @@
 ﻿using MC_132RTR.Model.Packet;
 using MC_132RTR.Model.Packet.Items;
+using MC_132RTR.Model.TablePrimitive;
 using PacketDotNet;
 using SharpPcap;
 using System.Collections.Generic;
@@ -56,7 +57,7 @@ namespace MC_132RTR.Model.Core
             switch(PR.CT)
             {
                 case 1:
-                    ProcessRequest(Ipv4, PR, ReceivalDev);
+                    ProcessRequest(PR, ReceivalDev);
                     break;
                 case 2:
                     ProcessResponse(PR, ReceivalDev);
@@ -66,38 +67,44 @@ namespace MC_132RTR.Model.Core
             }
         }
 
-        /*        REQUEST CORE PROCESSING            */
-        private void ProcessRequest(IPv4Packet IPv4, P_RIPv2 PR, Device RecDev)
+        /*                                            */
+        /*         REQUEST CORE PROCESSING            */
+        /*                                            */
+        private void ProcessRequest(P_RIPv2 PR, Device RecDev)
         {
-            I_RIPv2 RFCR_IR = new I_RIPv2(0, PR);
-            if (IsRequestForClassicResponse(PR.EntriesCount, RFCR_IR.Id, RFCR_IR.Metric))
-            {
-                List<P_RIPv2> LPR = P_RIPv2.CraftPeriodicResponses(RecDev);
-                P_RIPv2.SendList(RecDev, LPR, IP_RIPv2, MAC_RIPv2);
-                return;
-            }
-
-            for (int i=0; i < PR.EntriesCount; i++)
-            {
-                I_RIPv2 IR = new I_RIPv2(i, PR);
-
-                if (!IR.Usable)
-                    continue;
-                
-                // TODO
-
-            }
+            if (IsRequestForClassicResponse(PR))
+                ClassicResponse(RecDev);
+            else
+                ResponseUponRequest(PR, RecDev);
         }
 
-        private bool IsRequestForClassicResponse(int EntCnt, ushort Id, uint Metric)
+        // Is functions Request
+        private bool IsRequestForClassicResponse(P_RIPv2 PR)
         {
-            if (EntCnt == 1 && Id == 0 && Metric == 16)
+            I_RIPv2 RFCR_IR = new I_RIPv2(0, PR);
+
+            if (PR.EntriesCount == 1 && RFCR_IR.Id == 0 && RFCR_IR.Metric == TP_RIPv2.INFINITY)
                 return true;
 
             return false;
         }
 
+        // Do sth functions Request
+        private void ClassicResponse(Device RecDev)
+        {
+            List<P_RIPv2> LPR = P_RIPv2.CraftPeriodicResponses(RecDev);
+            P_RIPv2.SendList(RecDev, LPR, IP_RIPv2, MAC_RIPv2);
+        }
+
+        private void ResponseUponRequest(P_RIPv2 PR, Device RecDev)
+        {
+            P_RIPv2 PR_Resp = P_RIPv2.CraftResponseUponRequest(PR);
+            P_RIPv2.Send(RecDev, PR_Resp, IP_RIPv2, MAC_RIPv2);
+        }
+
+        /*                                            */
         /*        RESPONSE CORE PROCESSING            */
+        /*                                            */
         private void ProcessResponse(P_RIPv2 PR, Device RecDev)
         {
             for (int i = 0; i < PR.EntriesCount; i++)
@@ -108,8 +115,12 @@ namespace MC_132RTR.Model.Core
                     continue;
 
                 // TODO
-
             }
         }
+
+        // Is functions Response
+
+        // Do sth functions Response
+
     }
 }

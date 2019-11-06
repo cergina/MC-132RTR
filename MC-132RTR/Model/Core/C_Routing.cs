@@ -87,11 +87,11 @@ namespace MC_132RTR.Model.Core
             if (ArpPckt != null)
                 return Middleman.ARP;
 
-            //
+            // It cant be sourced from this Router
             IPv4Packet Ipv4 = Extractor.GetIPv4Packet(EthPckt);
-            if (Ipv4 == null || !Ipv4.ValidChecksum)
+            if (Ipv4 == null || !Ipv4.ValidChecksum || Device.PairDeviceWithIpAddress(Ipv4.SourceAddress) != null)
                 return Middleman.NOTHING;
-
+            
             // Check if it is RIP, hence it has to be UDP first
             UdpPacket Udp = Extractor.GetUdpPacket(Ipv4);
             if (Udp != null)
