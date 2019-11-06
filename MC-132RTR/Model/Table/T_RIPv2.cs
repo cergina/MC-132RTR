@@ -5,6 +5,7 @@ using System.Net;
 using System.Text;
 using System.Threading.Tasks;
 using MC_132RTR.Controller.Middleman;
+using MC_132RTR.Model.Packet.Items;
 using MC_132RTR.Model.Support;
 using MC_132RTR.Model.TablePrimitive;
 
@@ -22,9 +23,15 @@ namespace MC_132RTR.Model.Table
         public static int HOLDDOWN { private set; get; } = 180;
 
         // entries of 
-        public List<TP_RIPv2> Table = new List<TP_RIPv2>(); 
+        public List<TP_RIPv2> Table = new List<TP_RIPv2>();
 
         /*                Table stuff                   */
+        public void AttemptToIntegrateOutsider(out bool Trigger, I_RIPv2 IR, IPAddress RealNextHop)
+        {
+            // TODO
+            Trigger = false;
+        }
+
         public uint MetricsForRoute(IPAddress SubnetIp, IPAddress MaskIp)
         {
             Network Subnet = new Network(SubnetIp, new Mask(MaskIp));

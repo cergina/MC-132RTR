@@ -1,5 +1,6 @@
 ﻿using MC_132RTR.Model.Packet;
 using MC_132RTR.Model.Packet.Items;
+using MC_132RTR.Model.Table;
 using MC_132RTR.Model.TablePrimitive;
 using PacketDotNet;
 using SharpPcap;
@@ -60,7 +61,7 @@ namespace MC_132RTR.Model.Core
                     ProcessRequest(PR, ReceivalDev);
                     break;
                 case 2:
-                    ProcessResponse(PR, ReceivalDev);
+                    ProcessResponse(PR, Ipv4, ReceivalDev);
                     break;
                 default:
                     break;
@@ -105,22 +106,21 @@ namespace MC_132RTR.Model.Core
         /*                                            */
         /*        RESPONSE CORE PROCESSING            */
         /*                                            */
-        private void ProcessResponse(P_RIPv2 PR, Device RecDev)
+        private void ProcessResponse(P_RIPv2 PR, IPv4Packet IP4, Device RecDev)
         {
-            for (int i = 0; i < PR.EntriesCount; i++)
-            {
-                I_RIPv2 IR = new I_RIPv2(i, PR);
+            //When better route is found, or no longer available is, triggered update need be sent
+            P_RIPv2 PR_Trig = P_RIPv2.CraftTriggeredResponse(RecDev, PR, IP4);
 
-                if (!IR.Usable)
-                    continue;
+            if (PR_Trig.EntriesCount == 0)
+                return;
 
-                // TODO
-            }
+            List<Device> L_Dev = Device.GetListOfUsableDevicesExceptOf(RecDev);
+            foreach (Device D in L_Dev)
+                P_RIPv2.Send(D, PR_Trig, C_RIPv2.IP_RIPv2, C_RIPv2.MAC_RIPv2);
         }
 
         // Is functions Response
 
         // Do sth functions Response
-
     }
 }

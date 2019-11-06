@@ -1,4 +1,5 @@
 ﻿using MC_132RTR.Model.Support;
+using MC_132RTR.Model.TablePrimitive;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -59,6 +60,14 @@ namespace MC_132RTR.Model.Packet.Items
             DetermineUsability();
         }
 
+        public I_RIPv2 PrepareToResend()
+        {
+            if ((Metric + 1) <= TP_RIPv2.INFINITY)
+                ++Metric;
+
+            return this;
+        }
+
         private void DetermineUsability()
         {
             if (Ip == null || Mask == null 
@@ -69,7 +78,5 @@ namespace MC_132RTR.Model.Packet.Items
             else
                 Usable = true;
         }
-
-
     }
 }

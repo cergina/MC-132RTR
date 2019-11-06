@@ -137,6 +137,29 @@ namespace MC_132RTR.Model.Packet
             return Pckt;
         }
 
+        public static P_RIPv2 CraftTriggeredResponse(Device CameFromDev, P_RIPv2 PR, IPv4Packet IPv4)
+        {
+            P_RIPv2 PR_Trig = new P_RIPv2(null);
+            PR_Trig.InitializeRIPv2(false);
+
+            for (int i = 0, order = 0; i < PR.EntriesCount; i++)
+            {
+                I_RIPv2 IR = new I_RIPv2(i, PR);
+
+                if ((!IR.Usable) || (IR.Metric == TP_RIPv2.INFINITY))
+                    continue;
+
+                IPAddress ViaIp = (IR.NextHop.Equals(C_RIPv2.IP_NH_THIS)) ? IPv4.SourceAddress : IR.NextHop;
+
+                T_RIPv2.GetInstance().AttemptToIntegrateOutsider(out bool Trigger, IR, ViaIp);
+
+                if (Trigger)
+                    P_RIPv2.InsertEntry(PR_Trig, order++, IR.PrepareToResend());
+            }
+
+            return PR_Trig;
+        }
+
         public static List<P_RIPv2> CraftPeriodicResponses(Device ForThisDevice)
         {
             if (ForThisDevice.DEV_DisabledRIPv2)
