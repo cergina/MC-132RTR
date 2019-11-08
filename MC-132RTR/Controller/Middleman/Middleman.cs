@@ -81,24 +81,6 @@ namespace MC_132RTR.Controller.Middleman
             }
         }
 
-        /*public static void TryToChangeDevice(Device Dev, String Ip, String Mask)
-        {
-            if (Dev == null || String.IsNullOrEmpty(Ip) || String.IsNullOrEmpty(Mask))
-                return;
-
-            throw new NotImplementedException();
-        }*/
-
-        public static Device GetDeviceByICapture(SharpPcap.ICaptureDevice ICapDev)
-        {
-            throw new NotImplementedException();
-        }
-
-        public static Device GetDeviceByShorterName(String ShorterName)
-        {
-            return Device.PairDeviceWithToString(ShorterName);
-        }
-
         // RIPv2
         public static void EnableRIPv2OnDevice(string DevS)
         {
@@ -126,16 +108,6 @@ namespace MC_132RTR.Controller.Middleman
         }
 
         // ARP
-        public static PhysicalAddress ResolveMacForIp(IPAddress key)
-        {
-            TP_ARP TPA = T_ARP.GetInstance().IpToMac(key, false);
-
-            if (TPA != null)
-                return (TPA.Mac);
-            else
-                return null;
-        }
-
         public static void SendTestArp(String Ip, int DevNum)
         {
             try

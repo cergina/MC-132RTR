@@ -1,4 +1,5 @@
-﻿using MC_132RTR.Model.Support;
+﻿using MC_132RTR.Model.Packet;
+using MC_132RTR.Model.Support;
 using MC_132RTR.Model.Table;
 using MC_132RTR.Model.TablePrimitive;
 using PacketDotNet;
@@ -71,8 +72,8 @@ namespace MC_132RTR.Model.Core
                 Network CurrentNetwork = Network;
                 Network = NewProposedNet;
 
-                T_Routing.GetInstance().UpdateConnected(CurrentNetwork, NewProposedNet.GetNetworkGeneral());
-                SendInfoAboutChange(CurrentNetwork.GetNetworkGeneral(), NewProposedNet.GetNetworkGeneral());
+                if (T_Routing.GetInstance().UpdateConnected(CurrentNetwork, NewProposedNet.GetNetworkGeneral()))
+                    SendInfoAboutChange(CurrentNetwork.GetNetworkGeneral(), NewProposedNet.GetNetworkGeneral());
             } else if (Network.IsInSameSubnet(NewProposedNet))
             {
                 // if just IP address changed 
@@ -98,7 +99,11 @@ namespace MC_132RTR.Model.Core
             if (!RouterRunning)
                 return;
 
-            Logging.OutALWAYS("Send info about change not implemented yet");
+            P_RIPv2 PR = P_RIPv2.CraftResponse_ConnectedChange(CurrentNetwork, NewProposedNet);
+            if (PR != null)
+                foreach (Device D in ListOfDevices)
+                    if (!D.DEV_Disabled && !D.DEV_DisabledRIPv2)
+                        P_RIPv2.Send(D, PR, C_RIPv2.IP_RIPv2, C_RIPv2.MAC_RIPv2);
         }
 
         // This function's used to send directly ethernet, from upper layers or ARP

@@ -66,16 +66,17 @@ namespace MC_132RTR.Model.Table
             Routes.Remove(TPR);
         }
 
-        public void UpdateConnected(Network CurrentNetwork, Network NewProposedNet)
+        public bool UpdateConnected(Network CurrentNetwork, Network NewProposedNet)
         {
             foreach (TP_Routing TPR in Routes)
             {
                 if (TPR.Type == TP_Routing.DIRECT && TPR.Subnet.Equals(CurrentNetwork.GetNetworkGeneral()))
                 {
                     TPR.UpdateNetwork(NewProposedNet);
-                    return;
+                    return true;
                 }
             }
+            return false;
         }
 
         /*
