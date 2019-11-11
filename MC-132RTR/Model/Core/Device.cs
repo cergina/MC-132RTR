@@ -36,9 +36,7 @@ namespace MC_132RTR.Model.Core
         }
 
         public static List<Device> GetListOfUsableDevicesExceptOf(Device DevT)
-        {
-            return ListOfDevices.FindAll(T_Dev => T_Dev.IsUsable() && !DevT.Equals(T_Dev));
-        }
+            => ListOfDevices.FindAll(T_Dev => T_Dev.IsUsable() && !DevT.Equals(T_Dev));
 
         private void SetWhenRouterOff(Network TmpNet, string DevName)
         {
