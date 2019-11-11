@@ -139,8 +139,8 @@ namespace MC_132RTR.Model.Packet
 
         public static P_RIPv2 CraftTriggeredResponse(Device CameFromDev, P_RIPv2 PR, IPv4Packet IPv4)
         {
+            bool AlreadyTriggered = false;
             P_RIPv2 PR_Trig = new P_RIPv2(null);
-            PR_Trig.InitializeRIPv2(false);
 
             for (int i = 0, order = 0; i < PR.EntriesCount; i++)
             {
@@ -153,10 +153,16 @@ namespace MC_132RTR.Model.Packet
 
                 T_RIPv2.GetInstance().AttemptToIntegrateOutsider(out bool Trigger, IR, ViaIp);
 
-                if (Trigger)
+                // Determine whether to insert into Triggered packet or to create it or nothing
+                if (Trigger && AlreadyTriggered)
                     P_RIPv2.InsertEntry(PR_Trig, order++, IR.PrepareToResend());
+                else if (Trigger && !AlreadyTriggered)
+                {
+                    PR_Trig.InitializeRIPv2(false);
+                    AlreadyTriggered = true;
+                }
             }
-
+            
             return PR_Trig;
         }
 
@@ -188,7 +194,7 @@ namespace MC_132RTR.Model.Packet
                     Curr_RouteIndex = 0;
                 }
 
-                uint MetricToUse = (TPR.Metric >= TP_RIPv2.INFINITY) ? TP_RIPv2.INFINITY : TPR.Metric + 1;
+                uint MetricToUse = (TPR.Metrics >= TP_RIPv2.INFINITY) ? TP_RIPv2.INFINITY : TPR.Metrics + 1;
 
                 // insert
                 I_RIPv2 IR = new I_RIPv2(TPR.Net.GetNetworkAddress(), TPR.Net.MaskAddress.SubnetMask, C_RIPv2.IP_NH_THIS, MetricToUse);

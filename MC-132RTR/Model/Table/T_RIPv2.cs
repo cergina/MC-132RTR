@@ -1,10 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using System.Net;
-using System.Text;
-using System.Threading.Tasks;
 using MC_132RTR.Controller.Middleman;
+using MC_132RTR.Model.Core;
 using MC_132RTR.Model.Packet.Items;
 using MC_132RTR.Model.Support;
 using MC_132RTR.Model.TablePrimitive;
@@ -28,10 +26,15 @@ namespace MC_132RTR.Model.Table
         /*                Table stuff                   */
         public void AttemptToIntegrateOutsider(out bool Trigger, I_RIPv2 IR, IPAddress RealNextHop)
         {
-            // TODO
             Trigger = false;
+            if (Device.PairDeviceWithIpAddress(RealNextHop) != null)
+                return;
+
+            TP_RIPv2 TPR = GetRouteWithNetwork(IR.Ip, IR.Mask);
+            //TODO
         }
 
+        
         public uint MetricsForRoute(IPAddress SubnetIp, IPAddress MaskIp)
         {
             Network Subnet = new Network(SubnetIp, new Mask(MaskIp));
@@ -39,9 +42,20 @@ namespace MC_132RTR.Model.Table
             if (Subnet.IsCorrect())
                 foreach (TP_RIPv2 TPR in Table.ToList())
                     if (TPR.Net.Equals(Subnet))
-                        return TPR.Metric;
+                        return TPR.Metrics;
 
             return TP_RIPv2.INFINITY;
+        }
+
+        public TP_RIPv2 GetRouteWithNetwork(IPAddress NetIp, IPAddress NetMaskIp)
+        {
+            Network Net = new Network(NetIp, new Mask(NetMaskIp));
+
+            foreach (TP_RIPv2 TPR in Table)
+                if (TPR.Equals(Net))
+                    return TPR;
+
+            return null;
         }
 
         // generic stuff
