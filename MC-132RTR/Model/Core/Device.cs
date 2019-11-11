@@ -123,32 +123,13 @@ namespace MC_132RTR.Model.Core
         }
 
         public void EnableRIPv2()
-        {
-            if (DEV_Disabled || (!DEV_DisabledRIPv2))
-                return;
-
-            DEV_DisabledRIPv2 = false;
-        }
+            => DEV_DisabledRIPv2 = (DEV_Disabled) ? true : false;
 
         public void DisableRIPv2()
-        {
-            if (DEV_Disabled || DEV_DisabledRIPv2)
-                return;
-
-            DEV_DisabledRIPv2 = true;
-        }
+            => DEV_DisabledRIPv2 = true;
 
         private bool TurnOn()
-        {
-            if (DEV_Disabled)
-            {
-                bool ToReturn = IsUsable();
-                DEV_Disabled = !ToReturn;
-                return ToReturn;
-            }
-
-            return true;
-        }
+            => DEV_Disabled ? DEV_Disabled = !IsUsable() : true;
 
         public bool IsUsable()
             => (Network != null && Network.IsCorrect());
@@ -232,29 +213,10 @@ namespace MC_132RTR.Model.Core
         }
 
         public static int CountActiveDevices()
-        {
-            int TmpActive = 0;
-
-            foreach(var TmpDev in ListOfDevices)
-            {
-                if (!TmpDev.DEV_Disabled)
-                    ++TmpActive;
-            }
-
-            return TmpActive;
-        }
+            => ListOfDevices.FindAll(TmpDev => !TmpDev.DEV_Disabled).Count;
 
         public static int CountUsableDevices()
-        {
-            int TmpUsable = 0;
-            foreach(var TmpDev in ListOfDevices)
-            {
-                if (TmpDev.IsUsable())
-                    ++TmpUsable;
-            }
-
-            return TmpUsable;
-        }
+            => ListOfDevices.FindAll(TmpDev => TmpDev.IsUsable()).Count;
 
         public static Device PairDeviceWithIpAddress(IPAddress Ip) 
             => ListOfDevices.Find(Dev => Dev.IsUsable() && Dev.Network.Address.Equals(Ip));
@@ -263,19 +225,19 @@ namespace MC_132RTR.Model.Core
             => (number == 0 || number == 1) ? PairDeviceWithToString(number == 0 ? Dev1 : Dev2) : null;
 
         public static Device PairDeviceWithMacAdress(PhysicalAddress MacAddress)
-            => ListOfDevices.Find(Dev => Dev.ICapDev.Started && Dev.ICapDev.MacAddress != null && Dev.ICapDev.MacAddress.Equals(MacAddress));
+            => ListOfDevices.Find(Dev => Dev.ICapDev.MacAddress != null && Dev.ICapDev.Started && Dev.ICapDev.MacAddress.Equals(MacAddress));
 
         public static Device PairDeviceWithICaptureDevice(ICaptureDevice ICapDev)
-            => ListOfDevices.Find(Dev => ICapDev != null && ICapDev.MacAddress != null && ICapDev.MacAddress.Equals(Dev.ICapDev.MacAddress));
+            => ListOfDevices.Find(Dev => ICapDev != null && ICapDev.MacAddress != null && Dev.ICapDev.Started && ICapDev.MacAddress.Equals(Dev.ICapDev.MacAddress));
 
         public static Device PairDeviceWithToString(String Name)
             => ListOfDevices.Find(Dev => Dev.ToString().Equals(Name));
 
         public string IpToString()
-            => (Network != null) ? Network.ToString() : "IP is null";
+            => (Network != null) ? "IP: " + Network.ToString() : "IP is null";
 
         public string MacToString() 
-            => (ICapDev != null && ICapDev.Started) ? BitConverter.ToString(ICapDev.MacAddress.GetAddressBytes()) : "MAC is null";
+            => (ICapDev != null && ICapDev.Started) ? "MAC: " + BitConverter.ToString(ICapDev.MacAddress.GetAddressBytes()) : "MAC is null";
         
         override
         public string ToString() 

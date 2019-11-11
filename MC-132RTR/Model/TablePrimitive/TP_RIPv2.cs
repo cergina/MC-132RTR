@@ -31,7 +31,7 @@ namespace MC_132RTR.Model.TablePrimitive
         }
 
         public bool Equals(Network TPRNet)
-            => (TPRNet != null && Net.Equals(TPRNet));
+            => (TPRNet != null && TPRNet.Equals(Net));
 
         private void RegularStuff()
         {

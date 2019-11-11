@@ -255,7 +255,8 @@ namespace MC_132RTR.Controller.Middleman
         public static List<ListViewItem> GetListViewItemsRIP()
         {
             List<ListViewItem> ListTmp = new List<ListViewItem>();
-            
+
+            throw new NotImplementedException();
             return ListTmp;
         }
 

@@ -99,8 +99,6 @@ namespace MC_132RTR.Model.Core
         private void Handle_Response(ARPPacket Pckt, Device ReceivalDev)
         {
             PhysicalAddress Mac_Source = Pckt.SenderHardwareAddress;
-            //PhysicalAddress Mac_Target = Pckt.TargetHardwareAddress;
-            //IPAddress Ip_Target = Pckt.TargetProtocolAddress;
             IPAddress Ip_Source = Pckt.SenderProtocolAddress;
 
             IPAddress Ip_Desired = Ip_Source;
@@ -124,8 +122,6 @@ namespace MC_132RTR.Model.Core
         }
 
         public void AttemptToRemoveFromList(IPAddress IpToRemove)
-        {
-            AwaitingList.Remove(IpToRemove);
-        }
+            => AwaitingList.Remove(IpToRemove);
     }
 }

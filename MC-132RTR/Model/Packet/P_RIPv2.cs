@@ -79,11 +79,13 @@ namespace MC_132RTR.Model.Packet
             UdpPacket Udp = new UdpPacket(520, 520);
             Udp.PayloadData = PR.Bytes;
 
-            IPv4Packet IP4 = new IPv4Packet(ExitDev.Network.Address, IP_Target);
-            IP4.PayloadData = Udp.Bytes;
-            IP4.TimeToLive = 1;
-            IP4.Protocol = IPProtocolType.UDP;
-            IP4.PayloadLength = (ushort)Udp.Length;
+            IPv4Packet IP4 = new IPv4Packet(ExitDev.Network.Address, IP_Target)
+            {
+                PayloadData = Udp.Bytes,
+                TimeToLive = 1,
+                Protocol = IPProtocolType.UDP,
+                PayloadLength = (ushort)Udp.Length
+            };
             IP4.UpdateIPChecksum();
 
             ExitDev.SendViaThisDevice(MAC, EthernetPacketType.IpV4, IP4.Bytes);
@@ -245,9 +247,7 @@ namespace MC_132RTR.Model.Packet
         
         /*                   PRIVATE                          */
         private void FromBytesFillObject(byte[] BytesFromOutside)
-        {
-            Bytes = BytesFromOutside;
-        }
+            => Bytes = BytesFromOutside;
 
         private void InitializeRIPv2(bool Request_or_Reply)
         {
@@ -269,10 +269,9 @@ namespace MC_132RTR.Model.Packet
             return true;
         }
 
-        private void UpdateCountsOfEntries()
-        {
-            EntriesCount = (Bytes.Length - HEADER_BYTES) / ENTRY_BYTES;
-        }
+        private void UpdateCountsOfEntries() 
+            => EntriesCount = (Bytes.Length - HEADER_BYTES) / ENTRY_BYTES;
+        
 
         private static P_RIPv2 InsertEntry(P_RIPv2 PR, int order, I_RIPv2 IR)
         {
@@ -295,12 +294,7 @@ namespace MC_132RTR.Model.Packet
         }
 
         private int GetNumberOfRoutesInside()
-        {
-            if (Bytes == null)
-                return -1;
-
-            return (Bytes.Length - HEADER_BYTES) / ENTRY_BYTES;
-        }
+            => (Bytes == null) ? -1 : (Bytes.Length - HEADER_BYTES) / ENTRY_BYTES;
 
 
 
