@@ -25,13 +25,8 @@ namespace MC_132RTR.Model.Core
         {
         }
 
-        public static C_RIPv2 GetInstance()
-        {
-            if (Instance == null)
-                Instance = new C_RIPv2();
-
-            return Instance;
-        }
+        public static C_RIPv2 GetInstance() 
+            => Instance ?? (Instance = new C_RIPv2());
 
         public void ChangeTimer(int Adept)
         {

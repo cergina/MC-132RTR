@@ -28,18 +28,13 @@ namespace MC_132RTR.Model.Support
         }
 
         public static void OutALWAYS(String Output)
-        {
-            Console.WriteLine(Output);
-        }
+            => Console.WriteLine(Output);
 
         public static void ChangeMode()
-        {
-            Instance.DebugMode = !Instance.DebugMode;
-        }
+            => Instance.DebugMode = !Instance.DebugMode;
 
-        public static bool DisplayMode()
-        {
-            return Instance.DebugMode;
-        }
+        public static bool DisplayMode() 
+            => Instance.DebugMode;
+        
     }
 }

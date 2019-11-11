@@ -28,7 +28,6 @@ namespace MC_132RTR.Model.TablePrimitive
 
         private void RegularStuff()
         {
-            
         }
 
         public ListViewItem ToListViewItem()
@@ -43,9 +42,7 @@ namespace MC_132RTR.Model.TablePrimitive
 
         // Updates
         public void UpdateNetwork(Network NetworkNew)
-        {
-            Subnet = NetworkNew;
-        }
+            => Subnet = NetworkNew;
 
         public Boolean Equals(TP_Routing TPR)
         {
@@ -76,28 +73,13 @@ namespace MC_132RTR.Model.TablePrimitive
         }
 
         public bool CanBeRoutedDirectlyViaNextHop()
-        {
-            if (CanBeRoutedDirectly() && NextHopIp != null)
-                return true;
-
-            return false;
-        }
+            => (CanBeRoutedDirectly() && NextHopIp != null);
 
         public bool CanBeRoutedDirectly()
-        {
-            if (ExitDevice != null && ExitDevice.IsUsable())
-                return true;
-
-            return false;
-        }
+            => (ExitDevice != null && ExitDevice.IsUsable());
 
         public bool HasAtLeastNetHop()
-        {
-            if (NextHopIp == null)
-                return false;
-
-            return true;
-        }
+            => NextHopIp != null;
 
         /***
          * Two TP_Routing TPR's have to be passed, and at least one has 

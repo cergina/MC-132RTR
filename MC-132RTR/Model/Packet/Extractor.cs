@@ -60,24 +60,20 @@ namespace MC_132RTR.Model.Packet
             catch (Exception exc) { return null; }
         }
 
-        public static EthernetPacket GetEthPacket(PacketDotNet.Packet Pckt)
-        {
-            return (EthernetPacket)Pckt.Extract(typeof(EthernetPacket));
-        }
+        public static EthernetPacket GetEthPacket(PacketDotNet.Packet Pckt) 
+            => (EthernetPacket)Pckt.Extract(typeof(EthernetPacket));
+        
 
         public static IPv4Packet GetIPv4Packet(EthernetPacket EthPacket)
-        {
-            return (IPv4Packet)EthPacket.Extract(typeof(IPv4Packet));
-        }
+            => (IPv4Packet)EthPacket.Extract(typeof(IPv4Packet));
+        
 
         public static UdpPacket GetUdpPacket(IPv4Packet Ipv4Pckt)
-        {
-            return (UdpPacket)Ipv4Pckt.Extract(typeof(UdpPacket));
-        }
+            => (UdpPacket)Ipv4Pckt.Extract(typeof(UdpPacket));
+        
 
-        public static ARPPacket GetArpPacket(EthernetPacket EthPacket)
-        {
-            return (ARPPacket)EthPacket.Extract(typeof(ARPPacket));
-        }
+        public static ARPPacket GetArpPacket(EthernetPacket EthPacket) 
+            => (ARPPacket)EthPacket.Extract(typeof(ARPPacket));
+        
     }
 }

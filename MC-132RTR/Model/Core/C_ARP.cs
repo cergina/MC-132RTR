@@ -24,12 +24,7 @@ namespace MC_132RTR.Model.Core
         }
 
         public static C_ARP GetInstance()
-        {
-            if (Instance == null)
-                Instance = new C_ARP();
-
-            return Instance;
-        }
+            => Instance ?? (Instance = new C_ARP());
 
         public void ExplorationVia(IPAddress IpToExplore, int DevNum, bool All)
         {
@@ -43,8 +38,6 @@ namespace MC_132RTR.Model.Core
 
         public void Handle(CaptureEventArgs e, Device ReceivalDev)
         {
-            Logging.Out("ARP dosol");
-
             PacketDotNet.Packet Layer0 = Packet.Extractor.GetPacket(e.Packet);
             EthernetPacket EthPckt = Packet.Extractor.GetEthPacket(Layer0);
             ARPPacket ArpPckt = Packet.Extractor.GetArpPacket(EthPckt);
@@ -86,12 +79,7 @@ namespace MC_132RTR.Model.Core
         }
 
         private bool RequestForMyself(Device ForThisDevice, IPAddress Ip_Target)
-        {
-            if (Ip_Target != null && Ip_Target.Equals(ForThisDevice.Network.Address))
-                return true;
-
-            return false;
-        }
+            => (Ip_Target != null && Ip_Target.Equals(ForThisDevice.Network.Address));
 
         private bool RequestThatIKnow(Device AvoidThisDevice, IPAddress Ip_Target)
         {

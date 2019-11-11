@@ -23,12 +23,7 @@ namespace MC_132RTR.Model.Packet
         }
 
         public static bool Validate(P_Routing PR)
-        {
-            if (PR == null || (!IPv4_Checking.Check(PR.Ipv4)))
-                return false;
-            
-            return true;
-        }
+            => (PR != null && IPv4_Checking.Check(PR.Ipv4));
 
         private static bool ValidateBeforeSend(P_Routing PR)
         {

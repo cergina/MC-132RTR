@@ -123,15 +123,13 @@ namespace MC_132RTR.Model.Core
 
         public static void GeneralHandle(CaptureEventArgs e, Device ReceivalDev)
         {
-            bool Okay = true;
-
             PacketDotNet.Packet Layer0 = Extractor.GetPacket(e.Packet);
             EthernetPacket EthPckt = Extractor.GetEthPacket(Layer0);
             IPv4Packet Ipv4 = Extractor.GetIPv4Packet(EthPckt);
 
             P_Routing PR = new P_Routing(Ipv4);
 
-            P_Routing.UponArrival(PR, out Okay);
+            P_Routing.UponArrival(PR, out bool Okay);
             if (!Okay)
                 return;
 

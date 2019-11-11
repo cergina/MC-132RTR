@@ -60,12 +60,7 @@ namespace MC_132RTR.Model.Table
 
         // generic stuff
         public static T_RIPv2 GetInstance()
-        {
-            if (Instance == null)
-                Instance = new T_RIPv2();
-
-            return Instance;
-        }
+            => Instance ?? (Instance = new T_RIPv2());
 
         public void ChangeTimer(int Which, int Adept)
         {

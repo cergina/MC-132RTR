@@ -32,23 +32,12 @@ namespace MC_132RTR.Controller.Middleman
         }
 
         public static string GetStartState()
-        {
-            if (Device.RouterRunning)
-                return RouterForm.STOP;
-            else
-                return RouterForm.START_UP;
-        }
+            => Device.RouterRunning ? RouterForm.STOP : RouterForm.START_UP;
 
         public static string GetPowerState()
-        {
-            if (RouterForm.Instance == null)
-                return "Initial";
-
-            if (RouterForm.Instance.PowerState.Equals(RouterForm.POWER_UP))
-                return RouterForm.POWER_OFF;
-            else
-                return RouterForm.POWER_UP;
-        }
+            => RouterForm.Instance == null ? 
+                "Initial" : (RouterForm.Instance.PowerState.Equals(RouterForm.POWER_UP) ? 
+                    RouterForm.POWER_OFF : RouterForm.POWER_UP);
 
         public static void TryToStartRouter()
         {

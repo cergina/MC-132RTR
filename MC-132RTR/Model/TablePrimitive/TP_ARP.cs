@@ -23,9 +23,7 @@ namespace MC_132RTR.Model.TablePrimitive
         }
 
         public void RegularOperation()
-        {
-            Decrement();
-        }
+            => Decrement();
 
         public void Renew(PhysicalAddress value, Device ReceivalDev)
         {
@@ -41,17 +39,10 @@ namespace MC_132RTR.Model.TablePrimitive
         }
 
         public void Deactivate()
-        {
-            this.Validity = 0;
-        }
+            => this.Validity = 0;
 
         public bool IsPassable()
-        {
-            if (Validity > 0)
-                return true;
-            else
-                return false;
-        }
+            => Validity > 0;
 
         public ListViewItem ToListViewItem()
         {

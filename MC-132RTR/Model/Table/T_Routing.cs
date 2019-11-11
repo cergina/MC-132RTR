@@ -17,7 +17,6 @@ namespace MC_132RTR.Model.Table
 
         private T_Routing()
         {
-
         }
 
         public void AttemtToAdd_Static(Network SubNet, IPAddress Nh, int ExitDevNumber)
@@ -39,12 +38,7 @@ namespace MC_132RTR.Model.Table
         }
 
         public static T_Routing GetInstance()
-        {
-            if (Instance == null)
-                Instance = new T_Routing();
-
-            return Instance;
-        }
+            => Instance ?? (Instance = new T_Routing());
 
         public bool AddToRoutes(TP_Routing TPR)
         {
@@ -62,9 +56,7 @@ namespace MC_132RTR.Model.Table
         }
 
         public void RemoveFromRoutes(TP_Routing TPR)
-        {
-            Routes.Remove(TPR);
-        }
+            => Routes.Remove(TPR);
 
         public bool UpdateConnected(Network CurrentNetwork, Network NewProposedNet)
         {
@@ -83,15 +75,8 @@ namespace MC_132RTR.Model.Table
          * returns null if it's not in it
          */
         public TP_Routing IsSubnetInRoutes(Network Net)
-        {
-            foreach (TP_Routing TPR in Routes.ToList())
-            {
-                if (TPR.Subnet.Equals(Net))
-                    return TPR;
-            }
-
-            return null;
-        }
+            => Routes.Find(TPR => TPR.Subnet.Equals(Net));
+        
 
         public void DeepestMatchingSearch(IPAddress IpToSearch, out TP_Routing Chosen)
         {
@@ -144,13 +129,9 @@ namespace MC_132RTR.Model.Table
         }
 
         public void ClearAllRoutes()
-        {
-            Routes.Clear();
-        }
+            => Routes.Clear();
 
         public List<TP_Routing> GetListForView()
-        {
-            return Routes.ToList();
-        }
+            => Routes.ToList();
     }
 }

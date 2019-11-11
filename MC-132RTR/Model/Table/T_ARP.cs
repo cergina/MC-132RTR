@@ -45,8 +45,7 @@ namespace MC_132RTR.Model.Table
 
         public TP_ARP IpToMac(IPAddress key, bool Always)
         {
-            TP_ARP value;
-            if (Dict.TryGetValue(key, out value))
+            if (Dict.TryGetValue(key, out TP_ARP value))
             {
                 if (Always || (value != null && value.IsPassable()))
                 {
@@ -60,40 +59,26 @@ namespace MC_132RTR.Model.Table
 
         public bool AttemptAddElement(IPAddress key, PhysicalAddress value, Device ReceivalDev)
         {
+            bool Ret = !Dict.ContainsKey(key);
+
             // If doesn't contain just add
-            if (!Dict.ContainsKey(key))
-            {
-                Dict.Add(key, new TP_ARP(key, value, ReceivalDev));
-                return true;
-            } else
-            {
+            if (Ret)
+                Dict.Add(key, new TP_ARP(key, value, ReceivalDev)); 
+            else
                 Dict[key].Renew(value, ReceivalDev);
-            }
 
             // not necessary to detect when to insert in other cases
-            return false;
+            return Ret;
         }
 
         public void RemoveAllElements()
-        {
-            Dict.Clear();
-        }
+            => Dict.Clear();
 
         public void ChangeTimeout(int Adept)
-        {
-            if (Adept <= 0)
-                return;
-
-            TIMEOUT = Adept;
-        }
+            => TIMEOUT = (Adept > 0) ? Adept : TIMEOUT;
 
         public static T_ARP GetInstance()
-        {
-            if (Instance == null)
-                Instance = new T_ARP();
-
-            return Instance;
-        }
+            => Instance ?? (Instance = new T_ARP());
 
         public void Thread_Operation()
         {

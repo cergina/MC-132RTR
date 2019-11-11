@@ -49,7 +49,7 @@ namespace MC_132RTR.Model.Packet
 
         public int EntriesCount { get; private set; }
         public byte[] Bytes = null;
-        
+
         /*                   CONSTRUCTOR                        */
         public P_RIPv2(byte[] BytesFromOutside)
         {
@@ -63,20 +63,10 @@ namespace MC_132RTR.Model.Packet
 
         /*                      PUBLIC                          */
         public static void BeforeSend(P_RIPv2 PR, out bool Ok)
-        {
-            Ok = false;
-
-            if (Validate(PR))
-                Ok = true;
-        }
+            => Ok = (Validate(PR));
 
         public static void SendList(Device ExitDev, List<P_RIPv2> LPR, IPAddress IP_Target, PhysicalAddress MAC)
-        {
-            foreach(P_RIPv2 PR in LPR)
-            {
-                Send(ExitDev, PR, IP_Target, MAC);
-            }
-        }
+            => LPR.ForEach(PR => { Send(ExitDev, PR, IP_Target, MAC); });
 
         public static void Send(Device ExitDev, P_RIPv2 PR, IPAddress IP_Target, PhysicalAddress MAC)
         {
@@ -100,17 +90,10 @@ namespace MC_132RTR.Model.Packet
         }
 
         public static int CalculateStartByte(int order)
-        {
-            return P_RIPv2.HEADER_BYTES + (order * P_RIPv2.ENTRY_BYTES);
-        }
+            => P_RIPv2.HEADER_BYTES + (order * P_RIPv2.ENTRY_BYTES);
 
         public static bool Validate(P_RIPv2 PR)
-        {
-            if (!ValidateHeader(PR))
-                return false;
-
-            return true;
-        }
+            => ValidateHeader(PR); // && more stuff ? maybe?
 
         // PARSING
         public static IPv4Packet UponArrival(P_RIPv2 PR, IPv4Packet IPv4, out bool Okay)

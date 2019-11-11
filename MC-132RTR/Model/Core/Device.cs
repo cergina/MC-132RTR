@@ -37,15 +37,7 @@ namespace MC_132RTR.Model.Core
 
         public static List<Device> GetListOfUsableDevicesExceptOf(Device DevT)
         {
-            List<Device> L_Dev = new List<Device>();
-
-            foreach (Device T_Dev in ListOfDevices)
-            {
-                if (T_Dev.IsUsable() && (!DevT.Equals(T_Dev)))
-                    L_Dev.Add(T_Dev);
-            }
-
-            return L_Dev;
+            return ListOfDevices.FindAll(T_Dev => T_Dev.IsUsable() && !DevT.Equals(T_Dev));
         }
 
         private void SetWhenRouterOff(Network TmpNet, string DevName)
@@ -159,13 +151,7 @@ namespace MC_132RTR.Model.Core
         }
 
         public bool IsUsable()
-        {
-            if (Network != null && Network.IsCorrect())
-            {
-                return true;
-            }
-            return false;
-        }
+            => (Network != null && Network.IsCorrect());
 
         private void TurnOff()
         {
@@ -178,15 +164,7 @@ namespace MC_132RTR.Model.Core
         }
 
         private string GetDescription(bool UseShorterDescription)
-        {
-            if (UseShorterDescription)
-            {
-                //return ICapDev.Description.Split('\'')[0].Substring(14);
-                return ICapDev.Description.Split('\'')[1];
-            }
-                
-            return ICapDev.Description;
-        }
+            => (UseShorterDescription) ? ICapDev.Description.Split('\'')[1] : ICapDev.Description;
 
         // GENERAL router stuff
 
@@ -278,121 +256,35 @@ namespace MC_132RTR.Model.Core
             return TmpUsable;
         }
 
-        public static Device PairDeviceWithIpAddress(IPAddress Ip)
-        {
-            if (Ip == null)
-                return null;
-
-            foreach(Device Dev in ListOfDevices)
-            {
-                if (!Dev.IsUsable())
-                    continue;
-
-                if (Ip.Equals(Dev.Network.Address))
-                    return Dev;
-            }
-
-            return null;
-        }
+        public static Device PairDeviceWithIpAddress(IPAddress Ip) 
+            => ListOfDevices.Find(Dev => Dev.IsUsable() && Dev.Network.Address.Equals(Ip));
 
         public static Device PairDeviceWithNumber(int number)
-        {
-            if (number == 0)
-                return PairDeviceWithToString(Dev1);
-
-            if (number == 1)
-                return PairDeviceWithToString(Dev2);
-
-            return null;
-        }
+            => (number == 0 || number == 1) ? PairDeviceWithToString(number == 0 ? Dev1 : Dev2) : null;
 
         public static Device PairDeviceWithMacAdress(PhysicalAddress MacAddress)
-        {
-            if (MacAddress == null)
-                return null;
-
-            foreach(Device Dev in ListOfDevices)
-            {
-                if (!Dev.ICapDev.Started)
-                    continue;
-
-                Logging.Out("MacAddress: " + MacAddress + " , ICAP: " + Dev.ICapDev.MacAddress);
-
-                if (MacAddress.Equals(Dev.ICapDev.MacAddress))
-                    return Dev;
-            }
-
-            return null;
-        }
+            => ListOfDevices.Find(Dev => Dev.ICapDev.Started && Dev.ICapDev.MacAddress != null && Dev.ICapDev.MacAddress.Equals(MacAddress));
 
         public static Device PairDeviceWithICaptureDevice(ICaptureDevice ICapDev)
-        {
-            if (ICapDev == null || ICapDev.MacAddress == null)
-                return null;
-
-            foreach(Device Dev in ListOfDevices)
-            {
-                if (!Dev.ICapDev.Started)
-                    continue;
-
-                if (ICapDev.MacAddress.Equals(Dev.ICapDev.MacAddress))
-                    return Dev;
-            }
-
-            return null;
-        }
+            => ListOfDevices.Find(Dev => ICapDev != null && ICapDev.MacAddress != null && ICapDev.MacAddress.Equals(Dev.ICapDev.MacAddress));
 
         public static Device PairDeviceWithToString(String Name)
-        {
-            if (String.IsNullOrEmpty(Name))
-                return null;
-
-            foreach(Device Dev in ListOfDevices)
-            {
-                if (Name.Equals(Dev.ToString()))
-                    return Dev;
-            }
-
-            return null;
-        }
+            => ListOfDevices.Find(Dev => Dev.ToString().Equals(Name));
 
         public string IpToString()
-        {
-            //(Tmp.Network != null) ? "IP: " + Tmp.Network.ToString() : "null";
-            if (Network != null)
-                return "IP: " + Network.ToString();
+            => (Network != null) ? Network.ToString() : "IP is null";
 
-            return "IP is null";
-        }
-
-        public string MacToString()
-        {
-            if (ICapDev != null && ICapDev.Started)
-                return "MAC: " + BitConverter.ToString(ICapDev.MacAddress.GetAddressBytes());
-            
-            return "MAC is null";
-        }
-
+        public string MacToString() 
+            => (ICapDev != null && ICapDev.Started) ? BitConverter.ToString(ICapDev.MacAddress.GetAddressBytes()) : "MAC is null";
+        
         override
-        public string ToString()
-        {
-            return "[" + Id + "] " + GetDescription(true);
-        }
+        public string ToString() 
+            => "[" + Id + "] " + GetDescription(true);
 
         public bool Equals(Device Dev)
-        {
-            if (ToString().Equals(Dev.ToString()))
-                return true;
-
-            return false;
-        }
+            => (ToString().Equals(Dev.ToString()));
 
         public bool Equals(string desc)
-        {
-            if (ToString().Equals(desc))
-                return true;
-
-            return false;
-        }
+            => ToString().Equals(desc);
     }
 }
