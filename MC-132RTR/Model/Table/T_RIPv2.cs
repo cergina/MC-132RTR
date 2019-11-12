@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using System.Net;
+using System.Threading;
 using MC_132RTR.Controller.Middleman;
 using MC_132RTR.Model.Core;
 using MC_132RTR.Model.Packet.Items;
@@ -24,16 +25,61 @@ namespace MC_132RTR.Model.Table
         public List<TP_RIPv2> Table = new List<TP_RIPv2>();
 
         /*                Table stuff                   */
-        public void AttemptToIntegrateOutsider(out bool Trigger, I_RIPv2 IR, IPAddress RealNextHop)
+        public void AttemptToIntegrateOutsider(out bool Trigger, I_RIPv2 IR, IPAddress RealNextHop, Device LearnedViaDev)
         {
             Trigger = false;
             if (Device.PairDeviceWithIpAddress(RealNextHop) != null)
                 return;
 
             TP_RIPv2 TPR = GetRouteWithNetwork(IR.Ip, IR.Mask);
-            //TODO
+            Network ProposedNetwork = new Network(IR.Ip, new Mask(IR.Mask));
+
+            // Case: unknown Route, usable metrics => learn, send triggered update
+            if (TPR == null && IR.Metric < TP_RIPv2.INFINITY)
+            {
+                Table.Add(new TP_RIPv2(ProposedNetwork, IR.Metric, RealNextHop, LearnedViaDev));
+                Trigger = true;
+                return;
+            }
+
+            // Case: known Route
+            if (TPR != null)
+               switch(KnownRoute_JobDetermination(TPR, RealNextHop, IR.Metric))
+               {
+                   case "SAME_SOURCE_DIFF_METRICS_UPDATE":
+                       Trigger = true;
+                       TPR.Update(ProposedNetwork, IR.Metric, RealNextHop, TPR.OriginDevice);
+                       break;
+                   case "SAME_SOURCE_SAME_METRICS_UPDATE":
+                        TPR.Renew();
+                       break;
+                   case "SAME_SOURCE_UNAVAILABLE_UPDATE":
+                        Trigger = true;
+                        TPR.BlockUpdates();
+                       break;
+                   case "DIFFERENT_SOURCE_BETTER_METRICS_UPDATE":
+                        Trigger = true;
+                        TPR.Update(ProposedNetwork, IR.Metric, RealNextHop, LearnedViaDev);
+                        break;
+                    default:
+                        break;
+               }
         }
 
+        private string KnownRoute_JobDetermination(TP_RIPv2 TPR, IPAddress NextHop, uint NewMetrics)
+        {
+            if (NextHop.Equals(TPR.NextHopIp))
+                if (NewMetrics == TP_RIPv2.INFINITY)
+                    return "SAME_SOURCE_UNAVAILABLE_UPDATE";
+                else if (NewMetrics == TPR.Metrics)
+                    return "SAME_SOURCE_SAME_METRICS_UPDATE";
+                else
+                    return "SAME_SOURCE_DIFF_METRICS_UPDATE";
+            else if (NewMetrics < TPR.Metrics)
+                return "DIFFERENT_SOURCE_BETTER_METRICS_UPDATE";
+            else
+                return "";
+        }
         
         public uint MetricsForRoute(IPAddress SubnetIp, IPAddress MaskIp)
         {
@@ -79,6 +125,22 @@ namespace MC_132RTR.Model.Table
                 case Middleman.RIPv2_HOLDDOWN:
                     HOLDDOWN = Adept;
                     break;
+            }
+        }
+
+        public void Thread_Operation()
+        {
+            while (true)
+            {
+                if (Device.FinalShutdown)
+                    break;
+
+                if (Device.RouterRunning)
+                {
+                    Table.ForEach(TPR => TPR.RegularOperation());
+                }
+
+                Thread.Sleep(1000);
             }
         }
     }

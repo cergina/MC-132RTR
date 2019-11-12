@@ -136,15 +136,18 @@ namespace MC_132RTR.Model.Packet
 
                 IPAddress ViaIp = (IR.NextHop.Equals(C_RIPv2.IP_NH_THIS)) ? IPv4.SourceAddress : IR.NextHop;
 
-                T_RIPv2.GetInstance().AttemptToIntegrateOutsider(out bool Trigger, IR, ViaIp);
+                T_RIPv2.GetInstance().AttemptToIntegrateOutsider(out bool Trigger, IR, ViaIp, CameFromDev);
 
                 // Determine whether to insert into Triggered packet or to create it or nothing
-                if (Trigger && AlreadyTriggered)
-                    P_RIPv2.InsertEntry(PR_Trig, order++, IR.PrepareToResend());
-                else if (Trigger && !AlreadyTriggered)
+                if (Trigger)
                 {
-                    PR_Trig.InitializeRIPv2(false);
-                    AlreadyTriggered = true;
+                    if (!AlreadyTriggered)
+                    {
+                        PR_Trig.InitializeRIPv2(false);
+                        AlreadyTriggered = true;
+                    }
+
+                    P_RIPv2.InsertEntry(PR_Trig, order++, IR.PrepareToResend());
                 }
             }
             

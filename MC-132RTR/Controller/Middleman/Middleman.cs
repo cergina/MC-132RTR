@@ -300,6 +300,7 @@ namespace MC_132RTR.Controller.Middleman
             new Thread(() => T_ARP.GetInstance().Thread_Operation()) { IsBackground = true }.Start();
 
             // RIPv2
+            new Thread(() => T_RIPv2.GetInstance().Thread_Operation()) { IsBackground = true }.Start();
 
             // Routing
 

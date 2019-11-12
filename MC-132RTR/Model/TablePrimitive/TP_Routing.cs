@@ -26,7 +26,7 @@ namespace MC_132RTR.Model.TablePrimitive
             this.Subnet = SubNet;
         }
 
-        private void RegularStuff()
+        private void RegularOperation()
         {
         }
 
