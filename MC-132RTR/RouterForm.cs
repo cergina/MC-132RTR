@@ -13,8 +13,6 @@ namespace MC_132RTR
         // //////////////////
         // Atributes
         public static RouterForm Instance { private set; get; } = null;
-        private DateTime previousTime = DateTime.Now;
-        private readonly SynchronizationContext synchronizationContext;
 
         public String StartState { private set; get; }
         public const String START_UP = "START UP";
@@ -31,7 +29,6 @@ namespace MC_132RTR
             InitializeComponent();
             InitializeGui();
             Instance = this;
-            synchronizationContext = SynchronizationContext.Current;
         }
 
         // //////////////////
@@ -107,29 +104,15 @@ namespace MC_132RTR
         {
             // ARP
             ARPListView.Items.Clear();
-            Logging.Out("Method");
-            foreach (ListViewItem Item in Middleman.GetListViewItemsARP())
-            {
-                Logging.Out("Adding ARP");
-                ARPListView.Items.Add(Item);
-            }
-
+            Middleman.GetListViewItemsARP().ForEach(Item => ARPListView.Items.Add(Item));
+            
             // Routing
             RoutingListView.Items.Clear();
-
-            foreach (ListViewItem Item in Middleman.GetListViewItemsROUTE())
-            {
-                RoutingListView.Items.Add(Item);
-            }
-
+            Middleman.GetListViewItemsROUTE().ForEach(Item => RoutingListView.Items.Add(Item));
+            
             // RIP
-            //RIPListView
-            //ARPListView.Clear();
-
-            //foreach (ListViewItem Item in Middleman.GetListViewItemsRIP())
-            //{
-            //   //Rip ListView.Items.Add(Item);
-            //}
+            RIPListView.Items.Clear();
+            Middleman.GetListViewItemsRIP().ForEach(Item => RIPListView.Items.Add(Item));
         }
 
 
@@ -353,64 +336,5 @@ namespace MC_132RTR
 
             return whichNumberToUse;
         }
-
-
-
-
-
-
-
-
-        // ///////////////////////
-        // Useless
-        private void Dev2RIPv2CheckBox_CheckedChanged(object sender, EventArgs e)
-        {
-            // wont use
-        }
-        private void Dev2StatusCheckBox_CheckedChanged(object sender, EventArgs e)
-        {
-            // wont use
-        }
-        private async void ChangeButton_Click(object sender, EventArgs e)
-        {
-            changeButton.Enabled = false;
-
-            await Task.Run(() =>
-            {
-                int c = 0;
-                while (true)
-                {
-                    UpdateUI(c++);
-                }
-            });
-
-            changeButton.Enabled = true;
-        }
-        private void UpdateUI(int value)
-        {
-            var timeNow = DateTime.Now;
-
-            if ((DateTime.Now - previousTime).Milliseconds <= 250) return;
-
-            synchronizationContext.Post(new SendOrPostCallback(o =>
-            {
-                TimeLabel.Text = @"Ha " + (int)o;
-            }), value);
-
-            previousTime = timeNow;
-        }
-
-        /*private void DeactivateDevButton_Click(object sender, EventArgs e)
-        {
-            if (String.IsNullOrEmpty(DeviceRouterComboBOx.Text))
-                return;
-
-            Device ChosenDev = (Device)DeviceRouterComboBOx.SelectedItem;
-            DeviceRouterComboBOx.SelectedItem = null;
-
-            Middleman.TryToChangeDevice(ChosenDev, IPTextBox.Text, MaskTextBox.Text);
-            DefaultValues();
-            UpdateDeviceInfo();
-        }*/
     }
 }

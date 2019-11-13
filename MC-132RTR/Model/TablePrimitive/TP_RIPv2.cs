@@ -1,7 +1,9 @@
 ﻿using MC_132RTR.Model.Core;
 using MC_132RTR.Model.Support;
 using MC_132RTR.Model.Table;
+using System;
 using System.Net;
+using System.Windows.Forms;
 
 namespace MC_132RTR.Model.TablePrimitive
 {
@@ -70,11 +72,21 @@ namespace MC_132RTR.Model.TablePrimitive
             if (Flush > 0)
                 --Flush;
 
-            if (TemporaryDown())
-            {
-                if (Holddown > 0)
-                    --Holddown;
-            }
+            if (BlockedUpdate())
+                --Holddown;
+        }
+
+        public ListViewItem ToListViewItem()
+        {
+            String RIPNetworkColumn = Net.ToString();
+            String RIPNextHopColumn = (NextHopIp != null) ? NextHopIp.ToString() : "NO";
+            String RIPMetricsColumn = Metrics.ToString();
+            String RIPDeviceColumn = (OriginDevice != null) ? OriginDevice.Id : "NO";
+            String RIPInvalidColumn = Invalid.ToString();
+            String RIPHolddownColumn = Holddown.ToString();
+            String RIPFlushColumn = Flush.ToString();
+
+            return new ListViewItem(new string[] { RIPNetworkColumn, RIPNextHopColumn, RIPMetricsColumn, RIPDeviceColumn, RIPInvalidColumn, RIPHolddownColumn, RIPFlushColumn });
         }
 
         private bool BlockedUpdate()

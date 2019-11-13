@@ -90,9 +90,15 @@
             this.DeviceColumn = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.NextHopColumn = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.RipGB = new System.Windows.Forms.GroupBox();
+            this.RIPListView = new System.Windows.Forms.ListView();
+            this.RIPNetworkColumn = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.RIPNextHopColumn = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.RIPMetricsColumn = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.RIPDeviceColumn = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.RIPInvalidColumn = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.RIPHolddownColumn = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.RIPFlushColumn = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.ExtraGB = new System.Windows.Forms.GroupBox();
-            this.TimeLabel = new System.Windows.Forms.Label();
-            this.changeButton = new System.Windows.Forms.Button();
             this.Dev1GB.SuspendLayout();
             this.Dev2GB.SuspendLayout();
             this.RouterGB.SuspendLayout();
@@ -100,7 +106,7 @@
             this.TimersGB.SuspendLayout();
             this.ArpGB.SuspendLayout();
             this.RoutTabGB.SuspendLayout();
-            this.ExtraGB.SuspendLayout();
+            this.RipGB.SuspendLayout();
             this.SuspendLayout();
             // 
             // PowerButton
@@ -296,7 +302,6 @@
             this.Dev2RIPv2CheckBox.TabIndex = 9;
             this.Dev2RIPv2CheckBox.Text = "RIPv2";
             this.Dev2RIPv2CheckBox.UseVisualStyleBackColor = true;
-            this.Dev2RIPv2CheckBox.CheckedChanged += new System.EventHandler(this.Dev2RIPv2CheckBox_CheckedChanged);
             // 
             // Dev2Label
             // 
@@ -632,10 +637,10 @@
             this.ArpGB.Margin = new System.Windows.Forms.Padding(2);
             this.ArpGB.Name = "ArpGB";
             this.ArpGB.Padding = new System.Windows.Forms.Padding(2);
-            this.ArpGB.Size = new System.Drawing.Size(323, 249);
+            this.ArpGB.Size = new System.Drawing.Size(365, 249);
             this.ArpGB.TabIndex = 14;
             this.ArpGB.TabStop = false;
-            this.ArpGB.Text = "ARP";
+            this.ArpGB.Text = "ARP Table";
             // 
             // ARPClearButton
             // 
@@ -662,7 +667,7 @@
             this.ARPListView.HideSelection = false;
             this.ARPListView.Location = new System.Drawing.Point(5, 18);
             this.ARPListView.Name = "ARPListView";
-            this.ARPListView.Size = new System.Drawing.Size(314, 200);
+            this.ARPListView.Size = new System.Drawing.Size(354, 200);
             this.ARPListView.TabIndex = 33;
             this.ARPListView.UseCompatibleStateImageBehavior = false;
             this.ARPListView.View = System.Windows.Forms.View.Details;
@@ -732,9 +737,9 @@
             // RoutTabGB
             // 
             this.RoutTabGB.Controls.Add(this.RoutingListView);
-            this.RoutTabGB.Location = new System.Drawing.Point(602, 10);
+            this.RoutTabGB.Location = new System.Drawing.Point(643, 12);
             this.RoutTabGB.Name = "RoutTabGB";
-            this.RoutTabGB.Size = new System.Drawing.Size(489, 249);
+            this.RoutTabGB.Size = new System.Drawing.Size(519, 227);
             this.RoutTabGB.TabIndex = 15;
             this.RoutTabGB.TabStop = false;
             this.RoutTabGB.Text = "Routing Table";
@@ -751,7 +756,7 @@
             this.RoutingListView.HideSelection = false;
             this.RoutingListView.Location = new System.Drawing.Point(6, 18);
             this.RoutingListView.Name = "RoutingListView";
-            this.RoutingListView.Size = new System.Drawing.Size(475, 200);
+            this.RoutingListView.Size = new System.Drawing.Size(501, 200);
             this.RoutingListView.TabIndex = 35;
             this.RoutingListView.UseCompatibleStateImageBehavior = false;
             this.RoutingListView.View = System.Windows.Forms.View.Details;
@@ -778,17 +783,71 @@
             // 
             // RipGB
             // 
-            this.RipGB.Location = new System.Drawing.Point(643, 265);
+            this.RipGB.Controls.Add(this.RIPListView);
+            this.RipGB.Location = new System.Drawing.Point(643, 255);
             this.RipGB.Name = "RipGB";
-            this.RipGB.Size = new System.Drawing.Size(448, 236);
+            this.RipGB.Size = new System.Drawing.Size(519, 246);
             this.RipGB.TabIndex = 16;
             this.RipGB.TabStop = false;
-            this.RipGB.Text = "RIPv2";
+            this.RipGB.Text = "RIPv2 Table";
+            // 
+            // RIPListView
+            // 
+            this.RIPListView.BackColor = System.Drawing.SystemColors.ControlDarkDark;
+            this.RIPListView.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
+            this.RIPNetworkColumn,
+            this.RIPNextHopColumn,
+            this.RIPMetricsColumn,
+            this.RIPDeviceColumn,
+            this.RIPInvalidColumn,
+            this.RIPHolddownColumn,
+            this.RIPFlushColumn});
+            this.RIPListView.ForeColor = System.Drawing.SystemColors.InfoText;
+            this.RIPListView.HideSelection = false;
+            this.RIPListView.Location = new System.Drawing.Point(6, 19);
+            this.RIPListView.Name = "RIPListView";
+            this.RIPListView.Size = new System.Drawing.Size(507, 218);
+            this.RIPListView.TabIndex = 35;
+            this.RIPListView.UseCompatibleStateImageBehavior = false;
+            this.RIPListView.View = System.Windows.Forms.View.Details;
+            // 
+            // RIPNetworkColumn
+            // 
+            this.RIPNetworkColumn.Text = "Network";
+            this.RIPNetworkColumn.Width = 93;
+            // 
+            // RIPNextHopColumn
+            // 
+            this.RIPNextHopColumn.Text = "Next hop";
+            this.RIPNextHopColumn.Width = 73;
+            // 
+            // RIPMetricsColumn
+            // 
+            this.RIPMetricsColumn.Text = "Metrics";
+            this.RIPMetricsColumn.Width = 46;
+            // 
+            // RIPDeviceColumn
+            // 
+            this.RIPDeviceColumn.Text = "Device";
+            this.RIPDeviceColumn.Width = 82;
+            // 
+            // RIPInvalidColumn
+            // 
+            this.RIPInvalidColumn.Text = "Invalid";
+            this.RIPInvalidColumn.Width = 43;
+            // 
+            // RIPHolddownColumn
+            // 
+            this.RIPHolddownColumn.Text = "Holddown";
+            this.RIPHolddownColumn.Width = 64;
+            // 
+            // RIPFlushColumn
+            // 
+            this.RIPFlushColumn.Text = "Flush";
+            this.RIPFlushColumn.Width = 40;
             // 
             // ExtraGB
             // 
-            this.ExtraGB.Controls.Add(this.TimeLabel);
-            this.ExtraGB.Controls.Add(this.changeButton);
             this.ExtraGB.Location = new System.Drawing.Point(274, 268);
             this.ExtraGB.Name = "ExtraGB";
             this.ExtraGB.Size = new System.Drawing.Size(363, 151);
@@ -796,32 +855,11 @@
             this.ExtraGB.TabStop = false;
             this.ExtraGB.Text = "Extra";
             // 
-            // TimeLabel
-            // 
-            this.TimeLabel.AutoSize = true;
-            this.TimeLabel.Location = new System.Drawing.Point(5, 20);
-            this.TimeLabel.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
-            this.TimeLabel.Name = "TimeLabel";
-            this.TimeLabel.Size = new System.Drawing.Size(35, 13);
-            this.TimeLabel.TabIndex = 0;
-            this.TimeLabel.Text = "label4";
-            // 
-            // changeButton
-            // 
-            this.changeButton.Location = new System.Drawing.Point(45, 18);
-            this.changeButton.Margin = new System.Windows.Forms.Padding(2);
-            this.changeButton.Name = "changeButton";
-            this.changeButton.Size = new System.Drawing.Size(80, 19);
-            this.changeButton.TabIndex = 0;
-            this.changeButton.Text = "JUST TEST";
-            this.changeButton.UseVisualStyleBackColor = true;
-            this.changeButton.Click += new System.EventHandler(this.ChangeButton_Click);
-            // 
             // RouterForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1095, 510);
+            this.ClientSize = new System.Drawing.Size(1174, 510);
             this.Controls.Add(this.PowerButton);
             this.Controls.Add(this.ExtraGB);
             this.Controls.Add(this.RipGB);
@@ -848,8 +886,7 @@
             this.ArpGB.ResumeLayout(false);
             this.ArpGB.PerformLayout();
             this.RoutTabGB.ResumeLayout(false);
-            this.ExtraGB.ResumeLayout(false);
-            this.ExtraGB.PerformLayout();
+            this.RipGB.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }
@@ -917,10 +954,16 @@
         private System.Windows.Forms.ColumnHeader AdminDistanceColumn;
         private System.Windows.Forms.ColumnHeader DeviceColumn;
         private System.Windows.Forms.ColumnHeader NextHopColumn;
-        private System.Windows.Forms.Label TimeLabel;
-        private System.Windows.Forms.Button changeButton;
         private System.Windows.Forms.Label Dev1MacLabel;
         private System.Windows.Forms.Label Dev2MacLabel;
+        private System.Windows.Forms.ListView RIPListView;
+        private System.Windows.Forms.ColumnHeader RIPNetworkColumn;
+        private System.Windows.Forms.ColumnHeader RIPNextHopColumn;
+        private System.Windows.Forms.ColumnHeader RIPMetricsColumn;
+        private System.Windows.Forms.ColumnHeader RIPDeviceColumn;
+        private System.Windows.Forms.ColumnHeader RIPInvalidColumn;
+        private System.Windows.Forms.ColumnHeader RIPHolddownColumn;
+        private System.Windows.Forms.ColumnHeader RIPFlushColumn;
     }
 }
 

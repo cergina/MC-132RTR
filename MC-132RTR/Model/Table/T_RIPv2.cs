@@ -136,12 +136,13 @@ namespace MC_132RTR.Model.Table
                     break;
 
                 if (Device.RouterRunning)
-                {
                     Table.ForEach(TPR => TPR.RegularOperation());
-                }
 
                 Thread.Sleep(1000);
             }
         }
+
+        public List<TP_RIPv2> GetListForView()
+            => Table.ToList();
     }
 }

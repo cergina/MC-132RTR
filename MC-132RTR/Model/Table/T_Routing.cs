@@ -19,23 +19,14 @@ namespace MC_132RTR.Model.Table
         {
         }
 
-        public void AttemtToAdd_Static(Network SubNet, IPAddress Nh, int ExitDevNumber)
-        {
-            Device ExitDev = Device.PairDeviceWithNumber(ExitDevNumber);
-
-            AddToRoutes(new TP_Routing(TP_Routing.STATIC, ExitDev, SubNet.GetNetworkGeneral(), Nh));
-        }
+        public bool AttemtToAdd_Static(Network SubNet, IPAddress Nh, int ExitDevNumber)
+            => AddToRoutes(new TP_Routing(TP_Routing.STATIC, Device.PairDeviceWithNumber(ExitDevNumber), SubNet.GetNetworkGeneral(), Nh));
 
         public bool AttemtToAdd_Connected(Device ExitDev)
-        {
-            Network SubnetToUse = ExitDev.Network.GetNetworkGeneral();
-
-            return AddToRoutes(new TP_Routing(TP_Routing.DIRECT, ExitDev, SubnetToUse, null));
-        }
-
-        public void AttemtToAdd_Dynamic()
-        {
-        }
+            => AddToRoutes(new TP_Routing(TP_Routing.DIRECT, ExitDev, ExitDev.Network.GetNetworkGeneral(), null));
+        
+        public bool AttemtToAdd_Dynamic(TP_RIPv2 TPR)
+            => AddToRoutes(new TP_Routing(TP_Routing.RIP, TPR.OriginDevice, TPR.Net, TPR.NextHopIp));
 
         public static T_Routing GetInstance()
             => Instance ?? (Instance = new T_Routing());

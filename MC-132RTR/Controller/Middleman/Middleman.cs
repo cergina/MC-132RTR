@@ -41,18 +41,14 @@ namespace MC_132RTR.Controller.Middleman
 
         public static void TryToStartRouter()
         {
-            if (Device.RouterRunning || Device.CountUsableDevices() < 2)
-                return;
-
-            Device.StartRouter();
+            if (!Device.RouterRunning && Device.CountUsableDevices() >= 2)
+                Device.StartRouter();
         }
 
         public static void StopRouter()
         {
-            if (!Device.RouterRunning)
-                return;
-
-            Device.StopRouter();
+            if (Device.RouterRunning)
+                Device.StopRouter();
         }
 
         // DEVICES
@@ -175,10 +171,7 @@ namespace MC_132RTR.Controller.Middleman
                     T_Routing.GetInstance().RemoveFromRoutes(TPR);
             }
             catch (Exception e) { }
-
-            
         }
-
 
         // Tables
         /*
@@ -192,8 +185,7 @@ namespace MC_132RTR.Controller.Middleman
                     T_ARP.GetInstance().RemoveAllElements();
                     break;
                 case RIPv2:
-                    throw new NotImplementedException();
-                    break;
+                    throw new NotSupportedException();
                 default:
                     break;
             }
@@ -231,32 +223,21 @@ namespace MC_132RTR.Controller.Middleman
         public static List<ListViewItem> GetListViewItemsARP()
         {
             List<ListViewItem> ListTmp = new List<ListViewItem>();
-
-            foreach (TP_ARP tparp in T_ARP.GetInstance().GetListForView())
-            {
-                ListTmp.Add(tparp.ToListViewItem());
-            }
-
+            T_ARP.GetInstance().GetListForView().ForEach(Item => ListTmp.Add(Item.ToListViewItem()));
             return ListTmp;
         }
 
         public static List<ListViewItem> GetListViewItemsROUTE()
         {
             List<ListViewItem> ListTmp = new List<ListViewItem>();
-
-            foreach (TP_Routing TPR in T_Routing.GetInstance().GetListForView())
-            {
-                ListTmp.Add(TPR.ToListViewItem());
-            }
-            
+            T_Routing.GetInstance().GetListForView().ForEach(Item => ListTmp.Add(Item.ToListViewItem()));
             return ListTmp;
         }
 
         public static List<ListViewItem> GetListViewItemsRIP()
         {
             List<ListViewItem> ListTmp = new List<ListViewItem>();
-
-            throw new NotImplementedException();
+            T_RIPv2.GetInstance().GetListForView().ForEach(Item => ListTmp.Add(Item.ToListViewItem()));
             return ListTmp;
         }
 
