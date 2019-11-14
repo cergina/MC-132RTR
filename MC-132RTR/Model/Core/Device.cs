@@ -13,6 +13,8 @@ namespace MC_132RTR.Model.Core
 {
     public class Device
     {
+        public static int MinAmountOfRunningDevices = 2;
+
         public static bool RouterRunning = false;
         public static bool FinalShutdown = false;
         public static List<Device> ListOfDevices = new List<Device>();
@@ -37,6 +39,9 @@ namespace MC_132RTR.Model.Core
 
         public static List<Device> GetListOfUsableDevicesExceptOf(Device DevT)
             => ListOfDevices.FindAll(T_Dev => T_Dev.IsUsable() && !DevT.Equals(T_Dev));
+
+        public static List<Device> GetListOfUsableDevices()
+            => ListOfDevices.FindAll(T_Dev => T_Dev.IsUsable());
 
         private void SetWhenRouterOff(Network TmpNet, string DevName)
         {
@@ -91,7 +96,7 @@ namespace MC_132RTR.Model.Core
 
             P_RIPv2 PR = P_RIPv2.CraftResponse_ConnectedChange(CurrentNetwork, NewProposedNet);
             if (PR != null)
-                foreach (Device D in ListOfDevices)
+                foreach (Device D in GetListOfUsableDevices())
                     if (!D.DEV_Disabled && !D.DEV_DisabledRIPv2)
                         P_RIPv2.Send(D, PR, C_RIPv2.IP_RIPv2, C_RIPv2.MAC_RIPv2);
         }
@@ -106,7 +111,8 @@ namespace MC_132RTR.Model.Core
             var EthPckt = new EthernetPacket(this.ICapDev.MacAddress, MAC_Dst, Type);
             EthPckt.PayloadData = Payload;
 
-            this.ICapDev.SendPacket(EthPckt.Bytes);
+            if (Endorsment.SENDING_POSSIBLE)
+                this.ICapDev.SendPacket(EthPckt.Bytes);
         }
 
         // use this to send Ip layers (like UDP, ...)
@@ -121,13 +127,36 @@ namespace MC_132RTR.Model.Core
         }
 
         public void EnableRIPv2()
-            => DEV_DisabledRIPv2 = (DEV_Disabled) ? true : false;
+        {
+            if (DEV_Disabled || !DEV_DisabledRIPv2)
+                return;
+
+            DEV_DisabledRIPv2 = false;
+
+            C_RIPv2.GetInstance().DeviceAvailable(this);
+        }
 
         public void DisableRIPv2()
-            => DEV_DisabledRIPv2 = true;
+        {
+            if (DEV_Disabled || DEV_DisabledRIPv2)
+                return;
+
+            C_RIPv2.GetInstance().DeviceUnavailable(this);
+
+            DEV_DisabledRIPv2 = true;
+        }
 
         private bool TurnOn()
-            => DEV_Disabled ? DEV_Disabled = !IsUsable() : true;
+        {
+            if (DEV_Disabled)
+            {
+                bool ToReturn = IsUsable();
+                DEV_Disabled = !ToReturn;
+                return ToReturn;
+            }
+
+            return true;
+        }
 
         public bool IsUsable()
             => (Network != null && Network.IsCorrect());
@@ -198,7 +227,7 @@ namespace MC_132RTR.Model.Core
                 }
             }
 
-            if (StartedYet >= 2)
+            if (StartedYet >= MinAmountOfRunningDevices)
             {
                 RouterRunning = true;
                 C_Routing.TurnOnListeningOnDevices();
@@ -207,6 +236,7 @@ namespace MC_132RTR.Model.Core
             {
                 ShutDownAllDevices();
                 T_Routing.GetInstance().ClearAllRoutes();
+                T_RIPv2.GetInstance().ClearAllRoutes();
             }
         }
 
@@ -223,7 +253,7 @@ namespace MC_132RTR.Model.Core
             => (number == 0 || number == 1) ? PairDeviceWithToString(number == 0 ? Dev1 : Dev2) : null;
 
         public static Device PairDeviceWithMacAdress(PhysicalAddress MacAddress)
-            => ListOfDevices.Find(Dev => Dev.ICapDev.MacAddress != null && Dev.ICapDev.Started && Dev.ICapDev.MacAddress.Equals(MacAddress));
+            => ListOfDevices.Find(Dev => Dev.ICapDev.Started && Dev.ICapDev.MacAddress != null && Dev.ICapDev.MacAddress.Equals(MacAddress));
 
         public static Device PairDeviceWithICaptureDevice(ICaptureDevice ICapDev)
             => ListOfDevices.Find(Dev => ICapDev != null && ICapDev.MacAddress != null && Dev.ICapDev.Started && ICapDev.MacAddress.Equals(Dev.ICapDev.MacAddress));

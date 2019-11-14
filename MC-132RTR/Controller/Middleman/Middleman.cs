@@ -41,7 +41,7 @@ namespace MC_132RTR.Controller.Middleman
 
         public static void TryToStartRouter()
         {
-            if (!Device.RouterRunning && Device.CountUsableDevices() >= 2)
+            if (!Device.RouterRunning && Device.CountUsableDevices() >= Device.MinAmountOfRunningDevices)
                 Device.StartRouter();
         }
 
@@ -84,7 +84,9 @@ namespace MC_132RTR.Controller.Middleman
 
             Device Dev = Device.PairDeviceWithToString(DevS);
             if (Dev != null)
+            {
                 Dev.DisableRIPv2();
+            }
         }
 
         public static void SendTestRIPv2(Device Dev)

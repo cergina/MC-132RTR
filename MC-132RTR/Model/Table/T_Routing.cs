@@ -33,7 +33,6 @@ namespace MC_132RTR.Model.Table
 
         public bool AddToRoutes(TP_Routing TPR)
         {
-            //TODO sprav check aby sa directly connected nedavali duplicitne nazaciatku
             if (!TPR.Subnet.IsCorrect())
                 return false;
 
@@ -68,7 +67,6 @@ namespace MC_132RTR.Model.Table
         public TP_Routing IsSubnetInRoutes(Network Net)
             => Routes.Find(TPR => TPR.Subnet.Equals(Net));
         
-
         public void DeepestMatchingSearch(IPAddress IpToSearch, out TP_Routing Chosen)
         {
             Chosen = null;
@@ -81,39 +79,27 @@ namespace MC_132RTR.Model.Table
         }
 
         // used to obtain a route with specific stuff, ...
-        public TP_Routing SpecificSearch(IPAddress Ip, Mask MaskIp, Device ExitDev, IPAddress NextHopIp, int Type)
+        public TP_Routing SpecificSearch(IPAddress Ip, Mask MaskIp, Device ExitDev, IPAddress NextHopIp, uint Type)
         {
             TP_Routing CompareTPR = new TP_Routing(Type, ExitDev, new Network(Ip, MaskIp), NextHopIp);
-
-            foreach (TP_Routing TPR in Routes)
-            {
-                if (TPR.Equals(CompareTPR))
-                    return TPR;
-            }
-
-            return null;
+            return Routes.Find(TPR => TPR.Equals(CompareTPR));
         }
 
         public TP_Routing RegularSearch(IPAddress Ip_Target)
         {
-            TP_Routing TPR = null;
-
             for (short iteration = 0; iteration < MAX_ITERATIONS && Ip_Target != null; ++iteration)
             {
-                DeepestMatchingSearch(Ip_Target, out TPR);
+                DeepestMatchingSearch(Ip_Target, out TP_Routing TPR);
                 if (TPR == null)
                     return null;
 
                 if (TPR.CanBeRoutedDirectlyViaNextHop())
-                {
                     return TPR;
-                } else if (TPR.CanBeRoutedDirectly())
-                {
+                
+                if (TPR.CanBeRoutedDirectly())
                     return new TP_Routing(TPR.Type, TPR.ExitDevice, TPR.Subnet, Ip_Target);
-                } else
-                {
-                    Ip_Target = TPR.NextHopIp;
-                }
+                
+                Ip_Target = TPR.NextHopIp;
             }
 
             return null;

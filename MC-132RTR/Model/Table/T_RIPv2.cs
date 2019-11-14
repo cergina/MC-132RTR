@@ -25,6 +25,13 @@ namespace MC_132RTR.Model.Table
         public List<TP_RIPv2> Table = new List<TP_RIPv2>();
 
         /*                Table stuff                   */
+        public void IntegrateDevice(Device Dev)
+        {
+            Network Net = Dev.Network.GetNetworkGeneral();
+            TP_RIPv2 TPR = new TP_RIPv2(Net, TP_RIPv2.CONNECTED, C_RIPv2.IP_NH_THIS, Dev);
+            Table.Add(TPR);
+        }
+
         public void AttemptToIntegrateOutsider(out bool Trigger, I_RIPv2 IR, IPAddress RealNextHop, Device LearnedViaDev)
         {
             Trigger = false;
@@ -96,24 +103,35 @@ namespace MC_132RTR.Model.Table
         public TP_RIPv2 GetRouteWithNetwork(IPAddress NetIp, IPAddress NetMaskIp)
         {
             Network Net = new Network(NetIp, new Mask(NetMaskIp));
+            return Table.Find(TPR => TPR.Equals(Net));
+        }
 
-            foreach (TP_RIPv2 TPR in Table)
-                if (TPR.Equals(Net))
-                    return TPR;
+        public List<I_RIPv2>ListOfRoutesLearnedVia(Device Dev, bool INFINITY_METRICS)
+        {
+            List<I_RIPv2> L_IR = new List<I_RIPv2>();
+            
+            foreach(TP_RIPv2 TPR in GetListForView())
+            {
+                if (TPR.OriginDevice.Equals(Dev) && TPR.Metrics > TP_RIPv2.CONNECTED)
+                    L_IR.Add(new I_RIPv2(TPR.Net.GetNetworkAddress(), TPR.Net.GetMaskIpAddress(),
+                        TPR.NextHopIp, INFINITY_METRICS ? TP_RIPv2.INFINITY : TPR.Metrics));
+            }
 
-            return null;
+            return L_IR;
         }
 
         // generic stuff
         public static T_RIPv2 GetInstance()
             => Instance ?? (Instance = new T_RIPv2());
 
+        public void ClearAllRoutes()
+            => Table.Clear();
+
         public void ChangeTimer(int Which, int Adept)
         {
             if (Adept <= 0)
                 return;
 
-            Logging.OutALWAYS("je to" + Adept);
             switch (Which)
             {
                 case Middleman.RIPv2_FLUSH:
@@ -136,10 +154,26 @@ namespace MC_132RTR.Model.Table
                     break;
 
                 if (Device.RouterRunning)
+                {
+                    //  Regular decrements
                     Table.ForEach(TPR => TPR.RegularOperation());
+
+                    // Cleanup
+                    Table.RemoveAll(TPR => (TPR.Flush == 0 && TPR.OperationsBeforeFlushDone()));
+
+                    // Export to routing table
+                    ExportToRoutingTable();
+                }
 
                 Thread.Sleep(1000);
             }
+        }
+
+        private void ExportToRoutingTable()
+        {
+            foreach(TP_RIPv2 TPR in GetListForView())
+                if (TPR.PassableToRoutingTable())
+                    T_Routing.GetInstance().AttemtToAdd_Dynamic(TPR);
         }
 
         public List<TP_RIPv2> GetListForView()

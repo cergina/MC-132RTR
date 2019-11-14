@@ -34,6 +34,26 @@ namespace MC_132RTR.Model.Core
                 UPDATE_INTERVAL = Adept;
         }
 
+        /*                                            */
+        /*        CONNECTED DEVICES RIPv2             */
+        /*                                            */
+
+        // Send info about available network
+        public void DeviceAvailable(Device Dev)
+        {
+            P_RIPv2 PR = P_RIPv2.CraftResponse_RIPv2DeviceAvailability(Dev, true);
+            Device.GetListOfUsableDevices().ForEach(UD => { if (!UD.DEV_DisabledRIPv2) P_RIPv2.Send(UD, PR, IP_RIPv2, MAC_RIPv2); });
+
+            T_RIPv2.GetInstance().IntegrateDevice(Dev);
+        }
+
+        // Get list that is via Dev, Make unavailable, Send info
+        public void DeviceUnavailable(Device Dev)
+        {
+            P_RIPv2 PR = P_RIPv2.CraftResponse_RIPv2DeviceAvailability(Dev, false);
+            Device.GetListOfUsableDevices().ForEach(UD => { if (!UD.DEV_DisabledRIPv2) P_RIPv2.Send(UD, PR, IP_RIPv2, MAC_RIPv2); });
+        }
+
         /*                 HANDLER                      */
         public void Handle(CaptureEventArgs e, Device ReceivalDev)
         {
@@ -112,9 +132,5 @@ namespace MC_132RTR.Model.Core
             foreach (Device D in L_Dev)
                 P_RIPv2.Send(D, PR_Trig, C_RIPv2.IP_RIPv2, C_RIPv2.MAC_RIPv2);
         }
-
-        // Is functions Response
-
-        // Do sth functions Response
     }
 }

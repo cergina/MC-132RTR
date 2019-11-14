@@ -216,6 +216,26 @@ namespace MC_132RTR.Model.Packet
             return Pckt;
         }
 
+        public static P_RIPv2 CraftResponse_RIPv2DeviceAvailability(Device Dev, bool Available)
+        {
+            P_RIPv2 PR = new P_RIPv2(null);
+            PR.InitializeRIPv2(false);
+            int order = 0;
+
+            if (Available)
+            {
+                P_RIPv2.InsertEntry(PR, order++, new I_RIPv2(Dev.Network.GetNetworkAddress(), Dev.Network.GetMaskIpAddress(), C_RIPv2.IP_NH_THIS, TP_RIPv2.CONNECTED));
+            } else
+            {
+                P_RIPv2.InsertEntry(PR, order++, new I_RIPv2(Dev.Network.GetNetworkAddress(), Dev.Network.GetMaskIpAddress(), C_RIPv2.IP_NH_THIS, TP_RIPv2.INFINITY));
+                
+                foreach(I_RIPv2 IR in T_RIPv2.GetInstance().ListOfRoutesLearnedVia(Dev, true))
+                    P_RIPv2.InsertEntry(PR, order++, IR);
+            }
+
+            return PR;
+        }
+
         public static P_RIPv2 CraftResponseUponRequest(P_RIPv2 PR_Req)
         {
             P_RIPv2 PR_New = new P_RIPv2(null);

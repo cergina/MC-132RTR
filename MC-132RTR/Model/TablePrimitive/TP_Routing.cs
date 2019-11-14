@@ -8,17 +8,17 @@ namespace MC_132RTR.Model.TablePrimitive
 {
     public class TP_Routing
     {
-        public static readonly int DIRECT = 0;
-        public static readonly int STATIC = 1;
-        public static readonly int RIP = 120;
+        public static readonly uint DIRECT = 0;
+        public static readonly uint STATIC = 1;
+        public static readonly uint RIP = 120;
 
         public Device ExitDevice { private set; get; }
         public Network Subnet { private set; get; }
         public IPAddress NextHopIp { private set; get; }
-        public int Type { private set; get; }
+        public uint Type { private set; get; }
 
 
-        public TP_Routing(int Type, Device ExitDev, Network SubNet, IPAddress NextHop)
+        public TP_Routing(uint Type, Device ExitDev, Network SubNet, IPAddress NextHop)
         {
             this.ExitDevice = ExitDev;
             this.NextHopIp = NextHop;

@@ -9,6 +9,7 @@ namespace MC_132RTR.Model.TablePrimitive
 {
     public class TP_RIPv2
     {
+        public static uint CONNECTED { private set; get; } = 0;
         public static uint INFINITY { private set; get; } = 16;
 
         public Network Net { get; private set; } = null;
@@ -88,6 +89,20 @@ namespace MC_132RTR.Model.TablePrimitive
 
             return new ListViewItem(new string[] { RIPNetworkColumn, RIPNextHopColumn, RIPMetricsColumn, RIPDeviceColumn, RIPInvalidColumn, RIPHolddownColumn, RIPFlushColumn });
         }
+
+        public bool OperationsBeforeFlushDone()
+        {
+            TP_Routing TPR = T_Routing.GetInstance().SpecificSearch(
+                Net.GetNetworkAddress(), Net.MaskAddress, OriginDevice, NextHopIp, TP_Routing.RIP);
+
+            if (TPR != null)
+                T_Routing.GetInstance().RemoveFromRoutes(TPR);
+
+            return true;
+        }
+
+        public bool PassableToRoutingTable()
+            => Metrics != TP_Routing.DIRECT && Metrics != INFINITY && Flush > 0;
 
         private bool BlockedUpdate()
             => (TemporaryDown() && Holddown > 0);
