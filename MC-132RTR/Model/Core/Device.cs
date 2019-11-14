@@ -98,7 +98,10 @@ namespace MC_132RTR.Model.Core
             if (PR != null)
                 foreach (Device D in GetListOfUsableDevices())
                     if (!D.DEV_Disabled && !D.DEV_DisabledRIPv2)
+                    {
+                        T_RIPv2.GetInstance().ChangeConnected(CurrentNetwork, NewProposedNet);
                         P_RIPv2.Send(D, PR, C_RIPv2.IP_RIPv2, C_RIPv2.MAC_RIPv2);
+                    }
         }
 
         // This function's used to send directly ethernet, from upper layers or ARP

@@ -20,7 +20,7 @@ namespace MC_132RTR.Model.Core
         // UPDATE (seconds) - time for periodic update
         public static int UPDATE_INTERVAL { private set; get; } = 30;
         public static C_RIPv2 Instance = null;
-        
+
         private C_RIPv2()
         {
         }
@@ -32,6 +32,17 @@ namespace MC_132RTR.Model.Core
         {
             if (Adept > 0)
                 UPDATE_INTERVAL = Adept;
+        }
+
+        public int IfTimeForPeriodicDoSo(int UpdateTimer)
+        {
+            if (UpdateTimer == 0)
+                // TODO do sending
+
+            if (UpdateTimer > 0)
+                --UpdateTimer;
+            
+            return UpdateTimer;
         }
 
         /*                                            */
@@ -52,6 +63,8 @@ namespace MC_132RTR.Model.Core
         {
             P_RIPv2 PR = P_RIPv2.CraftResponse_RIPv2DeviceAvailability(Dev, false);
             Device.GetListOfUsableDevices().ForEach(UD => { if (!UD.DEV_DisabledRIPv2) P_RIPv2.Send(UD, PR, IP_RIPv2, MAC_RIPv2); });
+            
+            T_RIPv2.GetInstance().RemoveConnected(Dev.Network.GetNetworkGeneral());
         }
 
         /*                 HANDLER                      */

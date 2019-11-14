@@ -21,10 +21,13 @@ namespace MC_132RTR.Model.Table
         // HOLD DOWN (seconds) - during this time is network advertised with 16 metrics and NOT UPDATES itself
         public static int HOLDDOWN { private set; get; } = 180;
 
+        // Time until next RIPv2 periodic response attempt
+        public static int NextUpdate = C_RIPv2.UPDATE_INTERVAL;
         // entries of 
         public List<TP_RIPv2> Table = new List<TP_RIPv2>();
 
         /*                Table stuff                   */
+        // All about connected
         public void IntegrateDevice(Device Dev)
         {
             Network Net = Dev.Network.GetNetworkGeneral();
@@ -32,6 +35,21 @@ namespace MC_132RTR.Model.Table
             Table.Add(TPR);
         }
 
+        public void ChangeConnected(Network OldNet, Network NewNet)
+        {
+            foreach (TP_RIPv2 TPR in Table)
+            {
+                if (TPR.Metrics == TP_RIPv2.CONNECTED && TPR.Net.Equals(OldNet))
+                    TPR.Update(NewNet, TP_RIPv2.CONNECTED, TPR.NextHopIp, TPR.OriginDevice);
+            }
+        }
+
+        public void RemoveConnected(Network RemoveNet)
+        {
+            Table.Remove(Table.Find(Item => Item.Metrics == TP_RIPv2.CONNECTED && Item.Net.Equals(RemoveNet)));
+        }
+
+        // Routes from outside
         public void AttemptToIntegrateOutsider(out bool Trigger, I_RIPv2 IR, IPAddress RealNextHop, Device LearnedViaDev)
         {
             Trigger = false;
@@ -163,6 +181,9 @@ namespace MC_132RTR.Model.Table
 
                     // Export to routing table
                     ExportToRoutingTable();
+
+                    // Periodic decrease
+                    NextUpdate = C_RIPv2.GetInstance().IfTimeForPeriodicDoSo(NextUpdate);
                 }
 
                 Thread.Sleep(1000);
