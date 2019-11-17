@@ -52,6 +52,7 @@ namespace MC_132RTR
             EnableOrDisableElements();
             GuiTImersInit();
         }
+
         private void DefaultValues()
         {
             IPTextBox.Text = "10.10.10.2";
@@ -115,8 +116,6 @@ namespace MC_132RTR
             Middleman.GetListViewItemsRIP().ForEach(Item => RIPListView.Items.Add(Item));
         }
 
-
-
         // //////////////////
         // Event handlers NOT DONE
         private void ArpSendButton_Click(object sender, EventArgs e)
@@ -167,6 +166,7 @@ namespace MC_132RTR
             }
             catch (Exception en) { }
         }
+
         private void TimerFlushButton_Click(object sender, EventArgs e)
         {
             try
@@ -176,6 +176,7 @@ namespace MC_132RTR
             }
             catch (Exception en) { }
         }
+
         private void TimerHoldButton_Click(object sender, EventArgs e)
         {
             try
@@ -202,6 +203,7 @@ namespace MC_132RTR
             IPTextBox.Text = "11.11.11.2";
             UpdateDeviceInfo();
         }
+
         private void PowerButton_Click(object sender, EventArgs e)
         {
             switch (PowerState)
@@ -219,6 +221,7 @@ namespace MC_132RTR
             PowerButton.Text = Middleman.GetPowerState();
             EnableOrDisableElements();
         }
+
         private void StartButton_Click(object sender, EventArgs e)
         {
             switch (StartState)
@@ -252,6 +255,7 @@ namespace MC_132RTR
                 Meth.DynamicInvoke(args);
             }
         }
+
         public void RefreshEverySecond()
         {
             while (PowerState.Equals(POWER_UP))

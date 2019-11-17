@@ -86,7 +86,8 @@ namespace MC_132RTR.Model.Packet
                 Protocol = IPProtocolType.UDP,
                 PayloadLength = (ushort)Udp.Length
             };
-            IP4.UpdateIPChecksum();
+            IP4.Checksum = IP4.CalculateIPChecksum();
+            //IP4.UpdateIPChecksum();
 
             ExitDev.SendViaThisDevice(MAC, EthernetPacketType.IpV4, IP4.Bytes);
         }
@@ -167,7 +168,7 @@ namespace MC_132RTR.Model.Packet
 
             int Curr_RouteIndex = 0;
 
-            foreach (TP_RIPv2 TPR in T_RIPv2.GetInstance().Table.ToList())
+            foreach (TP_RIPv2 TPR in T_RIPv2.GetInstance().GetListForView())
             {
                 // ignore TablePRimitive that was learned via this device
                 if (TPR.OriginDevice.Equals(ForThisDevice))
@@ -182,7 +183,7 @@ namespace MC_132RTR.Model.Packet
                     Curr_RouteIndex = 0;
                 }
 
-                uint MetricToUse = (TPR.Metrics >= TP_RIPv2.INFINITY) ? TP_RIPv2.INFINITY : TPR.Metrics + 1;
+                uint MetricToUse = (TPR.Metrics >= TP_RIPv2.INFINITY) ? TP_RIPv2.INFINITY : TPR.Metrics; //TODO check if +1 not necessary
 
                 // insert
                 I_RIPv2 IR = new I_RIPv2(TPR.Net.GetNetworkAddress(), TPR.Net.MaskAddress.SubnetMask, C_RIPv2.IP_NH_THIS, MetricToUse);
@@ -224,13 +225,13 @@ namespace MC_132RTR.Model.Packet
 
             if (Available)
             {
-                P_RIPv2.InsertEntry(PR, order++, new I_RIPv2(Dev.Network.GetNetworkAddress(), Dev.Network.GetMaskIpAddress(), C_RIPv2.IP_NH_THIS, TP_RIPv2.CONNECTED));
+                PR = P_RIPv2.InsertEntry(PR, order++, new I_RIPv2(Dev.Network.GetNetworkAddress(), Dev.Network.GetMaskIpAddress(), C_RIPv2.IP_NH_THIS, TP_RIPv2.CONNECTED));
             } else
             {
-                P_RIPv2.InsertEntry(PR, order++, new I_RIPv2(Dev.Network.GetNetworkAddress(), Dev.Network.GetMaskIpAddress(), C_RIPv2.IP_NH_THIS, TP_RIPv2.INFINITY));
+                PR = P_RIPv2.InsertEntry(PR, order++, new I_RIPv2(Dev.Network.GetNetworkAddress(), Dev.Network.GetMaskIpAddress(), C_RIPv2.IP_NH_THIS, TP_RIPv2.INFINITY));
                 
                 foreach(I_RIPv2 IR in T_RIPv2.GetInstance().ListOfRoutesLearnedVia(Dev, true))
-                    P_RIPv2.InsertEntry(PR, order++, IR);
+                    PR = P_RIPv2.InsertEntry(PR, order++, IR);
             }
 
             return PR;
@@ -248,7 +249,7 @@ namespace MC_132RTR.Model.Packet
                 I_RIPv2 IR_New = new I_RIPv2(IR.Ip, IR.Mask, C_RIPv2.IP_NH_THIS,
                     T_RIPv2.GetInstance().MetricsForRoute(IR.Ip, IR.Mask));
 
-                P_RIPv2.InsertEntry(PR_New, i_req, IR_New);
+                PR_New = P_RIPv2.InsertEntry(PR_New, i_req, IR_New);
             }
 
             return PR_New;
@@ -268,6 +269,11 @@ namespace MC_132RTR.Model.Packet
             return Pckt;
         }
         
+        public string ToString()
+        {
+            return "No. of routes[" + GetNumberOfRoutesInside() + "]";
+        }
+
         /*                   PRIVATE                          */
         private void FromBytesFillObject(byte[] BytesFromOutside)
             => Bytes = BytesFromOutside;
@@ -295,24 +301,24 @@ namespace MC_132RTR.Model.Packet
         private void UpdateCountsOfEntries() 
             => EntriesCount = (Bytes.Length - HEADER_BYTES) / ENTRY_BYTES;
         
-
         private static P_RIPv2 InsertEntry(P_RIPv2 PR, int order, I_RIPv2 IR)
         {
             int StartB = CalculateStartByte(order);
             int TypesYet = 0;
 
-            Insertor.Insert(PR.Bytes, StartB + TypesYet, IR.Id); // AFI
+            PR.Bytes = Insertor.Insert(PR.Bytes, StartB + TypesYet, IR.Id); // AFI
             TypesYet += sizeof(ushort);
-            Insertor.Insert(PR.Bytes, StartB + TypesYet, IR.RouteTag); // RouteTag
+            PR.Bytes = Insertor.Insert(PR.Bytes, StartB + TypesYet, IR.RouteTag); // RouteTag
             TypesYet += sizeof(ushort);
-            Insertor.Insert(PR.Bytes, StartB + TypesYet, IR.Ip); // Ip
+            PR.Bytes = Insertor.Insert(PR.Bytes, StartB + TypesYet, IR.Ip); // Ip
             TypesYet += 4;
-            Insertor.Insert(PR.Bytes, StartB + TypesYet, IR.Mask); // Mask
+            PR.Bytes = Insertor.Insert(PR.Bytes, StartB + TypesYet, IR.Mask); // Mask
             TypesYet += 4;
-            Insertor.Insert(PR.Bytes, StartB + TypesYet, IR.NextHop); // NextHop
+            PR.Bytes = Insertor.Insert(PR.Bytes, StartB + TypesYet, IR.NextHop); // NextHop
             TypesYet += 4;
-            Insertor.Insert(PR.Bytes, StartB + TypesYet, IR.Metric); // Metric
+            PR.Bytes = Insertor.Insert(PR.Bytes, StartB + TypesYet, IR.Metric); // Metric
 
+            Logging.OutALWAYS("Insertujem");
             return PR;
         }
 

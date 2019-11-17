@@ -72,8 +72,8 @@ namespace MC_132RTR.Model.Table
                switch(KnownRoute_JobDetermination(TPR, RealNextHop, IR.Metric))
                {
                    case "SAME_SOURCE_DIFF_METRICS_UPDATE":
-                       Trigger = true;
-                       TPR.Update(ProposedNetwork, IR.Metric, RealNextHop, TPR.OriginDevice);
+                        if (TPR.Update(ProposedNetwork, IR.Metric, RealNextHop, TPR.OriginDevice))
+                            Trigger = true;
                        break;
                    case "SAME_SOURCE_SAME_METRICS_UPDATE":
                         TPR.Renew();
@@ -83,8 +83,8 @@ namespace MC_132RTR.Model.Table
                         TPR.BlockUpdates();
                        break;
                    case "DIFFERENT_SOURCE_BETTER_METRICS_UPDATE":
-                        Trigger = true;
-                        TPR.Update(ProposedNetwork, IR.Metric, RealNextHop, LearnedViaDev);
+                        if (TPR.Update(ProposedNetwork, IR.Metric, RealNextHop, LearnedViaDev))
+                            Trigger = true;
                         break;
                     default:
                         break;
@@ -111,7 +111,7 @@ namespace MC_132RTR.Model.Table
             Network Subnet = new Network(SubnetIp, new Mask(MaskIp));
             
             if (Subnet.IsCorrect())
-                foreach (TP_RIPv2 TPR in Table.ToList())
+                foreach (TP_RIPv2 TPR in GetListForView())
                     if (TPR.Net.Equals(Subnet))
                         return TPR.Metrics;
 

@@ -9,10 +9,6 @@ namespace MC_132RTR.Model.Support
     class Endorsment
     {
         // ENABLING OF SENDING
-        public static bool SENDING_POSSIBLE = false;
-
-
-        // CONSTANTS
-
+        public static bool SENDING_POSSIBLE = true;
     }
 }

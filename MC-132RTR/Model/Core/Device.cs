@@ -115,7 +115,10 @@ namespace MC_132RTR.Model.Core
             EthPckt.PayloadData = Payload;
 
             if (Endorsment.SENDING_POSSIBLE)
+            {
+                Logging.OutALWAYS("Sending from DEV: " + ToString());
                 this.ICapDev.SendPacket(EthPckt.Bytes);
+            }
         }
 
         // use this to send Ip layers (like UDP, ...)
@@ -234,7 +237,8 @@ namespace MC_132RTR.Model.Core
             {
                 RouterRunning = true;
                 C_Routing.TurnOnListeningOnDevices();
-                Logging.OutALWAYS("Router started");
+                Logging.OutALWAYS("Router started. ");
+                Logging.OutALWAYS("SENDING: [" + Endorsment.SENDING_POSSIBLE.ToString() + "]");
             } else
             {
                 ShutDownAllDevices();

@@ -98,14 +98,16 @@ namespace MC_132RTR.Model.Core
             {
                 if (Udp.SourcePort == 520 || Udp.DestinationPort == 520)
                 {
-                    // Unicast RIP for router
-                    // TODO not supported yet, will be tested?
-
                     // Multicast RIP case
                     if ((C_RIPv2.IP_RIPv2.Equals(Ipv4.DestinationAddress))
                         &&
                         (C_RIPv2.MAC_RIPv2.Equals(EthPckt.DestinationHwAddress))                        
                         )
+                        return (DeviceReceived.DEV_DisabledRIPv2) ? Middleman.NOTHING : Middleman.RIPv2;
+
+                    // Unicast RIP for router
+                    if (Ipv4.DestinationAddress.Equals(DeviceReceived.Network.Address)
+                        && EthPckt.DestinationHwAddress.Equals(DeviceReceived.ICapDev.MacAddress))
                         return (DeviceReceived.DEV_DisabledRIPv2) ? Middleman.NOTHING : Middleman.RIPv2;
                 }
             }

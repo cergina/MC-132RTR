@@ -30,10 +30,10 @@ namespace MC_132RTR.Model.TablePrimitive
             this.OriginDevice = OriginDevice;
         }
 
-        public void Update(Network Net, uint Metrics, IPAddress NextHopIp, Device OriginDevice)
+        public bool Update(Network Net, uint Metrics, IPAddress NextHopIp, Device OriginDevice)
         {
             if (BlockedUpdate())
-                return;
+                return false;
 
             this.Net = Net;
             this.NextHopIp = NextHopIp;
@@ -41,6 +41,7 @@ namespace MC_132RTR.Model.TablePrimitive
             this.OriginDevice = OriginDevice;
 
             ResetTimers();
+            return true;
         }
 
         public void Renew()

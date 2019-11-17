@@ -1,5 +1,6 @@
 ﻿using MC_132RTR.Model.Packet;
 using MC_132RTR.Model.Packet.Items;
+using MC_132RTR.Model.Support;
 using MC_132RTR.Model.Table;
 using MC_132RTR.Model.TablePrimitive;
 using PacketDotNet;
@@ -18,14 +19,14 @@ namespace MC_132RTR.Model.Core
 
 
         // UPDATE (seconds) - time for periodic update
-        public static int UPDATE_INTERVAL { private set; get; } = 30;
+        public static int UPDATE_INTERVAL { private set; get; } = 30; // TODO change back to 30
         public static C_RIPv2 Instance = null;
 
         private C_RIPv2()
         {
         }
 
-        public static C_RIPv2 GetInstance() 
+        public static C_RIPv2 GetInstance()
             => Instance ?? (Instance = new C_RIPv2());
 
         public void ChangeTimer(int Adept)
@@ -37,11 +38,16 @@ namespace MC_132RTR.Model.Core
         public int IfTimeForPeriodicDoSo(int UpdateTimer)
         {
             if (UpdateTimer == 0)
-                // TODO do sending
+            {
+                Device.GetListOfUsableDevices().ForEach(Dev => { if (!Dev.DEV_Disabled && !Dev.DEV_DisabledRIPv2)
+                        ClassicResponse(Dev);
+                });
+                UpdateTimer = UPDATE_INTERVAL;
+            }
 
             if (UpdateTimer > 0)
                 --UpdateTimer;
-            
+
             return UpdateTimer;
         }
 
@@ -53,7 +59,8 @@ namespace MC_132RTR.Model.Core
         public void DeviceAvailable(Device Dev)
         {
             P_RIPv2 PR = P_RIPv2.CraftResponse_RIPv2DeviceAvailability(Dev, true);
-            Device.GetListOfUsableDevices().ForEach(UD => { if (!UD.DEV_DisabledRIPv2) P_RIPv2.Send(UD, PR, IP_RIPv2, MAC_RIPv2); });
+            Logging.OutALWAYS(PR.ToString());       // TODO
+            Device.GetListOfUsableDevices().ForEach(UD => P_RIPv2.Send(UD, PR, IP_RIPv2, MAC_RIPv2));
 
             T_RIPv2.GetInstance().IntegrateDevice(Dev);
         }
@@ -62,8 +69,8 @@ namespace MC_132RTR.Model.Core
         public void DeviceUnavailable(Device Dev)
         {
             P_RIPv2 PR = P_RIPv2.CraftResponse_RIPv2DeviceAvailability(Dev, false);
-            Device.GetListOfUsableDevices().ForEach(UD => { if (!UD.DEV_DisabledRIPv2) P_RIPv2.Send(UD, PR, IP_RIPv2, MAC_RIPv2); });
-            
+            Device.GetListOfUsableDevices().ForEach(UD => P_RIPv2.Send(UD, PR, IP_RIPv2, MAC_RIPv2));
+
             T_RIPv2.GetInstance().RemoveConnected(Dev.Network.GetNetworkGeneral());
         }
 
@@ -82,7 +89,7 @@ namespace MC_132RTR.Model.Core
             if (!Ok)
                 return;
 
-            switch(PR.CT)
+            switch (PR.CT)
             {
                 case 1:
                     ProcessRequest(PR, ReceivalDev);
@@ -120,7 +127,12 @@ namespace MC_132RTR.Model.Core
         // Do sth functions Request
         private void ClassicResponse(Device RecDev)
         {
+            Logging.OutALWAYS("Classic response for: " + RecDev.ToString());
             List<P_RIPv2> LPR = P_RIPv2.CraftPeriodicResponses(RecDev);
+            if (LPR == null)
+                Logging.OutALWAYS("Classic response "  + RecDev.ToString() + " je null");
+            if (LPR.Count == 0)
+                Logging.OutALWAYS("Classic response " + RecDev.ToString() + " je empty");
             P_RIPv2.SendList(RecDev, LPR, IP_RIPv2, MAC_RIPv2);
         }
 
