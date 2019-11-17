@@ -44,6 +44,9 @@ namespace MC_132RTR.Model.Table
             }
         }
 
+        public void RemoveFromOriginDevice(Device Dev)
+            => Table.RemoveAll(Item => Item.OriginDevice.Equals(Dev));
+
         public void RemoveConnected(Network RemoveNet)
         {
             Table.Remove(Table.Find(Item => Item.Metrics == TP_RIPv2.CONNECTED && Item.Net.Equals(RemoveNet)));

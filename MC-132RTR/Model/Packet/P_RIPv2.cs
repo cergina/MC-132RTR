@@ -113,14 +113,15 @@ namespace MC_132RTR.Model.Packet
         // CRAFTING
         public static P_RIPv2 CraftRequest(IPAddress NetworkIp)
         {
-            P_RIPv2 Pckt = new P_RIPv2(null);
-            Pckt.InitializeRIPv2(true);
+            P_RIPv2 PR = new P_RIPv2(null);
+            PR.InitializeRIPv2(true);
 
             IPAddress AllZero = C_RIPv2.IP_NH_THIS;
 
-            P_RIPv2.InsertEntry(Pckt, 0, new I_RIPv2(NetworkIp, AllZero, AllZero, 0));
+            PR = P_RIPv2.InsertEntry(PR, 0, new I_RIPv2(NetworkIp, AllZero, AllZero, 0));
+            PR.UpdateCountsOfEntries();
 
-            return Pckt;
+            return PR;
         }
 
         public static P_RIPv2 CraftTriggeredResponse(Device CameFromDev, P_RIPv2 PR, IPv4Packet IPv4)
@@ -148,10 +149,11 @@ namespace MC_132RTR.Model.Packet
                         AlreadyTriggered = true;
                     }
 
-                    P_RIPv2.InsertEntry(PR_Trig, order++, IR.PrepareToResend());
+                    PR_Trig = P_RIPv2.InsertEntry(PR_Trig, order++, IR.PrepareToResend());
                 }
             }
-            
+
+            PR_Trig.UpdateCountsOfEntries();
             return PR_Trig;
         }
 
@@ -163,8 +165,8 @@ namespace MC_132RTR.Model.Packet
             // init list to return for this specific device
             List<P_RIPv2> ListToReturn = new List<P_RIPv2>();
 
-            P_RIPv2 Pckt = new P_RIPv2(null);
-            Pckt.InitializeRIPv2(false);
+            P_RIPv2 PR = new P_RIPv2(null);
+            PR.InitializeRIPv2(false);
 
             int Curr_RouteIndex = 0;
 
@@ -176,10 +178,10 @@ namespace MC_132RTR.Model.Packet
 
                 if (Curr_RouteIndex == PACKET_MAX_ENTRIES)
                 {
-                    ListToReturn.Add(Pckt);
+                    ListToReturn.Add(PR);
 
-                    Pckt = new P_RIPv2(null);
-                    Pckt.InitializeRIPv2(false);
+                    PR = new P_RIPv2(null);
+                    PR.InitializeRIPv2(false);
                     Curr_RouteIndex = 0;
                 }
 
@@ -187,11 +189,12 @@ namespace MC_132RTR.Model.Packet
 
                 // insert
                 I_RIPv2 IR = new I_RIPv2(TPR.Net.GetNetworkAddress(), TPR.Net.MaskAddress.SubnetMask, C_RIPv2.IP_NH_THIS, MetricToUse);
-                Pckt = P_RIPv2.InsertEntry(Pckt, Curr_RouteIndex++, IR);
+                PR = P_RIPv2.InsertEntry(PR, Curr_RouteIndex++, IR);
+                PR.UpdateCountsOfEntries();
             }
 
-            if (Pckt.GetNumberOfRoutesInside() > 0)
-                ListToReturn.Add(Pckt);
+            if (PR.GetNumberOfRoutesInside() > 0)
+                ListToReturn.Add(PR);
 
             return ListToReturn;
         }
@@ -201,20 +204,21 @@ namespace MC_132RTR.Model.Packet
             if (NetNew == null)
                 return null;
 
-            P_RIPv2 Pckt = new P_RIPv2(null);
-            Pckt.InitializeRIPv2(false);
+            P_RIPv2 PR = new P_RIPv2(null);
+            PR.InitializeRIPv2(false);
             int order = 0;
 
             if (NetOld != null)
             {
                 I_RIPv2 IR_Old = new I_RIPv2(NetOld.GetNetworkAddress(), NetOld.GetMaskIpAddress(), C_RIPv2.IP_NH_THIS, TP_RIPv2.INFINITY);
-                P_RIPv2.InsertEntry(Pckt, order++, IR_Old);
+                PR = P_RIPv2.InsertEntry(PR, order++, IR_Old);
             }
 
             I_RIPv2 IR_New = new I_RIPv2(NetNew.GetNetworkAddress(), NetNew.GetMaskIpAddress(), C_RIPv2.IP_NH_THIS, 0);
-            P_RIPv2.InsertEntry(Pckt, order, IR_New);
+            PR = P_RIPv2.InsertEntry(PR, order, IR_New);
 
-            return Pckt;
+            PR.UpdateCountsOfEntries();
+            return PR;
         }
 
         public static P_RIPv2 CraftResponse_RIPv2DeviceAvailability(Device Dev, bool Available)
@@ -234,6 +238,7 @@ namespace MC_132RTR.Model.Packet
                     PR = P_RIPv2.InsertEntry(PR, order++, IR);
             }
 
+            PR.UpdateCountsOfEntries();
             return PR;
         }
 
@@ -252,6 +257,7 @@ namespace MC_132RTR.Model.Packet
                 PR_New = P_RIPv2.InsertEntry(PR_New, i_req, IR_New);
             }
 
+            PR_New.UpdateCountsOfEntries();
             return PR_New;
         }
 
@@ -260,19 +266,18 @@ namespace MC_132RTR.Model.Packet
             if (Net == null)
                 return null;
 
-            P_RIPv2 Pckt = new P_RIPv2(null);
-            Pckt.InitializeRIPv2(false);
+            P_RIPv2 PR = new P_RIPv2(null);
+            PR.InitializeRIPv2(false);
 
             I_RIPv2 IR = new I_RIPv2(Net.GetNetworkAddress(), Net.GetMaskIpAddress(), C_RIPv2.IP_NH_THIS, Metrics);
-            P_RIPv2.InsertEntry(Pckt, 0, IR);
+            PR = P_RIPv2.InsertEntry(PR, 0, IR);
 
-            return Pckt;
+            PR.UpdateCountsOfEntries();
+            return PR;
         }
         
         public string ToString()
-        {
-            return "No. of routes[" + GetNumberOfRoutesInside() + "]";
-        }
+            => "No. of routes[" + GetNumberOfRoutesInside() + "]";
 
         /*                   PRIVATE                          */
         private void FromBytesFillObject(byte[] BytesFromOutside)
@@ -334,25 +339,25 @@ namespace MC_132RTR.Model.Packet
 
 
 
-        /*public bool IsPartOfThisProtocol(Device Dev_Received, EthernetPacket Pckt_Eth, IPv4Packet Pckt)
+        /*public bool IsPartOfThisProtocol(Device Dev_Received, EthernetPacket PR_Eth, IPv4Packet PR)
         {
-            this.Pckt_Eth = Pckt_Eth;
-            this.Pckt_IPv4 = Pckt;
+            this.PR_Eth = PR_Eth;
+            this.PR_IPv4 = PR;
 
-            if (Pckt_Eth == null || Pckt_IPv4 == null)
+            if (PR_Eth == null || PR_IPv4 == null)
                 return false;
 
-            if (Pckt_IPv4.Checksum == Pckt_IPv4.CalculateIPChecksum())
+            if (PR_IPv4.Checksum == PR_IPv4.CalculateIPChecksum())
                 return false;
 
-            this.Pckt_Udp = (UdpPacket)Pckt_IPv4.Extract(typeof(UdpPacket));
+            this.PR_Udp = (UdpPacket)PR_IPv4.Extract(typeof(UdpPacket));
 
-            if (Pckt_Udp == null || (Pckt_Udp.SourcePort != 520 && Pckt_Udp.DestinationPort != 520))
+            if (PR_Udp == null || (PR_Udp.SourcePort != 520 && PR_Udp.DestinationPort != 520))
                 return false;
 
             // it also has to match format of IP and MAC {unicast || multicast}
-            Byte[] Pckt_DestIp = Pckt_IPv4.DestinationAddress.GetAddressBytes();
-            Byte[] Pckt_DestMac = Pckt_Eth.DestinationHwAddress.GetAddressBytes();
+            Byte[] PR_DestIp = PR_IPv4.DestinationAddress.GetAddressBytes();
+            Byte[] PR_DestMac = PR_Eth.DestinationHwAddress.GetAddressBytes();
 
             Byte[] DestIp_MUL = IPAddress.Parse("224.0.0.9").GetAddressBytes();
             Byte[] DestMac_MUL = PhysicalAddress.Parse("01-00-5E-00-00-09").GetAddressBytes();
@@ -360,10 +365,10 @@ namespace MC_132RTR.Model.Packet
             byte[] IP_Dev = Dev_Received.Network.GetNetworkAddress().GetAddressBytes();
             byte[] MAC_Dev = Dev_Received.ICapDev.MacAddress.GetAddressBytes();
 
-            if (Pckt_DestIp.SequenceEqual(IP_Dev))
+            if (PR_DestIp.SequenceEqual(IP_Dev))
                 return true;
 
-            if (Pckt_DestIp.SequenceEqual(DestIp_MUL) && Pckt_DestMac.SequenceEqual(DestMac_MUL))
+            if (PR_DestIp.SequenceEqual(DestIp_MUL) && PR_DestMac.SequenceEqual(DestMac_MUL))
                 return true;
 
             return false;

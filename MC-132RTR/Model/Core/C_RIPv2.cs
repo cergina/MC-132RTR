@@ -59,8 +59,7 @@ namespace MC_132RTR.Model.Core
         public void DeviceAvailable(Device Dev)
         {
             P_RIPv2 PR = P_RIPv2.CraftResponse_RIPv2DeviceAvailability(Dev, true);
-            Logging.OutALWAYS(PR.ToString());       // TODO
-            Device.GetListOfUsableDevices().ForEach(UD => P_RIPv2.Send(UD, PR, IP_RIPv2, MAC_RIPv2));
+            Device.GetListOfUsableDevicesExceptOf(Dev).ForEach(UD => P_RIPv2.Send(UD, PR, IP_RIPv2, MAC_RIPv2));
 
             T_RIPv2.GetInstance().IntegrateDevice(Dev);
         }
@@ -69,9 +68,9 @@ namespace MC_132RTR.Model.Core
         public void DeviceUnavailable(Device Dev)
         {
             P_RIPv2 PR = P_RIPv2.CraftResponse_RIPv2DeviceAvailability(Dev, false);
-            Device.GetListOfUsableDevices().ForEach(UD => P_RIPv2.Send(UD, PR, IP_RIPv2, MAC_RIPv2));
+            Device.GetListOfUsableDevicesExceptOf(Dev).ForEach(UD => P_RIPv2.Send(UD, PR, IP_RIPv2, MAC_RIPv2));
 
-            T_RIPv2.GetInstance().RemoveConnected(Dev.Network.GetNetworkGeneral());
+            T_RIPv2.GetInstance().RemoveFromOriginDevice(Dev);
         }
 
         /*                 HANDLER                      */
@@ -127,12 +126,7 @@ namespace MC_132RTR.Model.Core
         // Do sth functions Request
         private void ClassicResponse(Device RecDev)
         {
-            Logging.OutALWAYS("Classic response for: " + RecDev.ToString());
             List<P_RIPv2> LPR = P_RIPv2.CraftPeriodicResponses(RecDev);
-            if (LPR == null)
-                Logging.OutALWAYS("Classic response "  + RecDev.ToString() + " je null");
-            if (LPR.Count == 0)
-                Logging.OutALWAYS("Classic response " + RecDev.ToString() + " je empty");
             P_RIPv2.SendList(RecDev, LPR, IP_RIPv2, MAC_RIPv2);
         }
 

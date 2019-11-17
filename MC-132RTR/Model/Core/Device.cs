@@ -68,7 +68,7 @@ namespace MC_132RTR.Model.Core
                 Network = NewProposedNet;
 
                 if (T_Routing.GetInstance().UpdateConnected(CurrentNetwork, NewProposedNet.GetNetworkGeneral()))
-                    SendInfoAboutChange(CurrentNetwork.GetNetworkGeneral(), NewProposedNet.GetNetworkGeneral());
+                    SendInfoAboutChange(this, CurrentNetwork.GetNetworkGeneral(), NewProposedNet.GetNetworkGeneral());
             } else if (Network.IsInSameSubnet(NewProposedNet))
             {
                 // if just IP address changed 
@@ -89,19 +89,20 @@ namespace MC_132RTR.Model.Core
                 SetWhenRouterOff(NewProposedNet, ToString());
         }
 
-        public static void SendInfoAboutChange(Network CurrentNetwork, Network NewProposedNet)
+        public static void SendInfoAboutChange(Device ExceptOf, Network CurrentNetwork, Network NewProposedNet)
         {
             if (!RouterRunning)
                 return;
 
+            T_RIPv2.GetInstance().ChangeConnected(CurrentNetwork, NewProposedNet);
             P_RIPv2 PR = P_RIPv2.CraftResponse_ConnectedChange(CurrentNetwork, NewProposedNet);
-            if (PR != null)
-                foreach (Device D in GetListOfUsableDevices())
-                    if (!D.DEV_Disabled && !D.DEV_DisabledRIPv2)
-                    {
-                        T_RIPv2.GetInstance().ChangeConnected(CurrentNetwork, NewProposedNet);
-                        P_RIPv2.Send(D, PR, C_RIPv2.IP_RIPv2, C_RIPv2.MAC_RIPv2);
-                    }
+
+            if (PR != null && PR.EntriesCount > 0)
+                GetListOfUsableDevicesExceptOf(ExceptOf).ForEach(
+                    D => {
+                        if (!D.DEV_Disabled && !D.DEV_DisabledRIPv2)
+                            P_RIPv2.Send(D, PR, C_RIPv2.IP_RIPv2, C_RIPv2.MAC_RIPv2);
+                    });
         }
 
         // This function's used to send directly ethernet, from upper layers or ARP
@@ -116,7 +117,7 @@ namespace MC_132RTR.Model.Core
 
             if (Endorsment.SENDING_POSSIBLE)
             {
-                Logging.OutALWAYS("Sending from DEV: " + ToString());
+                //Logging.OutALWAYS("Sending from DEV: " + ToString());
                 this.ICapDev.SendPacket(EthPckt.Bytes);
             }
         }
