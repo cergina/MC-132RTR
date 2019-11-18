@@ -84,7 +84,6 @@ namespace MC_132RTR.Model.Core
             P_RIPv2 PR = new P_RIPv2(Udp.PayloadData);
 
             Ipv4 = P_RIPv2.UponArrival(PR, Ipv4, out bool Ok);
-
             if (!Ok)
                 return;
 
@@ -143,6 +142,9 @@ namespace MC_132RTR.Model.Core
         {
             //When better route is found, or no longer available is, triggered update need be sent
             P_RIPv2 PR_Trig = P_RIPv2.CraftTriggeredResponse(RecDev, PR, IP4);
+
+
+            System.Console.WriteLine("Found " + PR.EntriesCount + " entries.");
 
             if (PR_Trig.EntriesCount == 0)
                 return;

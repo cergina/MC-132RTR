@@ -20,8 +20,10 @@ namespace MC_132RTR.Model.Packet
 
         public static bool TTL_OperationWithCheck(IPv4Packet Ipv4)
         {
-            if (Ipv4.TimeToLive > 0)
+            if (Ipv4.TimeToLive > 0) { 
                 --Ipv4.TimeToLive;
+                return true;
+            }
 
             return TTL_Check(Ipv4);
         }

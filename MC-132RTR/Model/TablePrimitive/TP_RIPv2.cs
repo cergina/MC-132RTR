@@ -9,7 +9,7 @@ namespace MC_132RTR.Model.TablePrimitive
 {
     public class TP_RIPv2
     {
-        public static uint CONNECTED { private set; get; } = 0;
+        public static uint CONNECTED { private set; get; } = 1;
         public static uint INFINITY { private set; get; } = 16;
 
         public Network Net { get; private set; } = null;
@@ -65,7 +65,7 @@ namespace MC_132RTR.Model.TablePrimitive
 
         public void RegularOperation()
         {
-            if (Metrics == TP_Routing.DIRECT)
+            if (Metrics == TP_RIPv2.CONNECTED)
                 return;
 
             if (Invalid > 0)

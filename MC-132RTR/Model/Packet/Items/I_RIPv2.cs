@@ -41,6 +41,9 @@ namespace MC_132RTR.Model.Packet.Items
                 NextHop = (IPAddress)Extractor.Extract(PR.Bytes, StartByte + TypesYet, typeof(IPAddress));
                 TypesYet += 4;
                 Metric = (uint)Extractor.Extract(PR.Bytes, StartByte + TypesYet, typeof(uint));
+                
+                if (Metric < TP_RIPv2.INFINITY)
+                    ++Metric;
 
                 DetermineUsability();
             }

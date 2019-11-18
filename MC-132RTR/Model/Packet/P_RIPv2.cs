@@ -56,9 +56,20 @@ namespace MC_132RTR.Model.Packet
             if (BytesFromOutside == null)
                 Bytes = new byte[HEADER_BYTES];
             else
+            {
                 FromBytesFillObject(BytesFromOutside);
+                InitializeRIPv2FromBytes();
+                //TODO block metrics 0 or 1 teda
+            }
 
             UpdateCountsOfEntries();
+        }
+
+        private void InitializeRIPv2FromBytes()
+        {
+            CT = (byte)Extractor.Extract(Bytes, 0, typeof(byte));
+            Ver = (byte)Extractor.Extract(Bytes, 0 + sizeof(byte), typeof(byte));
+            MBZ = (ushort)Extractor.Extract(Bytes, 0 + 2*sizeof(byte), typeof(ushort));
         }
 
         /*                      PUBLIC                          */
@@ -133,7 +144,7 @@ namespace MC_132RTR.Model.Packet
             {
                 I_RIPv2 IR = new I_RIPv2(i, PR);
 
-                if ((!IR.Usable) || (IR.Metric == TP_RIPv2.INFINITY))
+                if (!IR.Usable)
                     continue;
 
                 IPAddress ViaIp = (IR.NextHop.Equals(C_RIPv2.IP_NH_THIS)) ? IPv4.SourceAddress : IR.NextHop;
@@ -149,7 +160,7 @@ namespace MC_132RTR.Model.Packet
                         AlreadyTriggered = true;
                     }
 
-                    PR_Trig = P_RIPv2.InsertEntry(PR_Trig, order++, IR.PrepareToResend());
+                    PR_Trig = P_RIPv2.InsertEntry(PR_Trig, order++, IR);
                 }
             }
 
@@ -186,6 +197,8 @@ namespace MC_132RTR.Model.Packet
                 }
 
                 uint MetricToUse = (TPR.Metrics >= TP_RIPv2.INFINITY) ? TP_RIPv2.INFINITY : TPR.Metrics; //TODO check if +1 not necessary
+                if (TPR.Invalid == 0)
+                    MetricToUse = TP_RIPv2.INFINITY;
 
                 // insert
                 I_RIPv2 IR = new I_RIPv2(TPR.Net.GetNetworkAddress(), TPR.Net.MaskAddress.SubnetMask, C_RIPv2.IP_NH_THIS, MetricToUse);

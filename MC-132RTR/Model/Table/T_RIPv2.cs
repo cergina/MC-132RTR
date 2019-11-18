@@ -72,30 +72,37 @@ namespace MC_132RTR.Model.Table
 
             // Case: known Route
             if (TPR != null)
-               switch(KnownRoute_JobDetermination(TPR, RealNextHop, IR.Metric))
-               {
-                   case "SAME_SOURCE_DIFF_METRICS_UPDATE":
+            {
+                string s = KnownRoute_JobDetermination(TPR, RealNextHop, IR.Metric);
+                Logging.OutALWAYS(s);
+
+                switch (s)
+                {
+                    case "SAME_SOURCE_DIFF_METRICS_UPDATE":
                         if (TPR.Update(ProposedNetwork, IR.Metric, RealNextHop, TPR.OriginDevice))
                             Trigger = true;
-                       break;
-                   case "SAME_SOURCE_SAME_METRICS_UPDATE":
+                        break;
+                    case "SAME_SOURCE_SAME_METRICS_UPDATE":
                         TPR.Renew();
-                       break;
-                   case "SAME_SOURCE_UNAVAILABLE_UPDATE":
+                        break;
+                    case "SAME_SOURCE_UNAVAILABLE_UPDATE":
                         Trigger = true;
                         TPR.BlockUpdates();
-                       break;
-                   case "DIFFERENT_SOURCE_BETTER_METRICS_UPDATE":
+                        break;
+                    case "DIFFERENT_SOURCE_BETTER_METRICS_UPDATE":
                         if (TPR.Update(ProposedNetwork, IR.Metric, RealNextHop, LearnedViaDev))
                             Trigger = true;
                         break;
                     default:
                         break;
-               }
+                }
+            }
         }
 
         private string KnownRoute_JobDetermination(TP_RIPv2 TPR, IPAddress NextHop, uint NewMetrics)
         {
+            Logging.OutALWAYS(NextHop + " vs " + TPR.NextHopIp);
+            Logging.OutALWAYS(NewMetrics + " vs " + TPR.Metrics);
             if (NextHop.Equals(TPR.NextHopIp))
                 if (NewMetrics == TP_RIPv2.INFINITY)
                     return "SAME_SOURCE_UNAVAILABLE_UPDATE";
@@ -106,7 +113,7 @@ namespace MC_132RTR.Model.Table
             else if (NewMetrics < TPR.Metrics)
                 return "DIFFERENT_SOURCE_BETTER_METRICS_UPDATE";
             else
-                return "";
+                return "IRRELEVANT";
         }
         
         public uint MetricsForRoute(IPAddress SubnetIp, IPAddress MaskIp)
