@@ -74,7 +74,7 @@ namespace MC_132RTR.Model.Table
             if (TPR != null)
             {
                 string s = KnownRoute_JobDetermination(TPR, RealNextHop, IR.Metric);
-                Logging.OutALWAYS(s);
+                Logging.Out(s); //TODO remove this when done
 
                 switch (s)
                 {
@@ -101,8 +101,8 @@ namespace MC_132RTR.Model.Table
 
         private string KnownRoute_JobDetermination(TP_RIPv2 TPR, IPAddress NextHop, uint NewMetrics)
         {
-            Logging.OutALWAYS(NextHop + " vs " + TPR.NextHopIp);
-            Logging.OutALWAYS(NewMetrics + " vs " + TPR.Metrics);
+            Logging.Out(NextHop + " vs " + TPR.NextHopIp);
+            Logging.Out(NewMetrics + " vs " + TPR.Metrics);
             if (NextHop.Equals(TPR.NextHopIp))
                 if (NewMetrics == TP_RIPv2.INFINITY)
                     return "SAME_SOURCE_UNAVAILABLE_UPDATE";
@@ -186,6 +186,9 @@ namespace MC_132RTR.Model.Table
                     //  Regular decrements
                     Table.ForEach(TPR => TPR.RegularOperation());
 
+                    // Update All Routes
+                    UpdateRoutingTable();
+
                     // Cleanup
                     Table.RemoveAll(TPR => (TPR.Flush == 0 && TPR.OperationsBeforeFlushDone()));
 
@@ -202,9 +205,25 @@ namespace MC_132RTR.Model.Table
 
         private void ExportToRoutingTable()
         {
-            foreach(TP_RIPv2 TPR in GetListForView())
-                if (TPR.PassableToRoutingTable())
-                    T_Routing.GetInstance().AttemtToAdd_Dynamic(TPR);
+            foreach (TP_RIPv2 TPR in GetListForView())
+            {
+                if (T_Routing.GetInstance().IsSubnetInRoutes(TPR.Net) == null)
+                {
+                    if (TPR.PassableToRoutingTable())
+                        T_Routing.GetInstance().AttemtToAdd_Dynamic(TPR);
+                }
+            }
+        }
+
+        private void UpdateRoutingTable()
+        {
+            foreach (TP_RIPv2 TPR in GetListForView())
+            {
+                if (T_Routing.GetInstance().IsSubnetInRoutes(TPR.Net) != null)
+                {
+                    T_Routing.GetInstance().UpdateDynamic(TPR);
+                }
+            }
         }
 
         public List<TP_RIPv2> GetListForView()

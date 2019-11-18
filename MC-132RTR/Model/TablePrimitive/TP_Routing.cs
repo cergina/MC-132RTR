@@ -44,6 +44,12 @@ namespace MC_132RTR.Model.TablePrimitive
         public void UpdateNetwork(Network NetworkNew)
             => Subnet = NetworkNew;
 
+        public void UpdateFromRIP(TP_RIPv2 TPR_D)
+        {
+            ExitDevice = TPR_D.OriginDevice;
+            NextHopIp = TPR_D.NextHopIp;
+        }
+
         public Boolean Equals(TP_Routing TPR)
         {
             // MANDATORY

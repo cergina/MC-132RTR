@@ -61,6 +61,16 @@ namespace MC_132RTR.Model.Table
             return false;
         }
 
+        public void UpdateDynamic(TP_RIPv2 TPR_Update)
+        {
+            foreach (TP_Routing TPR in Routes)
+                if (TPR.Type == TP_Routing.RIP && TPR.Subnet.Equals(TPR_Update.Net))
+                {
+                    TPR.UpdateFromRIP(TPR_Update);
+                    return;
+                }
+        }
+
         /*
          * returns null if it's not in it
          */

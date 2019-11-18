@@ -58,18 +58,11 @@ namespace MC_132RTR.Model.Packet
             else
             {
                 FromBytesFillObject(BytesFromOutside);
-                InitializeRIPv2FromBytes();
+                InitializeRIPv2(false, true);
                 //TODO block metrics 0 or 1 teda
             }
 
             UpdateCountsOfEntries();
-        }
-
-        private void InitializeRIPv2FromBytes()
-        {
-            CT = (byte)Extractor.Extract(Bytes, 0, typeof(byte));
-            Ver = (byte)Extractor.Extract(Bytes, 0 + sizeof(byte), typeof(byte));
-            MBZ = (ushort)Extractor.Extract(Bytes, 0 + 2*sizeof(byte), typeof(ushort));
         }
 
         /*                      PUBLIC                          */
@@ -98,7 +91,6 @@ namespace MC_132RTR.Model.Packet
                 PayloadLength = (ushort)Udp.Length
             };
             IP4.Checksum = IP4.CalculateIPChecksum();
-            //IP4.UpdateIPChecksum();
 
             ExitDev.SendViaThisDevice(MAC, EthernetPacketType.IpV4, IP4.Bytes);
         }
@@ -125,7 +117,7 @@ namespace MC_132RTR.Model.Packet
         public static P_RIPv2 CraftRequest(IPAddress NetworkIp)
         {
             P_RIPv2 PR = new P_RIPv2(null);
-            PR.InitializeRIPv2(true);
+            PR.InitializeRIPv2(true, false);
 
             IPAddress AllZero = C_RIPv2.IP_NH_THIS;
 
@@ -135,7 +127,7 @@ namespace MC_132RTR.Model.Packet
             return PR;
         }
 
-        public static P_RIPv2 CraftTriggeredResponse(Device CameFromDev, P_RIPv2 PR, IPv4Packet IPv4)
+        public static P_RIPv2 AttemptToIntegrateAndCraftTriggeredResponse(Device CameFromDev, P_RIPv2 PR, IPv4Packet IPv4)
         {
             bool AlreadyTriggered = false;
             P_RIPv2 PR_Trig = new P_RIPv2(null);
@@ -144,7 +136,7 @@ namespace MC_132RTR.Model.Packet
             {
                 I_RIPv2 IR = new I_RIPv2(i, PR);
 
-                if (!IR.Usable)
+                if (!IR.Usable || (IR.Metric <= TP_RIPv2.CONNECTED || IR.Metric > TP_RIPv2.INFINITY))
                     continue;
 
                 IPAddress ViaIp = (IR.NextHop.Equals(C_RIPv2.IP_NH_THIS)) ? IPv4.SourceAddress : IR.NextHop;
@@ -156,7 +148,7 @@ namespace MC_132RTR.Model.Packet
                 {
                     if (!AlreadyTriggered)
                     {
-                        PR_Trig.InitializeRIPv2(false);
+                        PR_Trig.InitializeRIPv2(false, false);
                         AlreadyTriggered = true;
                     }
 
@@ -177,7 +169,7 @@ namespace MC_132RTR.Model.Packet
             List<P_RIPv2> ListToReturn = new List<P_RIPv2>();
 
             P_RIPv2 PR = new P_RIPv2(null);
-            PR.InitializeRIPv2(false);
+            PR.InitializeRIPv2(false, false);
 
             int Curr_RouteIndex = 0;
 
@@ -192,11 +184,11 @@ namespace MC_132RTR.Model.Packet
                     ListToReturn.Add(PR);
 
                     PR = new P_RIPv2(null);
-                    PR.InitializeRIPv2(false);
+                    PR.InitializeRIPv2(false, false);
                     Curr_RouteIndex = 0;
                 }
 
-                uint MetricToUse = (TPR.Metrics >= TP_RIPv2.INFINITY) ? TP_RIPv2.INFINITY : TPR.Metrics; //TODO check if +1 not necessary
+                uint MetricToUse = (TPR.Metrics >= TP_RIPv2.INFINITY) ? TP_RIPv2.INFINITY : TPR.Metrics;
                 if (TPR.Invalid == 0)
                     MetricToUse = TP_RIPv2.INFINITY;
 
@@ -218,7 +210,7 @@ namespace MC_132RTR.Model.Packet
                 return null;
 
             P_RIPv2 PR = new P_RIPv2(null);
-            PR.InitializeRIPv2(false);
+            PR.InitializeRIPv2(false, false);
             int order = 0;
 
             if (NetOld != null)
@@ -237,7 +229,7 @@ namespace MC_132RTR.Model.Packet
         public static P_RIPv2 CraftResponse_RIPv2DeviceAvailability(Device Dev, bool Available)
         {
             P_RIPv2 PR = new P_RIPv2(null);
-            PR.InitializeRIPv2(false);
+            PR.InitializeRIPv2(false, false);
             int order = 0;
 
             if (Available)
@@ -258,7 +250,7 @@ namespace MC_132RTR.Model.Packet
         public static P_RIPv2 CraftResponseUponRequest(P_RIPv2 PR_Req)
         {
             P_RIPv2 PR_New = new P_RIPv2(null);
-            PR_New.InitializeRIPv2(false);
+            PR_New.InitializeRIPv2(false, false);
             
             for (int i_req = 0; i_req < PR_Req.EntriesCount; i_req++)
             {
@@ -280,7 +272,7 @@ namespace MC_132RTR.Model.Packet
                 return null;
 
             P_RIPv2 PR = new P_RIPv2(null);
-            PR.InitializeRIPv2(false);
+            PR.InitializeRIPv2(false, false);
 
             I_RIPv2 IR = new I_RIPv2(Net.GetNetworkAddress(), Net.GetMaskIpAddress(), C_RIPv2.IP_NH_THIS, Metrics);
             PR = P_RIPv2.InsertEntry(PR, 0, IR);
@@ -296,16 +288,25 @@ namespace MC_132RTR.Model.Packet
         private void FromBytesFillObject(byte[] BytesFromOutside)
             => Bytes = BytesFromOutside;
 
-        private void InitializeRIPv2(bool Request_or_Reply)
+        // Request_or_Reply is irrelevant when initializing from extraced bytes
+        private void InitializeRIPv2(bool Request_or_Reply, bool ExtractFromBytes)
         {
-            CT = (Request_or_Reply == true) ? (byte)1 : (byte)2;
-            Ver = 2;
-            MBZ = 0;
+            if (ExtractFromBytes)
+            {
+                CT = (byte)Extractor.Extract(Bytes, 0, typeof(byte));
+                Ver = (byte)Extractor.Extract(Bytes, 0 + sizeof(byte), typeof(byte));
+                MBZ = (ushort)Extractor.Extract(Bytes, 0 + 2 * sizeof(byte), typeof(ushort));
+            } else
+            {
+                CT = (Request_or_Reply == true) ? (byte)1 : (byte)2;
+                Ver = 2;
+                MBZ = 0;
 
-            // Insert into packet
-            Packet.Insertor.Insert(Bytes, 0, CT);
-            Packet.Insertor.Insert(Bytes, 1, Ver);
-            Packet.Insertor.Insert(Bytes, 2, MBZ);
+                // Insert into packet
+                Packet.Insertor.Insert(Bytes, 0, CT);
+                Packet.Insertor.Insert(Bytes, 1, Ver);
+                Packet.Insertor.Insert(Bytes, 2, MBZ);
+            }
         }
 
         private static bool ValidateHeader(P_RIPv2 PR)
@@ -342,15 +343,6 @@ namespace MC_132RTR.Model.Packet
 
         private int GetNumberOfRoutesInside()
             => (Bytes == null) ? -1 : (Bytes.Length - HEADER_BYTES) / ENTRY_BYTES;
-
-
-
-
-
-
-
-
-
 
         /*public bool IsPartOfThisProtocol(Device Dev_Received, EthernetPacket PR_Eth, IPv4Packet PR)
         {

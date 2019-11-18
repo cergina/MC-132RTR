@@ -141,10 +141,7 @@ namespace MC_132RTR.Model.Core
         private void ProcessResponse(P_RIPv2 PR, IPv4Packet IP4, Device RecDev)
         {
             //When better route is found, or no longer available is, triggered update need be sent
-            P_RIPv2 PR_Trig = P_RIPv2.CraftTriggeredResponse(RecDev, PR, IP4);
-
-
-            System.Console.WriteLine("Found " + PR.EntriesCount + " entries.");
+            P_RIPv2 PR_Trig = P_RIPv2.AttemptToIntegrateAndCraftTriggeredResponse(RecDev, PR, IP4);
 
             if (PR_Trig.EntriesCount == 0)
                 return;
