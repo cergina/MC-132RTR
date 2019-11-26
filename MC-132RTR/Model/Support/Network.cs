@@ -22,6 +22,12 @@ namespace MC_132RTR.Model.Support
             MaskAddress = MaskCreate;
         }
 
+        public Network(String Ip, String MaskIp)
+        {
+            Address = IPAddress.Parse(Ip);
+            MaskAddress = new Mask(IPAddress.Parse(MaskIp));
+        }
+
         /***
          * STATUS: FINAL
          * Get broadcast address for the subnet in which this instance is
@@ -90,7 +96,7 @@ namespace MC_132RTR.Model.Support
             Byte[] NetTmpSub = NetworkTmpSubnet.GetAddressBytes();
 
             // Compare if the Subnet is the same
-            return NetSub.SequenceEqual(NetTmpSub);
+            return NetSub.SequenceEqual(NetTmpSub) && NetworkTmp.MaskAddress.Equals(MaskAddress);
         }
 
         /***
