@@ -1,6 +1,7 @@
 ﻿using MC_132RTR.Controller.Middleman;
 using MC_132RTR.Model.Core;
 using MC_132RTR.Model.Support;
+using MC_132RTR.Model.Table;
 using System;
 using System.Threading;
 using System.Threading.Tasks;
@@ -114,6 +115,9 @@ namespace MC_132RTR
             // RIP
             RIPListView.Items.Clear();
             Middleman.GetListViewItemsRIP().ForEach(Item => RIPListView.Items.Add(Item));
+
+            // RIP timer
+            RIPinTimeLabel.Text = "RIP periodic attempt in [" + T_RIPv2.NextUpdate + "] seconds";
         }
 
         // //////////////////

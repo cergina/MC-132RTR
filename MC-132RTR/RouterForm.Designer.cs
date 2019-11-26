@@ -99,6 +99,7 @@
             this.RIPHolddownColumn = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.RIPFlushColumn = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.ExtraGB = new System.Windows.Forms.GroupBox();
+            this.RIPinTimeLabel = new System.Windows.Forms.Label();
             this.Dev1GB.SuspendLayout();
             this.Dev2GB.SuspendLayout();
             this.RouterGB.SuspendLayout();
@@ -153,11 +154,11 @@
             this.Dev1GB.Controls.Add(this.Dev1RipButton);
             this.Dev1GB.Controls.Add(this.Dev1RIPv2CheckBox);
             this.Dev1GB.Controls.Add(this.Dev1Label);
-            this.Dev1GB.Location = new System.Drawing.Point(9, 71);
+            this.Dev1GB.Location = new System.Drawing.Point(9, 113);
             this.Dev1GB.Margin = new System.Windows.Forms.Padding(2);
             this.Dev1GB.Name = "Dev1GB";
             this.Dev1GB.Padding = new System.Windows.Forms.Padding(2);
-            this.Dev1GB.Size = new System.Drawing.Size(260, 94);
+            this.Dev1GB.Size = new System.Drawing.Size(260, 81);
             this.Dev1GB.TabIndex = 6;
             this.Dev1GB.TabStop = false;
             this.Dev1GB.Text = "Device 1";
@@ -165,7 +166,7 @@
             // Dev1MacLabel
             // 
             this.Dev1MacLabel.AutoSize = true;
-            this.Dev1MacLabel.Location = new System.Drawing.Point(16, 58);
+            this.Dev1MacLabel.Location = new System.Drawing.Point(12, 47);
             this.Dev1MacLabel.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.Dev1MacLabel.Name = "Dev1MacLabel";
             this.Dev1MacLabel.Size = new System.Drawing.Size(35, 13);
@@ -175,7 +176,7 @@
             // Dev1NetworkLabel
             // 
             this.Dev1NetworkLabel.AutoSize = true;
-            this.Dev1NetworkLabel.Location = new System.Drawing.Point(16, 34);
+            this.Dev1NetworkLabel.Location = new System.Drawing.Point(12, 28);
             this.Dev1NetworkLabel.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.Dev1NetworkLabel.Name = "Dev1NetworkLabel";
             this.Dev1NetworkLabel.Size = new System.Drawing.Size(35, 13);
@@ -186,7 +187,7 @@
             // 
             this.Dev1UsableCHeckBox.AutoSize = true;
             this.Dev1UsableCHeckBox.Enabled = false;
-            this.Dev1UsableCHeckBox.Location = new System.Drawing.Point(17, 74);
+            this.Dev1UsableCHeckBox.Location = new System.Drawing.Point(15, 64);
             this.Dev1UsableCHeckBox.Margin = new System.Windows.Forms.Padding(2);
             this.Dev1UsableCHeckBox.Name = "Dev1UsableCHeckBox";
             this.Dev1UsableCHeckBox.Size = new System.Drawing.Size(59, 17);
@@ -211,7 +212,7 @@
             // 
             this.Dev1RIPv2CheckBox.AutoSize = true;
             this.Dev1RIPv2CheckBox.Enabled = false;
-            this.Dev1RIPv2CheckBox.Location = new System.Drawing.Point(76, 74);
+            this.Dev1RIPv2CheckBox.Location = new System.Drawing.Point(74, 64);
             this.Dev1RIPv2CheckBox.Margin = new System.Windows.Forms.Padding(2);
             this.Dev1RIPv2CheckBox.Name = "Dev1RIPv2CheckBox";
             this.Dev1RIPv2CheckBox.Size = new System.Drawing.Size(56, 17);
@@ -237,11 +238,11 @@
             this.Dev2GB.Controls.Add(this.Dev2RipButton);
             this.Dev2GB.Controls.Add(this.Dev2RIPv2CheckBox);
             this.Dev2GB.Controls.Add(this.Dev2Label);
-            this.Dev2GB.Location = new System.Drawing.Point(8, 182);
+            this.Dev2GB.Location = new System.Drawing.Point(6, 198);
             this.Dev2GB.Margin = new System.Windows.Forms.Padding(2);
             this.Dev2GB.Name = "Dev2GB";
             this.Dev2GB.Padding = new System.Windows.Forms.Padding(2);
-            this.Dev2GB.Size = new System.Drawing.Size(260, 93);
+            this.Dev2GB.Size = new System.Drawing.Size(260, 77);
             this.Dev2GB.TabIndex = 8;
             this.Dev2GB.TabStop = false;
             this.Dev2GB.Text = "Device 2";
@@ -249,7 +250,7 @@
             // Dev2MacLabel
             // 
             this.Dev2MacLabel.AutoSize = true;
-            this.Dev2MacLabel.Location = new System.Drawing.Point(16, 54);
+            this.Dev2MacLabel.Location = new System.Drawing.Point(15, 44);
             this.Dev2MacLabel.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.Dev2MacLabel.Name = "Dev2MacLabel";
             this.Dev2MacLabel.Size = new System.Drawing.Size(35, 13);
@@ -259,7 +260,7 @@
             // Dev2NetworkLabel
             // 
             this.Dev2NetworkLabel.AutoSize = true;
-            this.Dev2NetworkLabel.Location = new System.Drawing.Point(16, 34);
+            this.Dev2NetworkLabel.Location = new System.Drawing.Point(15, 28);
             this.Dev2NetworkLabel.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.Dev2NetworkLabel.Name = "Dev2NetworkLabel";
             this.Dev2NetworkLabel.Size = new System.Drawing.Size(35, 13);
@@ -270,7 +271,7 @@
             // 
             this.Dev2UsableCHeckBox.AutoSize = true;
             this.Dev2UsableCHeckBox.Enabled = false;
-            this.Dev2UsableCHeckBox.Location = new System.Drawing.Point(18, 73);
+            this.Dev2UsableCHeckBox.Location = new System.Drawing.Point(18, 60);
             this.Dev2UsableCHeckBox.Margin = new System.Windows.Forms.Padding(2);
             this.Dev2UsableCHeckBox.Name = "Dev2UsableCHeckBox";
             this.Dev2UsableCHeckBox.Size = new System.Drawing.Size(59, 17);
@@ -295,7 +296,7 @@
             // 
             this.Dev2RIPv2CheckBox.AutoSize = true;
             this.Dev2RIPv2CheckBox.Enabled = false;
-            this.Dev2RIPv2CheckBox.Location = new System.Drawing.Point(77, 73);
+            this.Dev2RIPv2CheckBox.Location = new System.Drawing.Point(77, 60);
             this.Dev2RIPv2CheckBox.Margin = new System.Windows.Forms.Padding(2);
             this.Dev2RIPv2CheckBox.Name = "Dev2RIPv2CheckBox";
             this.Dev2RIPv2CheckBox.Size = new System.Drawing.Size(56, 17);
@@ -524,6 +525,7 @@
             // 
             // TimersGB
             // 
+            this.TimersGB.Controls.Add(this.RIPinTimeLabel);
             this.TimersGB.Controls.Add(this.TimerHoldTextBox);
             this.TimersGB.Controls.Add(this.TimerFlushTextBox);
             this.TimersGB.Controls.Add(this.TimerHoldButton);
@@ -536,7 +538,7 @@
             this.TimersGB.Margin = new System.Windows.Forms.Padding(2);
             this.TimersGB.Name = "TimersGB";
             this.TimersGB.Padding = new System.Windows.Forms.Padding(2);
-            this.TimersGB.Size = new System.Drawing.Size(256, 64);
+            this.TimersGB.Size = new System.Drawing.Size(256, 97);
             this.TimersGB.TabIndex = 13;
             this.TimersGB.TabStop = false;
             this.TimersGB.Text = "Timers";
@@ -855,6 +857,15 @@
             this.ExtraGB.TabStop = false;
             this.ExtraGB.Text = "Extra";
             // 
+            // RIPinTimeLabel
+            // 
+            this.RIPinTimeLabel.AutoSize = true;
+            this.RIPinTimeLabel.Location = new System.Drawing.Point(15, 67);
+            this.RIPinTimeLabel.Name = "RIPinTimeLabel";
+            this.RIPinTimeLabel.Size = new System.Drawing.Size(35, 13);
+            this.RIPinTimeLabel.TabIndex = 34;
+            this.RIPinTimeLabel.Text = "label4";
+            // 
             // RouterForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -964,6 +975,7 @@
         private System.Windows.Forms.ColumnHeader RIPInvalidColumn;
         private System.Windows.Forms.ColumnHeader RIPHolddownColumn;
         private System.Windows.Forms.ColumnHeader RIPFlushColumn;
+        private System.Windows.Forms.Label RIPinTimeLabel;
     }
 }
 
