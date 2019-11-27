@@ -59,7 +59,6 @@ namespace MC_132RTR.Model.Packet
             {
                 FromBytesFillObject(BytesFromOutside);
                 InitializeRIPv2(false, true);
-                //TODO block metrics 0 or 1 teda
             }
 
             UpdateCountsOfEntries();

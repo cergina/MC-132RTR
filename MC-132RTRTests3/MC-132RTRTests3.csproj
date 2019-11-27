@@ -56,6 +56,8 @@
     <Otherwise />
   </Choose>
   <ItemGroup>
+    <Compile Include="Controller\Middleman\MiddlemanTests.cs" />
+    <Compile Include="Model\Support\MaskTests.cs" />
     <Compile Include="Model\Support\NetworkTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

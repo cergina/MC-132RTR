@@ -32,18 +32,18 @@
             this.StartButton = new System.Windows.Forms.Button();
             this.DeviceRouterComboBOx = new System.Windows.Forms.ComboBox();
             this.Dev1GB = new System.Windows.Forms.GroupBox();
+            this.Dev1RIPv2CheckBox = new System.Windows.Forms.CheckBox();
             this.Dev1MacLabel = new System.Windows.Forms.Label();
             this.Dev1NetworkLabel = new System.Windows.Forms.Label();
             this.Dev1UsableCHeckBox = new System.Windows.Forms.CheckBox();
             this.Dev1RipButton = new System.Windows.Forms.Button();
-            this.Dev1RIPv2CheckBox = new System.Windows.Forms.CheckBox();
             this.Dev1Label = new System.Windows.Forms.Label();
             this.Dev2GB = new System.Windows.Forms.GroupBox();
+            this.Dev2RIPv2CheckBox = new System.Windows.Forms.CheckBox();
             this.Dev2MacLabel = new System.Windows.Forms.Label();
             this.Dev2NetworkLabel = new System.Windows.Forms.Label();
             this.Dev2UsableCHeckBox = new System.Windows.Forms.CheckBox();
             this.Dev2RipButton = new System.Windows.Forms.Button();
-            this.Dev2RIPv2CheckBox = new System.Windows.Forms.CheckBox();
             this.Dev2Label = new System.Windows.Forms.Label();
             this.RouterGB = new System.Windows.Forms.GroupBox();
             this.MaskTextBox = new System.Windows.Forms.TextBox();
@@ -64,6 +64,9 @@
             this.StaticMaskTextBox = new System.Windows.Forms.TextBox();
             this.StaticIpTextBox = new System.Windows.Forms.TextBox();
             this.TimersGB = new System.Windows.Forms.GroupBox();
+            this.RIPIntervalButton = new System.Windows.Forms.Button();
+            this.TimerPeriodicTextBox = new System.Windows.Forms.TextBox();
+            this.RIPinTimeLabel = new System.Windows.Forms.Label();
             this.TimerHoldTextBox = new System.Windows.Forms.TextBox();
             this.TimerFlushTextBox = new System.Windows.Forms.TextBox();
             this.TimerHoldButton = new System.Windows.Forms.Button();
@@ -99,7 +102,6 @@
             this.RIPHolddownColumn = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.RIPFlushColumn = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.ExtraGB = new System.Windows.Forms.GroupBox();
-            this.RIPinTimeLabel = new System.Windows.Forms.Label();
             this.Dev1GB.SuspendLayout();
             this.Dev2GB.SuspendLayout();
             this.RouterGB.SuspendLayout();
@@ -115,10 +117,10 @@
             this.PowerButton.BackColor = System.Drawing.Color.Red;
             this.PowerButton.Font = new System.Drawing.Font("Perpetua Titling MT", 10.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.PowerButton.ForeColor = System.Drawing.SystemColors.Control;
-            this.PowerButton.Location = new System.Drawing.Point(9, 418);
+            this.PowerButton.Location = new System.Drawing.Point(15, 428);
             this.PowerButton.Margin = new System.Windows.Forms.Padding(2);
             this.PowerButton.Name = "PowerButton";
-            this.PowerButton.Size = new System.Drawing.Size(146, 84);
+            this.PowerButton.Size = new System.Drawing.Size(130, 68);
             this.PowerButton.TabIndex = 0;
             this.PowerButton.Text = "POWER";
             this.PowerButton.UseVisualStyleBackColor = false;
@@ -126,8 +128,9 @@
             // 
             // StartButton
             // 
-            this.StartButton.BackColor = System.Drawing.SystemColors.Window;
+            this.StartButton.BackColor = System.Drawing.Color.Green;
             this.StartButton.Font = new System.Drawing.Font("Perpetua Titling MT", 10.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.StartButton.ForeColor = System.Drawing.SystemColors.ButtonFace;
             this.StartButton.Location = new System.Drawing.Point(6, 45);
             this.StartButton.Margin = new System.Windows.Forms.Padding(2);
             this.StartButton.Name = "StartButton";
@@ -139,6 +142,7 @@
             // 
             // DeviceRouterComboBOx
             // 
+            this.DeviceRouterComboBOx.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(128)))), ((int)(((byte)(0)))));
             this.DeviceRouterComboBOx.FormattingEnabled = true;
             this.DeviceRouterComboBOx.Location = new System.Drawing.Point(6, 20);
             this.DeviceRouterComboBOx.Margin = new System.Windows.Forms.Padding(2);
@@ -148,13 +152,13 @@
             // 
             // Dev1GB
             // 
+            this.Dev1GB.Controls.Add(this.Dev1RIPv2CheckBox);
             this.Dev1GB.Controls.Add(this.Dev1MacLabel);
             this.Dev1GB.Controls.Add(this.Dev1NetworkLabel);
             this.Dev1GB.Controls.Add(this.Dev1UsableCHeckBox);
             this.Dev1GB.Controls.Add(this.Dev1RipButton);
-            this.Dev1GB.Controls.Add(this.Dev1RIPv2CheckBox);
             this.Dev1GB.Controls.Add(this.Dev1Label);
-            this.Dev1GB.Location = new System.Drawing.Point(9, 113);
+            this.Dev1GB.Location = new System.Drawing.Point(9, 103);
             this.Dev1GB.Margin = new System.Windows.Forms.Padding(2);
             this.Dev1GB.Name = "Dev1GB";
             this.Dev1GB.Padding = new System.Windows.Forms.Padding(2);
@@ -163,10 +167,22 @@
             this.Dev1GB.TabStop = false;
             this.Dev1GB.Text = "Device 1";
             // 
+            // Dev1RIPv2CheckBox
+            // 
+            this.Dev1RIPv2CheckBox.AutoSize = true;
+            this.Dev1RIPv2CheckBox.Enabled = false;
+            this.Dev1RIPv2CheckBox.Location = new System.Drawing.Point(71, 60);
+            this.Dev1RIPv2CheckBox.Margin = new System.Windows.Forms.Padding(2);
+            this.Dev1RIPv2CheckBox.Name = "Dev1RIPv2CheckBox";
+            this.Dev1RIPv2CheckBox.Size = new System.Drawing.Size(56, 17);
+            this.Dev1RIPv2CheckBox.TabIndex = 11;
+            this.Dev1RIPv2CheckBox.Text = "RIPv2";
+            this.Dev1RIPv2CheckBox.UseVisualStyleBackColor = true;
+            // 
             // Dev1MacLabel
             // 
             this.Dev1MacLabel.AutoSize = true;
-            this.Dev1MacLabel.Location = new System.Drawing.Point(12, 47);
+            this.Dev1MacLabel.Location = new System.Drawing.Point(12, 45);
             this.Dev1MacLabel.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.Dev1MacLabel.Name = "Dev1MacLabel";
             this.Dev1MacLabel.Size = new System.Drawing.Size(35, 13);
@@ -187,7 +203,7 @@
             // 
             this.Dev1UsableCHeckBox.AutoSize = true;
             this.Dev1UsableCHeckBox.Enabled = false;
-            this.Dev1UsableCHeckBox.Location = new System.Drawing.Point(15, 64);
+            this.Dev1UsableCHeckBox.Location = new System.Drawing.Point(15, 60);
             this.Dev1UsableCHeckBox.Margin = new System.Windows.Forms.Padding(2);
             this.Dev1UsableCHeckBox.Name = "Dev1UsableCHeckBox";
             this.Dev1UsableCHeckBox.Size = new System.Drawing.Size(59, 17);
@@ -199,7 +215,7 @@
             // 
             this.Dev1RipButton.BackColor = System.Drawing.SystemColors.Window;
             this.Dev1RipButton.Font = new System.Drawing.Font("Perpetua Titling MT", 10.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.Dev1RipButton.Location = new System.Drawing.Point(170, 38);
+            this.Dev1RipButton.Location = new System.Drawing.Point(169, 49);
             this.Dev1RipButton.Margin = new System.Windows.Forms.Padding(2);
             this.Dev1RipButton.Name = "Dev1RipButton";
             this.Dev1RipButton.Size = new System.Drawing.Size(86, 28);
@@ -208,22 +224,10 @@
             this.Dev1RipButton.UseVisualStyleBackColor = false;
             this.Dev1RipButton.Click += new System.EventHandler(this.Dev1RipButton_Click);
             // 
-            // Dev1RIPv2CheckBox
-            // 
-            this.Dev1RIPv2CheckBox.AutoSize = true;
-            this.Dev1RIPv2CheckBox.Enabled = false;
-            this.Dev1RIPv2CheckBox.Location = new System.Drawing.Point(74, 64);
-            this.Dev1RIPv2CheckBox.Margin = new System.Windows.Forms.Padding(2);
-            this.Dev1RIPv2CheckBox.Name = "Dev1RIPv2CheckBox";
-            this.Dev1RIPv2CheckBox.Size = new System.Drawing.Size(56, 17);
-            this.Dev1RIPv2CheckBox.TabIndex = 11;
-            this.Dev1RIPv2CheckBox.Text = "RIPv2";
-            this.Dev1RIPv2CheckBox.UseVisualStyleBackColor = true;
-            // 
             // Dev1Label
             // 
             this.Dev1Label.AutoSize = true;
-            this.Dev1Label.Location = new System.Drawing.Point(16, 15);
+            this.Dev1Label.Location = new System.Drawing.Point(30, 15);
             this.Dev1Label.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.Dev1Label.Name = "Dev1Label";
             this.Dev1Label.Size = new System.Drawing.Size(72, 13);
@@ -232,25 +236,37 @@
             // 
             // Dev2GB
             // 
+            this.Dev2GB.Controls.Add(this.Dev2RIPv2CheckBox);
             this.Dev2GB.Controls.Add(this.Dev2MacLabel);
             this.Dev2GB.Controls.Add(this.Dev2NetworkLabel);
             this.Dev2GB.Controls.Add(this.Dev2UsableCHeckBox);
             this.Dev2GB.Controls.Add(this.Dev2RipButton);
-            this.Dev2GB.Controls.Add(this.Dev2RIPv2CheckBox);
             this.Dev2GB.Controls.Add(this.Dev2Label);
-            this.Dev2GB.Location = new System.Drawing.Point(6, 198);
+            this.Dev2GB.Location = new System.Drawing.Point(9, 188);
             this.Dev2GB.Margin = new System.Windows.Forms.Padding(2);
             this.Dev2GB.Name = "Dev2GB";
             this.Dev2GB.Padding = new System.Windows.Forms.Padding(2);
-            this.Dev2GB.Size = new System.Drawing.Size(260, 77);
+            this.Dev2GB.Size = new System.Drawing.Size(260, 87);
             this.Dev2GB.TabIndex = 8;
             this.Dev2GB.TabStop = false;
             this.Dev2GB.Text = "Device 2";
             // 
+            // Dev2RIPv2CheckBox
+            // 
+            this.Dev2RIPv2CheckBox.AutoSize = true;
+            this.Dev2RIPv2CheckBox.Enabled = false;
+            this.Dev2RIPv2CheckBox.Location = new System.Drawing.Point(71, 67);
+            this.Dev2RIPv2CheckBox.Margin = new System.Windows.Forms.Padding(2);
+            this.Dev2RIPv2CheckBox.Name = "Dev2RIPv2CheckBox";
+            this.Dev2RIPv2CheckBox.Size = new System.Drawing.Size(56, 17);
+            this.Dev2RIPv2CheckBox.TabIndex = 9;
+            this.Dev2RIPv2CheckBox.Text = "RIPv2";
+            this.Dev2RIPv2CheckBox.UseVisualStyleBackColor = true;
+            // 
             // Dev2MacLabel
             // 
             this.Dev2MacLabel.AutoSize = true;
-            this.Dev2MacLabel.Location = new System.Drawing.Point(15, 44);
+            this.Dev2MacLabel.Location = new System.Drawing.Point(12, 49);
             this.Dev2MacLabel.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.Dev2MacLabel.Name = "Dev2MacLabel";
             this.Dev2MacLabel.Size = new System.Drawing.Size(35, 13);
@@ -260,7 +276,7 @@
             // Dev2NetworkLabel
             // 
             this.Dev2NetworkLabel.AutoSize = true;
-            this.Dev2NetworkLabel.Location = new System.Drawing.Point(15, 28);
+            this.Dev2NetworkLabel.Location = new System.Drawing.Point(12, 29);
             this.Dev2NetworkLabel.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.Dev2NetworkLabel.Name = "Dev2NetworkLabel";
             this.Dev2NetworkLabel.Size = new System.Drawing.Size(35, 13);
@@ -271,7 +287,7 @@
             // 
             this.Dev2UsableCHeckBox.AutoSize = true;
             this.Dev2UsableCHeckBox.Enabled = false;
-            this.Dev2UsableCHeckBox.Location = new System.Drawing.Point(18, 60);
+            this.Dev2UsableCHeckBox.Location = new System.Drawing.Point(15, 66);
             this.Dev2UsableCHeckBox.Margin = new System.Windows.Forms.Padding(2);
             this.Dev2UsableCHeckBox.Name = "Dev2UsableCHeckBox";
             this.Dev2UsableCHeckBox.Size = new System.Drawing.Size(59, 17);
@@ -283,7 +299,7 @@
             // 
             this.Dev2RipButton.BackColor = System.Drawing.SystemColors.Window;
             this.Dev2RipButton.Font = new System.Drawing.Font("Perpetua Titling MT", 10.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.Dev2RipButton.Location = new System.Drawing.Point(170, 39);
+            this.Dev2RipButton.Location = new System.Drawing.Point(169, 55);
             this.Dev2RipButton.Margin = new System.Windows.Forms.Padding(2);
             this.Dev2RipButton.Name = "Dev2RipButton";
             this.Dev2RipButton.Size = new System.Drawing.Size(86, 28);
@@ -292,22 +308,10 @@
             this.Dev2RipButton.UseVisualStyleBackColor = false;
             this.Dev2RipButton.Click += new System.EventHandler(this.Dev2RipButton_Click);
             // 
-            // Dev2RIPv2CheckBox
-            // 
-            this.Dev2RIPv2CheckBox.AutoSize = true;
-            this.Dev2RIPv2CheckBox.Enabled = false;
-            this.Dev2RIPv2CheckBox.Location = new System.Drawing.Point(77, 60);
-            this.Dev2RIPv2CheckBox.Margin = new System.Windows.Forms.Padding(2);
-            this.Dev2RIPv2CheckBox.Name = "Dev2RIPv2CheckBox";
-            this.Dev2RIPv2CheckBox.Size = new System.Drawing.Size(56, 17);
-            this.Dev2RIPv2CheckBox.TabIndex = 9;
-            this.Dev2RIPv2CheckBox.Text = "RIPv2";
-            this.Dev2RIPv2CheckBox.UseVisualStyleBackColor = true;
-            // 
             // Dev2Label
             // 
             this.Dev2Label.AutoSize = true;
-            this.Dev2Label.Location = new System.Drawing.Point(16, 15);
+            this.Dev2Label.Location = new System.Drawing.Point(30, 15);
             this.Dev2Label.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.Dev2Label.Name = "Dev2Label";
             this.Dev2Label.Size = new System.Drawing.Size(72, 13);
@@ -334,14 +338,16 @@
             // 
             // MaskTextBox
             // 
+            this.MaskTextBox.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(128)))), ((int)(((byte)(0)))));
             this.MaskTextBox.Location = new System.Drawing.Point(349, 21);
             this.MaskTextBox.Margin = new System.Windows.Forms.Padding(2);
             this.MaskTextBox.Name = "MaskTextBox";
-            this.MaskTextBox.Size = new System.Drawing.Size(125, 20);
+            this.MaskTextBox.Size = new System.Drawing.Size(129, 20);
             this.MaskTextBox.TabIndex = 19;
             // 
             // IPTextBox
             // 
+            this.IPTextBox.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(128)))), ((int)(((byte)(0)))));
             this.IPTextBox.Location = new System.Drawing.Point(199, 21);
             this.IPTextBox.Margin = new System.Windows.Forms.Padding(2);
             this.IPTextBox.Name = "IPTextBox";
@@ -374,12 +380,12 @@
             // 
             // ActivateDevButton
             // 
-            this.ActivateDevButton.BackColor = System.Drawing.SystemColors.Window;
+            this.ActivateDevButton.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(128)))), ((int)(((byte)(0)))));
             this.ActivateDevButton.Font = new System.Drawing.Font("Perpetua Titling MT", 10.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.ActivateDevButton.Location = new System.Drawing.Point(343, 42);
+            this.ActivateDevButton.Location = new System.Drawing.Point(349, 42);
             this.ActivateDevButton.Margin = new System.Windows.Forms.Padding(2);
             this.ActivateDevButton.Name = "ActivateDevButton";
-            this.ActivateDevButton.Size = new System.Drawing.Size(130, 32);
+            this.ActivateDevButton.Size = new System.Drawing.Size(129, 32);
             this.ActivateDevButton.TabIndex = 15;
             this.ActivateDevButton.Text = "ACTIVATE";
             this.ActivateDevButton.UseVisualStyleBackColor = false;
@@ -402,7 +408,7 @@
             this.StaticRoutesGB.Margin = new System.Windows.Forms.Padding(2);
             this.StaticRoutesGB.Name = "StaticRoutesGB";
             this.StaticRoutesGB.Padding = new System.Windows.Forms.Padding(2);
-            this.StaticRoutesGB.Size = new System.Drawing.Size(260, 135);
+            this.StaticRoutesGB.Size = new System.Drawing.Size(260, 140);
             this.StaticRoutesGB.TabIndex = 12;
             this.StaticRoutesGB.TabStop = false;
             this.StaticRoutesGB.Text = "Static Routes";
@@ -525,6 +531,8 @@
             // 
             // TimersGB
             // 
+            this.TimersGB.Controls.Add(this.RIPIntervalButton);
+            this.TimersGB.Controls.Add(this.TimerPeriodicTextBox);
             this.TimersGB.Controls.Add(this.RIPinTimeLabel);
             this.TimersGB.Controls.Add(this.TimerHoldTextBox);
             this.TimersGB.Controls.Add(this.TimerFlushTextBox);
@@ -542,6 +550,36 @@
             this.TimersGB.TabIndex = 13;
             this.TimersGB.TabStop = false;
             this.TimersGB.Text = "Timers";
+            // 
+            // RIPIntervalButton
+            // 
+            this.RIPIntervalButton.BackColor = System.Drawing.SystemColors.Window;
+            this.RIPIntervalButton.Font = new System.Drawing.Font("Perpetua Titling MT", 7.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.RIPIntervalButton.Location = new System.Drawing.Point(199, 64);
+            this.RIPIntervalButton.Margin = new System.Windows.Forms.Padding(2);
+            this.RIPIntervalButton.Name = "RIPIntervalButton";
+            this.RIPIntervalButton.Size = new System.Drawing.Size(52, 20);
+            this.RIPIntervalButton.TabIndex = 36;
+            this.RIPIntervalButton.Text = "PERIODIC";
+            this.RIPIntervalButton.UseVisualStyleBackColor = false;
+            this.RIPIntervalButton.Click += new System.EventHandler(this.RIPIntervalButton_Click);
+            // 
+            // TimerPeriodicTextBox
+            // 
+            this.TimerPeriodicTextBox.Location = new System.Drawing.Point(141, 64);
+            this.TimerPeriodicTextBox.Margin = new System.Windows.Forms.Padding(2);
+            this.TimerPeriodicTextBox.Name = "TimerPeriodicTextBox";
+            this.TimerPeriodicTextBox.Size = new System.Drawing.Size(54, 20);
+            this.TimerPeriodicTextBox.TabIndex = 35;
+            // 
+            // RIPinTimeLabel
+            // 
+            this.RIPinTimeLabel.AutoSize = true;
+            this.RIPinTimeLabel.Location = new System.Drawing.Point(3, 71);
+            this.RIPinTimeLabel.Name = "RIPinTimeLabel";
+            this.RIPinTimeLabel.Size = new System.Drawing.Size(35, 13);
+            this.RIPinTimeLabel.TabIndex = 34;
+            this.RIPinTimeLabel.Text = "label4";
             // 
             // TimerHoldTextBox
             // 
@@ -739,9 +777,9 @@
             // RoutTabGB
             // 
             this.RoutTabGB.Controls.Add(this.RoutingListView);
-            this.RoutTabGB.Location = new System.Drawing.Point(643, 12);
+            this.RoutTabGB.Location = new System.Drawing.Point(643, 10);
             this.RoutTabGB.Name = "RoutTabGB";
-            this.RoutTabGB.Size = new System.Drawing.Size(519, 227);
+            this.RoutTabGB.Size = new System.Drawing.Size(519, 249);
             this.RoutTabGB.TabIndex = 15;
             this.RoutTabGB.TabStop = false;
             this.RoutTabGB.Text = "Routing Table";
@@ -758,7 +796,7 @@
             this.RoutingListView.HideSelection = false;
             this.RoutingListView.Location = new System.Drawing.Point(6, 18);
             this.RoutingListView.Name = "RoutingListView";
-            this.RoutingListView.Size = new System.Drawing.Size(501, 200);
+            this.RoutingListView.Size = new System.Drawing.Size(501, 222);
             this.RoutingListView.TabIndex = 35;
             this.RoutingListView.UseCompatibleStateImageBehavior = false;
             this.RoutingListView.View = System.Windows.Forms.View.Details;
@@ -786,9 +824,9 @@
             // RipGB
             // 
             this.RipGB.Controls.Add(this.RIPListView);
-            this.RipGB.Location = new System.Drawing.Point(643, 255);
+            this.RipGB.Location = new System.Drawing.Point(643, 268);
             this.RipGB.Name = "RipGB";
-            this.RipGB.Size = new System.Drawing.Size(519, 246);
+            this.RipGB.Size = new System.Drawing.Size(519, 233);
             this.RipGB.TabIndex = 16;
             this.RipGB.TabStop = false;
             this.RipGB.Text = "RIPv2 Table";
@@ -857,20 +895,11 @@
             this.ExtraGB.TabStop = false;
             this.ExtraGB.Text = "Extra";
             // 
-            // RIPinTimeLabel
-            // 
-            this.RIPinTimeLabel.AutoSize = true;
-            this.RIPinTimeLabel.Location = new System.Drawing.Point(15, 67);
-            this.RIPinTimeLabel.Name = "RIPinTimeLabel";
-            this.RIPinTimeLabel.Size = new System.Drawing.Size(35, 13);
-            this.RIPinTimeLabel.TabIndex = 34;
-            this.RIPinTimeLabel.Text = "label4";
-            // 
             // RouterForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1174, 510);
+            this.ClientSize = new System.Drawing.Size(1175, 510);
             this.Controls.Add(this.PowerButton);
             this.Controls.Add(this.ExtraGB);
             this.Controls.Add(this.RipGB);
@@ -949,7 +978,6 @@
         private System.Windows.Forms.GroupBox ArpGB;
         private System.Windows.Forms.GroupBox RoutTabGB;
         private System.Windows.Forms.GroupBox RipGB;
-        private System.Windows.Forms.GroupBox ExtraGB;
         private System.Windows.Forms.ListView ARPListView;
         private System.Windows.Forms.ColumnHeader ArpIpColumn;
         private System.Windows.Forms.ColumnHeader ArpMacColumn;
@@ -976,6 +1004,9 @@
         private System.Windows.Forms.ColumnHeader RIPHolddownColumn;
         private System.Windows.Forms.ColumnHeader RIPFlushColumn;
         private System.Windows.Forms.Label RIPinTimeLabel;
+        private System.Windows.Forms.Button RIPIntervalButton;
+        private System.Windows.Forms.TextBox TimerPeriodicTextBox;
+        private System.Windows.Forms.GroupBox ExtraGB;
     }
 }
 

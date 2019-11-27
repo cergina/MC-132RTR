@@ -31,10 +31,6 @@ namespace MC_132RTR.Model.Packet
             if (!Validate(PR))
                 return false;
 
-            /*Logging.OutALWAYS("Validacia 2");
-            if (PR.Mac == null)
-                return false;*/
-
             Logging.OutALWAYS("validacia pred poslanim ok");
             return true;
         }

@@ -118,18 +118,6 @@ namespace MC_132RTR.Model.Support
             return true;
         }
 
-
-        /***
-         * Parses Mask from string.
-         */
-        public static Mask Parse(string IPMask)
-        {
-            Logging.Out("Maska je: " + IPMask);
-            IPAddress Ip = IPAddress.Parse(IPMask.ToString());
-
-            return new Mask(Ip);
-        }
-
         public bool Equals(Mask Mask)
         {
             if (Mask is null)

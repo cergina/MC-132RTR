@@ -66,6 +66,7 @@ namespace MC_132RTR
             TimerInvalidTextBox.Text = "[" + Middleman.GetTimer(Middleman.RIPv2, Middleman.RIPv2_INVALID).ToString() + "] sec";
             TimerFlushTextBox.Text = "[" + Middleman.GetTimer(Middleman.RIPv2, Middleman.RIPv2_FLUSH).ToString() + "] sec";
             TimerHoldTextBox.Text = "[" + Middleman.GetTimer(Middleman.RIPv2, Middleman.RIPv2_HOLDDOWN).ToString() + "] sec";
+            TimerPeriodicTextBox.Text = "[" + Middleman.GetTimer(Middleman.RIPv2, Middleman.RIPv2_INTERVAL).ToString() + "] sec";
         }
 
         private void GuiClearStatic()
@@ -189,6 +190,15 @@ namespace MC_132RTR
                 GuiTImersInit();
             }
             catch (Exception en) { }
+        }
+
+        private void RIPIntervalButton_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                Middleman.SetTimer(Middleman.RIPv2, Middleman.RIPv2_INTERVAL, int.Parse(TimerPeriodicTextBox.Text));
+                GuiTImersInit();
+            } catch (Exception en) { }
         }
 
         // //////////////////

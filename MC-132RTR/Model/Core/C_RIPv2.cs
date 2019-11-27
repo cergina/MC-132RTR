@@ -19,7 +19,7 @@ namespace MC_132RTR.Model.Core
 
 
         // UPDATE (seconds) - time for periodic update
-        public static int UPDATE_INTERVAL { private set; get; } = 30; // TODO change back to 30
+        public static int UPDATE_INTERVAL { private set; get; } = 30;
         public static C_RIPv2 Instance = null;
 
         private C_RIPv2()

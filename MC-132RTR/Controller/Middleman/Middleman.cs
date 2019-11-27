@@ -5,7 +5,6 @@ using MC_132RTR.Model.TablePrimitive;
 using System;
 using System.Collections.Generic;
 using System.Net;
-using System.Net.NetworkInformation;
 using System.Threading;
 using System.Windows.Forms;
 
@@ -87,11 +86,6 @@ namespace MC_132RTR.Controller.Middleman
             {
                 Dev.DisableRIPv2();
             }
-        }
-
-        public static void SendTestRIPv2(Device Dev)
-        {
-            throw new NotImplementedException();
         }
 
         // ARP
@@ -284,9 +278,6 @@ namespace MC_132RTR.Controller.Middleman
 
             // RIPv2
             new Thread(() => T_RIPv2.GetInstance().Thread_Operation()) { IsBackground = true }.Start();
-
-            // Routing
-
         }
 
     }

@@ -72,11 +72,7 @@ namespace MC_132RTR.Model.Table
 
             // Case: known Route
             if (TPR != null)
-            {
-                string s = KnownRoute_JobDetermination(TPR, RealNextHop, IR.Metric);
-                Logging.Out(s); //TODO remove this when done
-
-                switch (s)
+                switch (KnownRoute_JobDetermination(TPR, RealNextHop, IR.Metric))
                 {
                     case "SAME_SOURCE_DIFF_METRICS_UPDATE":
                         if (TPR.Update(ProposedNetwork, IR.Metric, RealNextHop, TPR.OriginDevice))
@@ -96,7 +92,6 @@ namespace MC_132RTR.Model.Table
                     default:
                         break;
                 }
-            }
         }
 
         private string KnownRoute_JobDetermination(TP_RIPv2 TPR, IPAddress NextHop, uint NewMetrics)

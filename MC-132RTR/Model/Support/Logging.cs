@@ -30,6 +30,8 @@ namespace MC_132RTR.Model.Support
         public static void OutALWAYS(String Output)
             => Console.WriteLine(Output);
 
+
+        // These functions are here in case it would be necessary to change Debug mode in real time
         public static void ChangeMode()
             => Instance.DebugMode = !Instance.DebugMode;
 
