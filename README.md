@@ -20,11 +20,14 @@ TODO list of Router project for WANT in Summer semester, 2019/2020 at FIIT STU.
 - Routing: implemented | cca 100% | tested
 - Static Routing: implemented | cca 100% | tested
 
-Resolution: Macko has to still confirm this
+Resolution: Dr. Macko has to still confirm this
+
 ------------------------------------------------------------------
 
  **Extra functionality:**
  - GUI: ??
  - Functionality: ??
 
-Resolution: Wait for Summer semester
+Resolution: After consulting with Dr. Macko, I can implement NAT/DHCP
+
+DHCP will be implemented.

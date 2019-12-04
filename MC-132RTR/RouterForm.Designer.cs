@@ -686,12 +686,12 @@
             // 
             this.ARPClearButton.BackColor = System.Drawing.SystemColors.Window;
             this.ARPClearButton.Font = new System.Drawing.Font("Perpetua Titling MT", 7.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.ARPClearButton.Location = new System.Drawing.Point(259, 225);
+            this.ARPClearButton.Location = new System.Drawing.Point(259, 223);
             this.ARPClearButton.Margin = new System.Windows.Forms.Padding(2);
             this.ARPClearButton.Name = "ARPClearButton";
-            this.ARPClearButton.Size = new System.Drawing.Size(60, 20);
+            this.ARPClearButton.Size = new System.Drawing.Size(100, 20);
             this.ARPClearButton.TabIndex = 34;
-            this.ARPClearButton.Text = "Clear";
+            this.ARPClearButton.Text = "Clear ALL";
             this.ARPClearButton.UseVisualStyleBackColor = false;
             this.ARPClearButton.Click += new System.EventHandler(this.ARPClearButton_Click);
             // 
@@ -912,7 +912,7 @@
             this.Controls.Add(this.Dev1GB);
             this.Margin = new System.Windows.Forms.Padding(2);
             this.Name = "RouterForm";
-            this.Text = "Form1";
+            this.Text = "MC-132RTR";
             this.Dev1GB.ResumeLayout(false);
             this.Dev1GB.PerformLayout();
             this.Dev2GB.ResumeLayout(false);

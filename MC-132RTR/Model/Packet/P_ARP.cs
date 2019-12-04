@@ -47,6 +47,7 @@ namespace MC_132RTR.Model.Packet
                 EthernetPacketType.Arp, Pckt.Bytes);
 
             C_ARP.GetInstance().AttemptToAddIntoList(RequestedIp);
+            // TODO zistiť či vymena tychto dvoch nespôsobí, že sa zrýchli prijatie
         }
 
         /*
