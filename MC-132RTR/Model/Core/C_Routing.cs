@@ -61,6 +61,9 @@ namespace MC_132RTR.Model.Core
                     // Do some routing
                     C_Routing.GeneralHandle(e, DeviceReceived);
                     break;
+                case Middleman.DHCP:
+                    // Create DHCP handler
+                    // TODO
                 default:
                     break;
             }

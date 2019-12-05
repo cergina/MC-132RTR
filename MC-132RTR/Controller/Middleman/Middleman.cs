@@ -20,8 +20,7 @@ namespace MC_132RTR.Controller.Middleman
         public const int RIPv2_INVALID = 302;
         public const int RIPv2_HOLDDOWN = 303;
         public const int RIPv2_INTERVAL = 304;
-
-
+        public const int DHCP = 400;
 
         // GENERAL
         public static List<Device> InitializeRouter()
