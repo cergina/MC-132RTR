@@ -11,7 +11,15 @@ namespace MC_132RTR.Model.Core
 {
     class C_DHCP
     {
+        public const short MANUAL = 1;
+        public const short DYNAMIC = 2;
+        public const short AUTOMAT = 3;
+
+        public const short Port_UDP_DHCP_ClientToServer = 67;
+        public const short Port_UDP_DHCP_ServerToClient = 68;
+
         public static C_DHCP Instance = null;
+        public static bool RUNNING { get; private set; } = false;
 
         private C_DHCP()
         {
@@ -41,7 +49,7 @@ namespace MC_132RTR.Model.Core
             IPv4Packet Ipv4 = Extractor.GetIPv4Packet(EthPckt);
             UdpPacket Udp = Extractor.GetUdpPacket(Ipv4);
 
-
+            // TODO
         }
     }
 }

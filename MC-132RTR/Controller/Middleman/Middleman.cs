@@ -88,6 +88,19 @@ namespace MC_132RTR.Controller.Middleman
         }
 
         // DHCP
+        public static void SaveDHCPSettings(String IpStart, String IpEnd, String IpMask)
+        {
+            try
+            {
+                IPAddress IpFirst = IPAddress.Parse(IpStart);
+                IPAddress IpLast = IPAddress.Parse(IpEnd);
+                Mask SubnetMask = new Mask(IPAddress.Parse(IpMask));
+
+                // TODO C_DHCP.GetInstance().
+            }
+            catch (Exception en) { }
+        }
+
         public static void EnableDHCPOnDevice(string DevS)
         {
             if (String.IsNullOrEmpty(DevS))
@@ -204,6 +217,8 @@ namespace MC_132RTR.Controller.Middleman
                     break;
                 case RIPv2:
                     throw new NotSupportedException();
+                case DHCP:
+                    throw new NotSupportedException();
                 default:
                     break;
             }
@@ -232,6 +247,8 @@ namespace MC_132RTR.Controller.Middleman
                         default:
                             return -1;
                     }
+                case DHCP:
+                    return T_DHCP.TIMER;
                 default:
                     return -1;
             }
@@ -259,6 +276,12 @@ namespace MC_132RTR.Controller.Middleman
             return ListTmp;
         }
 
+        public static List<ListViewItem> GetListViewItemsDHCP()
+        {
+            List<ListViewItem> ListTmp = new List<ListViewItem>();
+            T_DHCP.GetInstance().GetListForView().ForEach(Item => ListTmp.Add(Item.ToListViewItem()));
+            return ListTmp;
+        }
         /*
          * 
          */
@@ -283,6 +306,9 @@ namespace MC_132RTR.Controller.Middleman
                         default:
                             return;
                     }
+                case DHCP:
+                    T_DHCP.GetInstance().ChangeTimer(Value);
+                    return;
                 default:
                     return;
             }
@@ -300,7 +326,15 @@ namespace MC_132RTR.Controller.Middleman
 
             // RIPv2
             new Thread(() => T_RIPv2.GetInstance().Thread_Operation()) { IsBackground = true }.Start();
+
+            // DHCP
+            new Thread(() => T_DHCP.GetInstance().Thread_Operation()) { IsBackground = true }.Start();
         }
 
+        internal static string GetDHCPState()
+        {
+            // TODO
+            return "Stav DHCP";
+        }
     }
 }

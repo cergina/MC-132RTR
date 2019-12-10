@@ -30,6 +30,7 @@ namespace MC_132RTR
             InitializeComponent();
             InitializeGui();
             Instance = this;
+            CommentTextBox.Text = Endorsment.COMMENT;
         }
 
         // //////////////////
@@ -58,6 +59,7 @@ namespace MC_132RTR
         {
             IPTextBox.Text = "10.10.10.2";
             MaskTextBox.Text = "255.255.255.0";
+            DHCPIpTextBox.Text = "eg.: 192.168.11.15";
         }
 
         private void GuiTImersInit()
@@ -67,6 +69,7 @@ namespace MC_132RTR
             TimerFlushTextBox.Text = "[" + Middleman.GetTimer(Middleman.RIPv2, Middleman.RIPv2_FLUSH).ToString() + "] sec";
             TimerHoldTextBox.Text = "[" + Middleman.GetTimer(Middleman.RIPv2, Middleman.RIPv2_HOLDDOWN).ToString() + "] sec";
             TimerPeriodicTextBox.Text = "[" + Middleman.GetTimer(Middleman.RIPv2, Middleman.RIPv2_INTERVAL).ToString() + "] sec";
+            DHCPTimerTextBox.Text = "[" + Middleman.GetTimer(Middleman.DHCP, 0).ToString() + "] sec";
         }
 
         private void GuiClearStatic()
@@ -121,7 +124,7 @@ namespace MC_132RTR
 
             // DHCP
             DHCPListView.Items.Clear();
-            //TODO Middleman.GetListViewItemsDHCP().ForEach(Item => DHCPListView.Items.Add(Item));
+            Middleman.GetListViewItemsDHCP().ForEach(Item => DHCPListView.Items.Add(Item));
 
             // RIP timer
             RIPinTimeLabel.Text = "RIP periodic attempt in [" + T_RIPv2.NextUpdate + "] seconds";
@@ -160,6 +163,17 @@ namespace MC_132RTR
             UpdateDeviceInfo();
         }
 
+        private void DHCPSaveButton_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                Middleman.SaveDHCPSettings(
+                    DHCPIpStartTextBox.Text, DHCPIpEndTextBox.Text,
+                    DHCPMaskTextBox.Text);
+            }
+            catch (Exception en) { }
+        }
+
         private void Dev1DHCPButton_Click(object sender, EventArgs e)
         {
             if (Dev1DHCPCheckBox.Checked)
@@ -180,6 +194,12 @@ namespace MC_132RTR
             UpdateDeviceInfo();
         }
 
+        private void DHCPAddButton_Click(object sender, EventArgs e)
+        {
+            // TODO
+        }
+
+        // Timers
         private void TimerArpButton_Click(object sender, EventArgs e)
         {
             try
@@ -226,6 +246,16 @@ namespace MC_132RTR
                 Middleman.SetTimer(Middleman.RIPv2, Middleman.RIPv2_INTERVAL, int.Parse(TimerPeriodicTextBox.Text));
                 GuiTImersInit();
             } catch (Exception en) { }
+        }
+
+        private void DHCPTimerButton_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                Middleman.SetTimer(Middleman.DHCP, 0, int.Parse(DHCPTimerTextBox.Text));
+                GuiTImersInit();
+            }
+            catch (Exception en) { }
         }
 
         // //////////////////
@@ -336,6 +366,8 @@ namespace MC_132RTR
                         DeviceRouterComboBOx.Items.Add(Dev);
                 }
             }
+
+            DHCPInfoLabel.Text = Middleman.GetDHCPState();
         }
 
         private void ProcessDeviceFE(String DevNO, Label DevLabel, Label NetworkLabel, Label MacLabel, CheckBox UsableCheckBox, CheckBox RIPv2CheckBox, CheckBox DHCPCheckBox)
@@ -382,7 +414,5 @@ namespace MC_132RTR
 
             return whichNumberToUse;
         }
-
-
     }
 }

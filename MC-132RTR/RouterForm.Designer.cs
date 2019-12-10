@@ -32,6 +32,8 @@
             this.StartButton = new System.Windows.Forms.Button();
             this.DeviceRouterComboBOx = new System.Windows.Forms.ComboBox();
             this.Dev1GB = new System.Windows.Forms.GroupBox();
+            this.Dev1DHCPCheckBox = new System.Windows.Forms.CheckBox();
+            this.Dev1DHCPButton = new System.Windows.Forms.Button();
             this.Dev1RIPv2CheckBox = new System.Windows.Forms.CheckBox();
             this.Dev1MacLabel = new System.Windows.Forms.Label();
             this.Dev1NetworkLabel = new System.Windows.Forms.Label();
@@ -39,6 +41,8 @@
             this.Dev1RipButton = new System.Windows.Forms.Button();
             this.Dev1Label = new System.Windows.Forms.Label();
             this.Dev2GB = new System.Windows.Forms.GroupBox();
+            this.Dev2DHCPCheckBox = new System.Windows.Forms.CheckBox();
+            this.Dev2DHCPButton = new System.Windows.Forms.Button();
             this.Dev2RIPv2CheckBox = new System.Windows.Forms.CheckBox();
             this.Dev2MacLabel = new System.Windows.Forms.Label();
             this.Dev2NetworkLabel = new System.Windows.Forms.Label();
@@ -102,13 +106,35 @@
             this.RIPHolddownColumn = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.RIPFlushColumn = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.ExtraGB = new System.Windows.Forms.GroupBox();
-            this.Dev2DHCPButton = new System.Windows.Forms.Button();
-            this.Dev1DHCPButton = new System.Windows.Forms.Button();
-            this.Dev1DHCPCheckBox = new System.Windows.Forms.CheckBox();
-            this.Dev2DHCPCheckBox = new System.Windows.Forms.CheckBox();
-            this.DHCPOptionsGB = new System.Windows.Forms.GroupBox();
-            this.DHCPManagementGB = new System.Windows.Forms.GroupBox();
             this.DHCPListView = new System.Windows.Forms.ListView();
+            this.DHCPIpColumn = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.DHCPMaskColumn = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.DHCPDefGatColumn = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.DHCPMacColumn = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.DHCPTimeColumn = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.DHCPTypeColumn = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.DHCPOptionsGB = new System.Windows.Forms.GroupBox();
+            this.DHCPSaveButton = new System.Windows.Forms.Button();
+            this.DHCPIpEndTextBox = new System.Windows.Forms.TextBox();
+            this.DHCPIpStartTextBox = new System.Windows.Forms.TextBox();
+            this.label9 = new System.Windows.Forms.Label();
+            this.label8 = new System.Windows.Forms.Label();
+            this.DHCPTimerButton = new System.Windows.Forms.Button();
+            this.DHCPTimerTextBox = new System.Windows.Forms.TextBox();
+            this.DHCPAutoRadioButton = new System.Windows.Forms.RadioButton();
+            this.label5 = new System.Windows.Forms.Label();
+            this.DHCPMaskTextBox = new System.Windows.Forms.TextBox();
+            this.DHCPDynRadioButton = new System.Windows.Forms.RadioButton();
+            this.DHCPManagementGB = new System.Windows.Forms.GroupBox();
+            this.DHCPAddButton = new System.Windows.Forms.Button();
+            this.label7 = new System.Windows.Forms.Label();
+            this.DHCPMacTextBox = new System.Windows.Forms.TextBox();
+            this.label6 = new System.Windows.Forms.Label();
+            this.DHCPDefGateTextBox = new System.Windows.Forms.TextBox();
+            this.label4 = new System.Windows.Forms.Label();
+            this.DHCPIpTextBox = new System.Windows.Forms.TextBox();
+            this.CommentTextBox = new System.Windows.Forms.Label();
+            this.DHCPInfoLabel = new System.Windows.Forms.Label();
             this.Dev1GB.SuspendLayout();
             this.Dev2GB.SuspendLayout();
             this.RouterGB.SuspendLayout();
@@ -118,6 +144,8 @@
             this.RoutTabGB.SuspendLayout();
             this.RipGB.SuspendLayout();
             this.ExtraGB.SuspendLayout();
+            this.DHCPOptionsGB.SuspendLayout();
+            this.DHCPManagementGB.SuspendLayout();
             this.SuspendLayout();
             // 
             // PowerButton
@@ -125,10 +153,10 @@
             this.PowerButton.BackColor = System.Drawing.Color.Red;
             this.PowerButton.Font = new System.Drawing.Font("Perpetua Titling MT", 10.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.PowerButton.ForeColor = System.Drawing.SystemColors.Control;
-            this.PowerButton.Location = new System.Drawing.Point(4, 609);
+            this.PowerButton.Location = new System.Drawing.Point(4, 636);
             this.PowerButton.Margin = new System.Windows.Forms.Padding(2);
             this.PowerButton.Name = "PowerButton";
-            this.PowerButton.Size = new System.Drawing.Size(145, 83);
+            this.PowerButton.Size = new System.Drawing.Size(99, 83);
             this.PowerButton.TabIndex = 0;
             this.PowerButton.Text = "POWER";
             this.PowerButton.UseVisualStyleBackColor = false;
@@ -176,6 +204,31 @@
             this.Dev1GB.TabIndex = 6;
             this.Dev1GB.TabStop = false;
             this.Dev1GB.Text = "Device 1";
+            // 
+            // Dev1DHCPCheckBox
+            // 
+            this.Dev1DHCPCheckBox.AutoSize = true;
+            this.Dev1DHCPCheckBox.Enabled = false;
+            this.Dev1DHCPCheckBox.Location = new System.Drawing.Point(10, 83);
+            this.Dev1DHCPCheckBox.Margin = new System.Windows.Forms.Padding(2);
+            this.Dev1DHCPCheckBox.Name = "Dev1DHCPCheckBox";
+            this.Dev1DHCPCheckBox.Size = new System.Drawing.Size(56, 17);
+            this.Dev1DHCPCheckBox.TabIndex = 22;
+            this.Dev1DHCPCheckBox.Text = "DHCP";
+            this.Dev1DHCPCheckBox.UseVisualStyleBackColor = true;
+            // 
+            // Dev1DHCPButton
+            // 
+            this.Dev1DHCPButton.BackColor = System.Drawing.SystemColors.Window;
+            this.Dev1DHCPButton.Font = new System.Drawing.Font("Perpetua Titling MT", 10.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.Dev1DHCPButton.Location = new System.Drawing.Point(79, 93);
+            this.Dev1DHCPButton.Margin = new System.Windows.Forms.Padding(2);
+            this.Dev1DHCPButton.Name = "Dev1DHCPButton";
+            this.Dev1DHCPButton.Size = new System.Drawing.Size(86, 28);
+            this.Dev1DHCPButton.TabIndex = 21;
+            this.Dev1DHCPButton.Text = "DHCP";
+            this.Dev1DHCPButton.UseVisualStyleBackColor = false;
+            this.Dev1DHCPButton.Click += new System.EventHandler(this.Dev1DHCPButton_Click);
             // 
             // Dev1RIPv2CheckBox
             // 
@@ -263,6 +316,31 @@
             this.Dev2GB.TabStop = false;
             this.Dev2GB.Text = "Device 2";
             // 
+            // Dev2DHCPCheckBox
+            // 
+            this.Dev2DHCPCheckBox.AutoSize = true;
+            this.Dev2DHCPCheckBox.Enabled = false;
+            this.Dev2DHCPCheckBox.Location = new System.Drawing.Point(11, 87);
+            this.Dev2DHCPCheckBox.Margin = new System.Windows.Forms.Padding(2);
+            this.Dev2DHCPCheckBox.Name = "Dev2DHCPCheckBox";
+            this.Dev2DHCPCheckBox.Size = new System.Drawing.Size(56, 17);
+            this.Dev2DHCPCheckBox.TabIndex = 22;
+            this.Dev2DHCPCheckBox.Text = "DHCP";
+            this.Dev2DHCPCheckBox.UseVisualStyleBackColor = true;
+            // 
+            // Dev2DHCPButton
+            // 
+            this.Dev2DHCPButton.BackColor = System.Drawing.SystemColors.Window;
+            this.Dev2DHCPButton.Font = new System.Drawing.Font("Perpetua Titling MT", 10.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.Dev2DHCPButton.Location = new System.Drawing.Point(80, 97);
+            this.Dev2DHCPButton.Margin = new System.Windows.Forms.Padding(2);
+            this.Dev2DHCPButton.Name = "Dev2DHCPButton";
+            this.Dev2DHCPButton.Size = new System.Drawing.Size(86, 28);
+            this.Dev2DHCPButton.TabIndex = 21;
+            this.Dev2DHCPButton.Text = "DHCP";
+            this.Dev2DHCPButton.UseVisualStyleBackColor = false;
+            this.Dev2DHCPButton.Click += new System.EventHandler(this.Dev2DHCPButton_Click);
+            // 
             // Dev2RIPv2CheckBox
             // 
             this.Dev2RIPv2CheckBox.AutoSize = true;
@@ -339,7 +417,7 @@
             this.RouterGB.Controls.Add(this.DeviceRouterComboBOx);
             this.RouterGB.Controls.Add(this.ActivateDevButton);
             this.RouterGB.Controls.Add(this.StartButton);
-            this.RouterGB.Location = new System.Drawing.Point(153, 609);
+            this.RouterGB.Location = new System.Drawing.Point(107, 636);
             this.RouterGB.Margin = new System.Windows.Forms.Padding(2);
             this.RouterGB.Name = "RouterGB";
             this.RouterGB.Padding = new System.Windows.Forms.Padding(2);
@@ -901,102 +979,304 @@
             // ExtraGB
             // 
             this.ExtraGB.Controls.Add(this.DHCPListView);
-            this.ExtraGB.Location = new System.Drawing.Point(274, 268);
+            this.ExtraGB.Location = new System.Drawing.Point(597, 511);
             this.ExtraGB.Name = "ExtraGB";
-            this.ExtraGB.Size = new System.Drawing.Size(363, 237);
+            this.ExtraGB.Size = new System.Drawing.Size(529, 221);
             this.ExtraGB.TabIndex = 17;
             this.ExtraGB.TabStop = false;
             this.ExtraGB.Text = "DHCP Table";
             // 
-            // Dev2DHCPButton
+            // DHCPListView
             // 
-            this.Dev2DHCPButton.BackColor = System.Drawing.SystemColors.Window;
-            this.Dev2DHCPButton.Font = new System.Drawing.Font("Perpetua Titling MT", 10.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.Dev2DHCPButton.Location = new System.Drawing.Point(80, 97);
-            this.Dev2DHCPButton.Margin = new System.Windows.Forms.Padding(2);
-            this.Dev2DHCPButton.Name = "Dev2DHCPButton";
-            this.Dev2DHCPButton.Size = new System.Drawing.Size(86, 28);
-            this.Dev2DHCPButton.TabIndex = 21;
-            this.Dev2DHCPButton.Text = "DHCP";
-            this.Dev2DHCPButton.UseVisualStyleBackColor = false;
-            this.Dev2DHCPButton.Click += new System.EventHandler(this.Dev2DHCPButton_Click);
+            this.DHCPListView.BackColor = System.Drawing.SystemColors.ControlDarkDark;
+            this.DHCPListView.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
+            this.DHCPIpColumn,
+            this.DHCPMaskColumn,
+            this.DHCPDefGatColumn,
+            this.DHCPMacColumn,
+            this.DHCPTimeColumn,
+            this.DHCPTypeColumn});
+            this.DHCPListView.ForeColor = System.Drawing.SystemColors.InfoText;
+            this.DHCPListView.HideSelection = false;
+            this.DHCPListView.Location = new System.Drawing.Point(6, 19);
+            this.DHCPListView.Name = "DHCPListView";
+            this.DHCPListView.Size = new System.Drawing.Size(517, 196);
+            this.DHCPListView.TabIndex = 36;
+            this.DHCPListView.UseCompatibleStateImageBehavior = false;
+            this.DHCPListView.View = System.Windows.Forms.View.Details;
             // 
-            // Dev1DHCPButton
+            // DHCPIpColumn
             // 
-            this.Dev1DHCPButton.BackColor = System.Drawing.SystemColors.Window;
-            this.Dev1DHCPButton.Font = new System.Drawing.Font("Perpetua Titling MT", 10.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.Dev1DHCPButton.Location = new System.Drawing.Point(79, 93);
-            this.Dev1DHCPButton.Margin = new System.Windows.Forms.Padding(2);
-            this.Dev1DHCPButton.Name = "Dev1DHCPButton";
-            this.Dev1DHCPButton.Size = new System.Drawing.Size(86, 28);
-            this.Dev1DHCPButton.TabIndex = 21;
-            this.Dev1DHCPButton.Text = "DHCP";
-            this.Dev1DHCPButton.UseVisualStyleBackColor = false;
-            this.Dev1DHCPButton.Click += new System.EventHandler(this.Dev1DHCPButton_Click);
+            this.DHCPIpColumn.Text = "Ip";
+            this.DHCPIpColumn.Width = 80;
             // 
-            // Dev1DHCPCheckBox
+            // DHCPMaskColumn
             // 
-            this.Dev1DHCPCheckBox.AutoSize = true;
-            this.Dev1DHCPCheckBox.Enabled = false;
-            this.Dev1DHCPCheckBox.Location = new System.Drawing.Point(10, 83);
-            this.Dev1DHCPCheckBox.Margin = new System.Windows.Forms.Padding(2);
-            this.Dev1DHCPCheckBox.Name = "Dev1DHCPCheckBox";
-            this.Dev1DHCPCheckBox.Size = new System.Drawing.Size(56, 17);
-            this.Dev1DHCPCheckBox.TabIndex = 22;
-            this.Dev1DHCPCheckBox.Text = "DHCP";
-            this.Dev1DHCPCheckBox.UseVisualStyleBackColor = true;
+            this.DHCPMaskColumn.Text = "Mask";
+            this.DHCPMaskColumn.Width = 97;
             // 
-            // Dev2DHCPCheckBox
+            // DHCPDefGatColumn
             // 
-            this.Dev2DHCPCheckBox.AutoSize = true;
-            this.Dev2DHCPCheckBox.Enabled = false;
-            this.Dev2DHCPCheckBox.Location = new System.Drawing.Point(11, 87);
-            this.Dev2DHCPCheckBox.Margin = new System.Windows.Forms.Padding(2);
-            this.Dev2DHCPCheckBox.Name = "Dev2DHCPCheckBox";
-            this.Dev2DHCPCheckBox.Size = new System.Drawing.Size(56, 17);
-            this.Dev2DHCPCheckBox.TabIndex = 22;
-            this.Dev2DHCPCheckBox.Text = "DHCP";
-            this.Dev2DHCPCheckBox.UseVisualStyleBackColor = true;
+            this.DHCPDefGatColumn.Text = "Default Gateway";
+            this.DHCPDefGatColumn.Width = 97;
+            // 
+            // DHCPMacColumn
+            // 
+            this.DHCPMacColumn.Text = "MAC";
+            this.DHCPMacColumn.Width = 91;
+            // 
+            // DHCPTimeColumn
+            // 
+            this.DHCPTimeColumn.Text = "Time";
+            // 
+            // DHCPTypeColumn
+            // 
+            this.DHCPTypeColumn.Text = "Type";
+            this.DHCPTypeColumn.Width = 83;
             // 
             // DHCPOptionsGB
             // 
-            this.DHCPOptionsGB.Location = new System.Drawing.Point(643, 511);
+            this.DHCPOptionsGB.Controls.Add(this.DHCPInfoLabel);
+            this.DHCPOptionsGB.Controls.Add(this.DHCPSaveButton);
+            this.DHCPOptionsGB.Controls.Add(this.DHCPIpEndTextBox);
+            this.DHCPOptionsGB.Controls.Add(this.DHCPIpStartTextBox);
+            this.DHCPOptionsGB.Controls.Add(this.label9);
+            this.DHCPOptionsGB.Controls.Add(this.label8);
+            this.DHCPOptionsGB.Controls.Add(this.DHCPTimerButton);
+            this.DHCPOptionsGB.Controls.Add(this.DHCPTimerTextBox);
+            this.DHCPOptionsGB.Controls.Add(this.DHCPAutoRadioButton);
+            this.DHCPOptionsGB.Controls.Add(this.label5);
+            this.DHCPOptionsGB.Controls.Add(this.DHCPMaskTextBox);
+            this.DHCPOptionsGB.Controls.Add(this.DHCPDynRadioButton);
+            this.DHCPOptionsGB.Location = new System.Drawing.Point(273, 365);
             this.DHCPOptionsGB.Name = "DHCPOptionsGB";
-            this.DHCPOptionsGB.Size = new System.Drawing.Size(490, 183);
+            this.DHCPOptionsGB.Size = new System.Drawing.Size(364, 140);
             this.DHCPOptionsGB.TabIndex = 18;
             this.DHCPOptionsGB.TabStop = false;
             this.DHCPOptionsGB.Text = "DHCP Options";
             // 
+            // DHCPSaveButton
+            // 
+            this.DHCPSaveButton.BackColor = System.Drawing.SystemColors.Window;
+            this.DHCPSaveButton.Font = new System.Drawing.Font("Perpetua Titling MT", 7.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.DHCPSaveButton.Location = new System.Drawing.Point(182, 86);
+            this.DHCPSaveButton.Margin = new System.Windows.Forms.Padding(2);
+            this.DHCPSaveButton.Name = "DHCPSaveButton";
+            this.DHCPSaveButton.Size = new System.Drawing.Size(154, 26);
+            this.DHCPSaveButton.TabIndex = 41;
+            this.DHCPSaveButton.Text = "Save settings";
+            this.DHCPSaveButton.UseVisualStyleBackColor = false;
+            this.DHCPSaveButton.Click += new System.EventHandler(this.DHCPSaveButton_Click);
+            // 
+            // DHCPIpEndTextBox
+            // 
+            this.DHCPIpEndTextBox.Location = new System.Drawing.Point(219, 54);
+            this.DHCPIpEndTextBox.Margin = new System.Windows.Forms.Padding(2);
+            this.DHCPIpEndTextBox.Name = "DHCPIpEndTextBox";
+            this.DHCPIpEndTextBox.Size = new System.Drawing.Size(117, 20);
+            this.DHCPIpEndTextBox.TabIndex = 40;
+            // 
+            // DHCPIpStartTextBox
+            // 
+            this.DHCPIpStartTextBox.Location = new System.Drawing.Point(56, 54);
+            this.DHCPIpStartTextBox.Margin = new System.Windows.Forms.Padding(2);
+            this.DHCPIpStartTextBox.Name = "DHCPIpStartTextBox";
+            this.DHCPIpStartTextBox.Size = new System.Drawing.Size(117, 20);
+            this.DHCPIpStartTextBox.TabIndex = 39;
+            // 
+            // label9
+            // 
+            this.label9.AutoSize = true;
+            this.label9.Location = new System.Drawing.Point(179, 57);
+            this.label9.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
+            this.label9.Name = "label9";
+            this.label9.Size = new System.Drawing.Size(39, 13);
+            this.label9.TabIndex = 38;
+            this.label9.Text = "End IP";
+            // 
+            // label8
+            // 
+            this.label8.AutoSize = true;
+            this.label8.Location = new System.Drawing.Point(11, 57);
+            this.label8.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
+            this.label8.Name = "label8";
+            this.label8.Size = new System.Drawing.Size(42, 13);
+            this.label8.TabIndex = 35;
+            this.label8.Text = "Start IP";
+            // 
+            // DHCPTimerButton
+            // 
+            this.DHCPTimerButton.BackColor = System.Drawing.SystemColors.Window;
+            this.DHCPTimerButton.Font = new System.Drawing.Font("Perpetua Titling MT", 7.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.DHCPTimerButton.Location = new System.Drawing.Point(242, 12);
+            this.DHCPTimerButton.Margin = new System.Windows.Forms.Padding(2);
+            this.DHCPTimerButton.Name = "DHCPTimerButton";
+            this.DHCPTimerButton.Size = new System.Drawing.Size(94, 26);
+            this.DHCPTimerButton.TabIndex = 37;
+            this.DHCPTimerButton.Text = "Lease Time";
+            this.DHCPTimerButton.UseVisualStyleBackColor = false;
+            this.DHCPTimerButton.Click += new System.EventHandler(this.DHCPTimerButton_Click);
+            // 
+            // DHCPTimerTextBox
+            // 
+            this.DHCPTimerTextBox.Location = new System.Drawing.Point(180, 15);
+            this.DHCPTimerTextBox.Margin = new System.Windows.Forms.Padding(2);
+            this.DHCPTimerTextBox.Name = "DHCPTimerTextBox";
+            this.DHCPTimerTextBox.Size = new System.Drawing.Size(58, 20);
+            this.DHCPTimerTextBox.TabIndex = 37;
+            // 
+            // DHCPAutoRadioButton
+            // 
+            this.DHCPAutoRadioButton.AutoSize = true;
+            this.DHCPAutoRadioButton.Location = new System.Drawing.Point(87, 17);
+            this.DHCPAutoRadioButton.Name = "DHCPAutoRadioButton";
+            this.DHCPAutoRadioButton.Size = new System.Drawing.Size(88, 17);
+            this.DHCPAutoRadioButton.TabIndex = 1;
+            this.DHCPAutoRadioButton.TabStop = true;
+            this.DHCPAutoRadioButton.Text = "AUTOMATIC";
+            this.DHCPAutoRadioButton.UseVisualStyleBackColor = true;
+            // 
+            // label5
+            // 
+            this.label5.AutoSize = true;
+            this.label5.Location = new System.Drawing.Point(19, 95);
+            this.label5.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
+            this.label5.Name = "label5";
+            this.label5.Size = new System.Drawing.Size(33, 13);
+            this.label5.TabIndex = 30;
+            this.label5.Text = "Mask";
+            // 
+            // DHCPMaskTextBox
+            // 
+            this.DHCPMaskTextBox.Location = new System.Drawing.Point(56, 92);
+            this.DHCPMaskTextBox.Margin = new System.Windows.Forms.Padding(2);
+            this.DHCPMaskTextBox.Name = "DHCPMaskTextBox";
+            this.DHCPMaskTextBox.Size = new System.Drawing.Size(117, 20);
+            this.DHCPMaskTextBox.TabIndex = 29;
+            // 
+            // DHCPDynRadioButton
+            // 
+            this.DHCPDynRadioButton.AutoSize = true;
+            this.DHCPDynRadioButton.Location = new System.Drawing.Point(14, 17);
+            this.DHCPDynRadioButton.Name = "DHCPDynRadioButton";
+            this.DHCPDynRadioButton.Size = new System.Drawing.Size(74, 17);
+            this.DHCPDynRadioButton.TabIndex = 0;
+            this.DHCPDynRadioButton.TabStop = true;
+            this.DHCPDynRadioButton.Text = "DYNAMIC";
+            this.DHCPDynRadioButton.UseVisualStyleBackColor = true;
+            // 
             // DHCPManagementGB
             // 
-            this.DHCPManagementGB.Location = new System.Drawing.Point(5, 511);
+            this.DHCPManagementGB.Controls.Add(this.DHCPAddButton);
+            this.DHCPManagementGB.Controls.Add(this.label7);
+            this.DHCPManagementGB.Controls.Add(this.DHCPMacTextBox);
+            this.DHCPManagementGB.Controls.Add(this.label6);
+            this.DHCPManagementGB.Controls.Add(this.DHCPDefGateTextBox);
+            this.DHCPManagementGB.Controls.Add(this.label4);
+            this.DHCPManagementGB.Controls.Add(this.DHCPIpTextBox);
+            this.DHCPManagementGB.Location = new System.Drawing.Point(4, 530);
             this.DHCPManagementGB.Name = "DHCPManagementGB";
-            this.DHCPManagementGB.Size = new System.Drawing.Size(632, 93);
+            this.DHCPManagementGB.Size = new System.Drawing.Size(587, 82);
             this.DHCPManagementGB.TabIndex = 19;
             this.DHCPManagementGB.TabStop = false;
             this.DHCPManagementGB.Text = "DHCP Management";
             // 
-            // DHCPListView
+            // DHCPAddButton
             // 
-            this.DHCPListView.BackColor = System.Drawing.SystemColors.ControlDarkDark;
-            this.DHCPListView.ForeColor = System.Drawing.SystemColors.InfoText;
-            this.DHCPListView.HideSelection = false;
-            this.DHCPListView.Location = new System.Drawing.Point(7, 19);
-            this.DHCPListView.Name = "DHCPListView";
-            this.DHCPListView.Size = new System.Drawing.Size(350, 212);
-            this.DHCPListView.TabIndex = 36;
-            this.DHCPListView.UseCompatibleStateImageBehavior = false;
-            this.DHCPListView.View = System.Windows.Forms.View.Details;
+            this.DHCPAddButton.BackColor = System.Drawing.SystemColors.Window;
+            this.DHCPAddButton.Font = new System.Drawing.Font("Perpetua Titling MT", 10.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.DHCPAddButton.Location = new System.Drawing.Point(324, 42);
+            this.DHCPAddButton.Margin = new System.Windows.Forms.Padding(2);
+            this.DHCPAddButton.Name = "DHCPAddButton";
+            this.DHCPAddButton.Size = new System.Drawing.Size(257, 31);
+            this.DHCPAddButton.TabIndex = 23;
+            this.DHCPAddButton.Text = "ADD";
+            this.DHCPAddButton.UseVisualStyleBackColor = false;
+            this.DHCPAddButton.Click += new System.EventHandler(this.DHCPAddButton_Click);
+            // 
+            // label7
+            // 
+            this.label7.AutoSize = true;
+            this.label7.Location = new System.Drawing.Point(15, 52);
+            this.label7.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
+            this.label7.Name = "label7";
+            this.label7.Size = new System.Drawing.Size(48, 13);
+            this.label7.TabIndex = 34;
+            this.label7.Text = "For MAC";
+            // 
+            // DHCPMacTextBox
+            // 
+            this.DHCPMacTextBox.Location = new System.Drawing.Point(95, 49);
+            this.DHCPMacTextBox.Margin = new System.Windows.Forms.Padding(2);
+            this.DHCPMacTextBox.Name = "DHCPMacTextBox";
+            this.DHCPMacTextBox.Size = new System.Drawing.Size(164, 20);
+            this.DHCPMacTextBox.TabIndex = 33;
+            // 
+            // label6
+            // 
+            this.label6.AutoSize = true;
+            this.label6.Location = new System.Drawing.Point(327, 21);
+            this.label6.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
+            this.label6.Name = "label6";
+            this.label6.Size = new System.Drawing.Size(86, 13);
+            this.label6.TabIndex = 32;
+            this.label6.Text = "Default Gateway";
+            // 
+            // DHCPDefGateTextBox
+            // 
+            this.DHCPDefGateTextBox.Location = new System.Drawing.Point(417, 18);
+            this.DHCPDefGateTextBox.Margin = new System.Windows.Forms.Padding(2);
+            this.DHCPDefGateTextBox.Name = "DHCPDefGateTextBox";
+            this.DHCPDefGateTextBox.Size = new System.Drawing.Size(164, 20);
+            this.DHCPDefGateTextBox.TabIndex = 31;
+            // 
+            // label4
+            // 
+            this.label4.AutoSize = true;
+            this.label4.Location = new System.Drawing.Point(11, 21);
+            this.label4.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
+            this.label4.Name = "label4";
+            this.label4.Size = new System.Drawing.Size(58, 13);
+            this.label4.TabIndex = 28;
+            this.label4.Text = "IP Address";
+            // 
+            // DHCPIpTextBox
+            // 
+            this.DHCPIpTextBox.Location = new System.Drawing.Point(95, 18);
+            this.DHCPIpTextBox.Margin = new System.Windows.Forms.Padding(2);
+            this.DHCPIpTextBox.Name = "DHCPIpTextBox";
+            this.DHCPIpTextBox.Size = new System.Drawing.Size(164, 20);
+            this.DHCPIpTextBox.TabIndex = 28;
+            // 
+            // CommentTextBox
+            // 
+            this.CommentTextBox.AutoSize = true;
+            this.CommentTextBox.Location = new System.Drawing.Point(331, 287);
+            this.CommentTextBox.Name = "CommentTextBox";
+            this.CommentTextBox.Size = new System.Drawing.Size(57, 13);
+            this.CommentTextBox.TabIndex = 20;
+            this.CommentTextBox.Text = "TextToPut";
+            this.CommentTextBox.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
+            // DHCPInfoLabel
+            // 
+            this.DHCPInfoLabel.AutoSize = true;
+            this.DHCPInfoLabel.Location = new System.Drawing.Point(19, 117);
+            this.DHCPInfoLabel.Name = "DHCPInfoLabel";
+            this.DHCPInfoLabel.Size = new System.Drawing.Size(41, 13);
+            this.DHCPInfoLabel.TabIndex = 42;
+            this.DHCPInfoLabel.Text = "label10";
             // 
             // RouterForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1140, 703);
+            this.ClientSize = new System.Drawing.Size(1140, 735);
+            this.Controls.Add(this.CommentTextBox);
             this.Controls.Add(this.DHCPManagementGB);
+            this.Controls.Add(this.ExtraGB);
             this.Controls.Add(this.DHCPOptionsGB);
             this.Controls.Add(this.PowerButton);
-            this.Controls.Add(this.ExtraGB);
             this.Controls.Add(this.RipGB);
             this.Controls.Add(this.RoutTabGB);
             this.Controls.Add(this.ArpGB);
@@ -1023,7 +1303,12 @@
             this.RoutTabGB.ResumeLayout(false);
             this.RipGB.ResumeLayout(false);
             this.ExtraGB.ResumeLayout(false);
+            this.DHCPOptionsGB.ResumeLayout(false);
+            this.DHCPOptionsGB.PerformLayout();
+            this.DHCPManagementGB.ResumeLayout(false);
+            this.DHCPManagementGB.PerformLayout();
             this.ResumeLayout(false);
+            this.PerformLayout();
 
         }
 
@@ -1110,6 +1395,32 @@
         private System.Windows.Forms.GroupBox DHCPOptionsGB;
         private System.Windows.Forms.GroupBox DHCPManagementGB;
         private System.Windows.Forms.ListView DHCPListView;
+        private System.Windows.Forms.Label label7;
+        private System.Windows.Forms.TextBox DHCPMacTextBox;
+        private System.Windows.Forms.Label label6;
+        private System.Windows.Forms.TextBox DHCPDefGateTextBox;
+        private System.Windows.Forms.Label label5;
+        private System.Windows.Forms.Label label4;
+        private System.Windows.Forms.TextBox DHCPMaskTextBox;
+        private System.Windows.Forms.TextBox DHCPIpTextBox;
+        private System.Windows.Forms.Button DHCPAddButton;
+        private System.Windows.Forms.RadioButton DHCPDynRadioButton;
+        private System.Windows.Forms.RadioButton DHCPAutoRadioButton;
+        private System.Windows.Forms.TextBox DHCPTimerTextBox;
+        private System.Windows.Forms.Label CommentTextBox;
+        private System.Windows.Forms.Button DHCPTimerButton;
+        private System.Windows.Forms.ColumnHeader DHCPIpColumn;
+        private System.Windows.Forms.ColumnHeader DHCPMaskColumn;
+        private System.Windows.Forms.ColumnHeader DHCPDefGatColumn;
+        private System.Windows.Forms.ColumnHeader DHCPTimeColumn;
+        private System.Windows.Forms.ColumnHeader DHCPMacColumn;
+        private System.Windows.Forms.ColumnHeader DHCPTypeColumn;
+        private System.Windows.Forms.Label label9;
+        private System.Windows.Forms.Label label8;
+        private System.Windows.Forms.TextBox DHCPIpEndTextBox;
+        private System.Windows.Forms.TextBox DHCPIpStartTextBox;
+        private System.Windows.Forms.Button DHCPSaveButton;
+        private System.Windows.Forms.Label DHCPInfoLabel;
     }
 }
 

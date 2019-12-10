@@ -62,8 +62,9 @@ namespace MC_132RTR.Model.Core
                     C_Routing.GeneralHandle(e, DeviceReceived);
                     break;
                 case Middleman.DHCP:
-                    // Create DHCP handler
-                    // TODO
+                    // Do some DHCP
+                    C_DHCP.GetInstance().Handle(e, DeviceReceived);
+                    break;
                 default:
                     break;
             }
@@ -112,6 +113,12 @@ namespace MC_132RTR.Model.Core
                     if (Ipv4.DestinationAddress.Equals(DeviceReceived.Network.Address)
                         && EthPckt.DestinationHwAddress.Equals(DeviceReceived.ICapDev.MacAddress))
                         return (DeviceReceived.DEV_DisabledRIPv2) ? Middleman.NOTHING : Middleman.RIPv2;
+                }
+
+                // client -> server accept only
+                if (Udp.DestinationPort == C_DHCP.Port_UDP_DHCP_ClientToServer)
+                {
+                    return (DeviceReceived.DEV_DisabledDHCP || !C_DHCP.RUNNING) ? Middleman.NOTHING : Middleman.DHCP;
                 }
             }
 
