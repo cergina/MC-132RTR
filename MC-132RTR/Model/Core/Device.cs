@@ -27,6 +27,7 @@ namespace MC_132RTR.Model.Core
 
         public bool DEV_Disabled { get; private set; } = true;
         public bool DEV_DisabledRIPv2 { get; private set; } = true;
+        public bool DEV_DisabledDHCP { get; private set; } = true;
 
         private Device(ICaptureDevice TmpICapDev, string Id)
         {
@@ -151,6 +152,26 @@ namespace MC_132RTR.Model.Core
             C_RIPv2.GetInstance().DeviceUnavailable(this);
 
             DEV_DisabledRIPv2 = true;
+        }
+
+        public void EnableDHCP()
+        {
+            if (DEV_Disabled || !DEV_DisabledDHCP)
+                return;
+
+            DEV_DisabledDHCP = false;
+
+            C_DHCP.GetInstance().DeviceAvailable(this);
+        }
+
+        public void DisableDHCP()
+        {
+            if (DEV_Disabled || DEV_DisabledDHCP)
+                return;
+
+            DEV_DisabledDHCP = true;
+
+            C_DHCP.GetInstance().DeviceUnavailable(this);
         }
 
         private bool TurnOn()

@@ -102,6 +102,13 @@
             this.RIPHolddownColumn = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.RIPFlushColumn = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.ExtraGB = new System.Windows.Forms.GroupBox();
+            this.Dev2DHCPButton = new System.Windows.Forms.Button();
+            this.Dev1DHCPButton = new System.Windows.Forms.Button();
+            this.Dev1DHCPCheckBox = new System.Windows.Forms.CheckBox();
+            this.Dev2DHCPCheckBox = new System.Windows.Forms.CheckBox();
+            this.DHCPOptionsGB = new System.Windows.Forms.GroupBox();
+            this.DHCPManagementGB = new System.Windows.Forms.GroupBox();
+            this.DHCPListView = new System.Windows.Forms.ListView();
             this.Dev1GB.SuspendLayout();
             this.Dev2GB.SuspendLayout();
             this.RouterGB.SuspendLayout();
@@ -110,6 +117,7 @@
             this.ArpGB.SuspendLayout();
             this.RoutTabGB.SuspendLayout();
             this.RipGB.SuspendLayout();
+            this.ExtraGB.SuspendLayout();
             this.SuspendLayout();
             // 
             // PowerButton
@@ -117,10 +125,10 @@
             this.PowerButton.BackColor = System.Drawing.Color.Red;
             this.PowerButton.Font = new System.Drawing.Font("Perpetua Titling MT", 10.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.PowerButton.ForeColor = System.Drawing.SystemColors.Control;
-            this.PowerButton.Location = new System.Drawing.Point(15, 428);
+            this.PowerButton.Location = new System.Drawing.Point(4, 609);
             this.PowerButton.Margin = new System.Windows.Forms.Padding(2);
             this.PowerButton.Name = "PowerButton";
-            this.PowerButton.Size = new System.Drawing.Size(130, 68);
+            this.PowerButton.Size = new System.Drawing.Size(145, 83);
             this.PowerButton.TabIndex = 0;
             this.PowerButton.Text = "POWER";
             this.PowerButton.UseVisualStyleBackColor = false;
@@ -152,17 +160,19 @@
             // 
             // Dev1GB
             // 
+            this.Dev1GB.Controls.Add(this.Dev1DHCPCheckBox);
+            this.Dev1GB.Controls.Add(this.Dev1DHCPButton);
             this.Dev1GB.Controls.Add(this.Dev1RIPv2CheckBox);
             this.Dev1GB.Controls.Add(this.Dev1MacLabel);
             this.Dev1GB.Controls.Add(this.Dev1NetworkLabel);
             this.Dev1GB.Controls.Add(this.Dev1UsableCHeckBox);
             this.Dev1GB.Controls.Add(this.Dev1RipButton);
             this.Dev1GB.Controls.Add(this.Dev1Label);
-            this.Dev1GB.Location = new System.Drawing.Point(9, 103);
+            this.Dev1GB.Location = new System.Drawing.Point(5, 103);
             this.Dev1GB.Margin = new System.Windows.Forms.Padding(2);
             this.Dev1GB.Name = "Dev1GB";
             this.Dev1GB.Padding = new System.Windows.Forms.Padding(2);
-            this.Dev1GB.Size = new System.Drawing.Size(260, 81);
+            this.Dev1GB.Size = new System.Drawing.Size(260, 125);
             this.Dev1GB.TabIndex = 6;
             this.Dev1GB.TabStop = false;
             this.Dev1GB.Text = "Device 1";
@@ -171,7 +181,7 @@
             // 
             this.Dev1RIPv2CheckBox.AutoSize = true;
             this.Dev1RIPv2CheckBox.Enabled = false;
-            this.Dev1RIPv2CheckBox.Location = new System.Drawing.Point(71, 60);
+            this.Dev1RIPv2CheckBox.Location = new System.Drawing.Point(10, 104);
             this.Dev1RIPv2CheckBox.Margin = new System.Windows.Forms.Padding(2);
             this.Dev1RIPv2CheckBox.Name = "Dev1RIPv2CheckBox";
             this.Dev1RIPv2CheckBox.Size = new System.Drawing.Size(56, 17);
@@ -182,7 +192,7 @@
             // Dev1MacLabel
             // 
             this.Dev1MacLabel.AutoSize = true;
-            this.Dev1MacLabel.Location = new System.Drawing.Point(12, 45);
+            this.Dev1MacLabel.Location = new System.Drawing.Point(12, 47);
             this.Dev1MacLabel.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.Dev1MacLabel.Name = "Dev1MacLabel";
             this.Dev1MacLabel.Size = new System.Drawing.Size(35, 13);
@@ -192,7 +202,7 @@
             // Dev1NetworkLabel
             // 
             this.Dev1NetworkLabel.AutoSize = true;
-            this.Dev1NetworkLabel.Location = new System.Drawing.Point(12, 28);
+            this.Dev1NetworkLabel.Location = new System.Drawing.Point(12, 34);
             this.Dev1NetworkLabel.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.Dev1NetworkLabel.Name = "Dev1NetworkLabel";
             this.Dev1NetworkLabel.Size = new System.Drawing.Size(35, 13);
@@ -203,7 +213,7 @@
             // 
             this.Dev1UsableCHeckBox.AutoSize = true;
             this.Dev1UsableCHeckBox.Enabled = false;
-            this.Dev1UsableCHeckBox.Location = new System.Drawing.Point(15, 60);
+            this.Dev1UsableCHeckBox.Location = new System.Drawing.Point(10, 62);
             this.Dev1UsableCHeckBox.Margin = new System.Windows.Forms.Padding(2);
             this.Dev1UsableCHeckBox.Name = "Dev1UsableCHeckBox";
             this.Dev1UsableCHeckBox.Size = new System.Drawing.Size(59, 17);
@@ -215,7 +225,7 @@
             // 
             this.Dev1RipButton.BackColor = System.Drawing.SystemColors.Window;
             this.Dev1RipButton.Font = new System.Drawing.Font("Perpetua Titling MT", 10.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.Dev1RipButton.Location = new System.Drawing.Point(169, 49);
+            this.Dev1RipButton.Location = new System.Drawing.Point(169, 93);
             this.Dev1RipButton.Margin = new System.Windows.Forms.Padding(2);
             this.Dev1RipButton.Name = "Dev1RipButton";
             this.Dev1RipButton.Size = new System.Drawing.Size(86, 28);
@@ -227,7 +237,7 @@
             // Dev1Label
             // 
             this.Dev1Label.AutoSize = true;
-            this.Dev1Label.Location = new System.Drawing.Point(30, 15);
+            this.Dev1Label.Location = new System.Drawing.Point(12, 15);
             this.Dev1Label.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.Dev1Label.Name = "Dev1Label";
             this.Dev1Label.Size = new System.Drawing.Size(72, 13);
@@ -236,17 +246,19 @@
             // 
             // Dev2GB
             // 
+            this.Dev2GB.Controls.Add(this.Dev2DHCPCheckBox);
+            this.Dev2GB.Controls.Add(this.Dev2DHCPButton);
             this.Dev2GB.Controls.Add(this.Dev2RIPv2CheckBox);
             this.Dev2GB.Controls.Add(this.Dev2MacLabel);
             this.Dev2GB.Controls.Add(this.Dev2NetworkLabel);
             this.Dev2GB.Controls.Add(this.Dev2UsableCHeckBox);
             this.Dev2GB.Controls.Add(this.Dev2RipButton);
             this.Dev2GB.Controls.Add(this.Dev2Label);
-            this.Dev2GB.Location = new System.Drawing.Point(9, 188);
+            this.Dev2GB.Location = new System.Drawing.Point(4, 232);
             this.Dev2GB.Margin = new System.Windows.Forms.Padding(2);
             this.Dev2GB.Name = "Dev2GB";
             this.Dev2GB.Padding = new System.Windows.Forms.Padding(2);
-            this.Dev2GB.Size = new System.Drawing.Size(260, 87);
+            this.Dev2GB.Size = new System.Drawing.Size(260, 129);
             this.Dev2GB.TabIndex = 8;
             this.Dev2GB.TabStop = false;
             this.Dev2GB.Text = "Device 2";
@@ -255,7 +267,7 @@
             // 
             this.Dev2RIPv2CheckBox.AutoSize = true;
             this.Dev2RIPv2CheckBox.Enabled = false;
-            this.Dev2RIPv2CheckBox.Location = new System.Drawing.Point(71, 67);
+            this.Dev2RIPv2CheckBox.Location = new System.Drawing.Point(11, 108);
             this.Dev2RIPv2CheckBox.Margin = new System.Windows.Forms.Padding(2);
             this.Dev2RIPv2CheckBox.Name = "Dev2RIPv2CheckBox";
             this.Dev2RIPv2CheckBox.Size = new System.Drawing.Size(56, 17);
@@ -266,7 +278,7 @@
             // Dev2MacLabel
             // 
             this.Dev2MacLabel.AutoSize = true;
-            this.Dev2MacLabel.Location = new System.Drawing.Point(12, 49);
+            this.Dev2MacLabel.Location = new System.Drawing.Point(13, 51);
             this.Dev2MacLabel.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.Dev2MacLabel.Name = "Dev2MacLabel";
             this.Dev2MacLabel.Size = new System.Drawing.Size(35, 13);
@@ -276,7 +288,7 @@
             // Dev2NetworkLabel
             // 
             this.Dev2NetworkLabel.AutoSize = true;
-            this.Dev2NetworkLabel.Location = new System.Drawing.Point(12, 29);
+            this.Dev2NetworkLabel.Location = new System.Drawing.Point(13, 36);
             this.Dev2NetworkLabel.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.Dev2NetworkLabel.Name = "Dev2NetworkLabel";
             this.Dev2NetworkLabel.Size = new System.Drawing.Size(35, 13);
@@ -287,7 +299,7 @@
             // 
             this.Dev2UsableCHeckBox.AutoSize = true;
             this.Dev2UsableCHeckBox.Enabled = false;
-            this.Dev2UsableCHeckBox.Location = new System.Drawing.Point(15, 66);
+            this.Dev2UsableCHeckBox.Location = new System.Drawing.Point(11, 66);
             this.Dev2UsableCHeckBox.Margin = new System.Windows.Forms.Padding(2);
             this.Dev2UsableCHeckBox.Name = "Dev2UsableCHeckBox";
             this.Dev2UsableCHeckBox.Size = new System.Drawing.Size(59, 17);
@@ -299,7 +311,7 @@
             // 
             this.Dev2RipButton.BackColor = System.Drawing.SystemColors.Window;
             this.Dev2RipButton.Font = new System.Drawing.Font("Perpetua Titling MT", 10.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.Dev2RipButton.Location = new System.Drawing.Point(169, 55);
+            this.Dev2RipButton.Location = new System.Drawing.Point(170, 97);
             this.Dev2RipButton.Margin = new System.Windows.Forms.Padding(2);
             this.Dev2RipButton.Name = "Dev2RipButton";
             this.Dev2RipButton.Size = new System.Drawing.Size(86, 28);
@@ -311,7 +323,7 @@
             // Dev2Label
             // 
             this.Dev2Label.AutoSize = true;
-            this.Dev2Label.Location = new System.Drawing.Point(30, 15);
+            this.Dev2Label.Location = new System.Drawing.Point(13, 15);
             this.Dev2Label.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.Dev2Label.Name = "Dev2Label";
             this.Dev2Label.Size = new System.Drawing.Size(72, 13);
@@ -327,11 +339,11 @@
             this.RouterGB.Controls.Add(this.DeviceRouterComboBOx);
             this.RouterGB.Controls.Add(this.ActivateDevButton);
             this.RouterGB.Controls.Add(this.StartButton);
-            this.RouterGB.Location = new System.Drawing.Point(159, 418);
+            this.RouterGB.Location = new System.Drawing.Point(153, 609);
             this.RouterGB.Margin = new System.Windows.Forms.Padding(2);
             this.RouterGB.Name = "RouterGB";
             this.RouterGB.Padding = new System.Windows.Forms.Padding(2);
-            this.RouterGB.Size = new System.Drawing.Size(479, 83);
+            this.RouterGB.Size = new System.Drawing.Size(484, 83);
             this.RouterGB.TabIndex = 11;
             this.RouterGB.TabStop = false;
             this.RouterGB.Text = "Router";
@@ -404,7 +416,7 @@
             this.StaticRoutesGB.Controls.Add(this.StaticNextHopTextBox);
             this.StaticRoutesGB.Controls.Add(this.StaticMaskTextBox);
             this.StaticRoutesGB.Controls.Add(this.StaticIpTextBox);
-            this.StaticRoutesGB.Location = new System.Drawing.Point(9, 279);
+            this.StaticRoutesGB.Location = new System.Drawing.Point(4, 365);
             this.StaticRoutesGB.Margin = new System.Windows.Forms.Padding(2);
             this.StaticRoutesGB.Name = "StaticRoutesGB";
             this.StaticRoutesGB.Padding = new System.Windows.Forms.Padding(2);
@@ -779,7 +791,7 @@
             this.RoutTabGB.Controls.Add(this.RoutingListView);
             this.RoutTabGB.Location = new System.Drawing.Point(643, 10);
             this.RoutTabGB.Name = "RoutTabGB";
-            this.RoutTabGB.Size = new System.Drawing.Size(519, 249);
+            this.RoutTabGB.Size = new System.Drawing.Size(490, 249);
             this.RoutTabGB.TabIndex = 15;
             this.RoutTabGB.TabStop = false;
             this.RoutTabGB.Text = "Routing Table";
@@ -796,7 +808,7 @@
             this.RoutingListView.HideSelection = false;
             this.RoutingListView.Location = new System.Drawing.Point(6, 18);
             this.RoutingListView.Name = "RoutingListView";
-            this.RoutingListView.Size = new System.Drawing.Size(501, 222);
+            this.RoutingListView.Size = new System.Drawing.Size(477, 222);
             this.RoutingListView.TabIndex = 35;
             this.RoutingListView.UseCompatibleStateImageBehavior = false;
             this.RoutingListView.View = System.Windows.Forms.View.Details;
@@ -826,7 +838,7 @@
             this.RipGB.Controls.Add(this.RIPListView);
             this.RipGB.Location = new System.Drawing.Point(643, 268);
             this.RipGB.Name = "RipGB";
-            this.RipGB.Size = new System.Drawing.Size(519, 233);
+            this.RipGB.Size = new System.Drawing.Size(490, 237);
             this.RipGB.TabIndex = 16;
             this.RipGB.TabStop = false;
             this.RipGB.Text = "RIPv2 Table";
@@ -846,7 +858,7 @@
             this.RIPListView.HideSelection = false;
             this.RIPListView.Location = new System.Drawing.Point(6, 19);
             this.RIPListView.Name = "RIPListView";
-            this.RIPListView.Size = new System.Drawing.Size(507, 218);
+            this.RIPListView.Size = new System.Drawing.Size(477, 212);
             this.RIPListView.TabIndex = 35;
             this.RIPListView.UseCompatibleStateImageBehavior = false;
             this.RIPListView.View = System.Windows.Forms.View.Details;
@@ -888,18 +900,101 @@
             // 
             // ExtraGB
             // 
+            this.ExtraGB.Controls.Add(this.DHCPListView);
             this.ExtraGB.Location = new System.Drawing.Point(274, 268);
             this.ExtraGB.Name = "ExtraGB";
-            this.ExtraGB.Size = new System.Drawing.Size(363, 151);
+            this.ExtraGB.Size = new System.Drawing.Size(363, 237);
             this.ExtraGB.TabIndex = 17;
             this.ExtraGB.TabStop = false;
-            this.ExtraGB.Text = "Extra";
+            this.ExtraGB.Text = "DHCP Table";
+            // 
+            // Dev2DHCPButton
+            // 
+            this.Dev2DHCPButton.BackColor = System.Drawing.SystemColors.Window;
+            this.Dev2DHCPButton.Font = new System.Drawing.Font("Perpetua Titling MT", 10.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.Dev2DHCPButton.Location = new System.Drawing.Point(80, 97);
+            this.Dev2DHCPButton.Margin = new System.Windows.Forms.Padding(2);
+            this.Dev2DHCPButton.Name = "Dev2DHCPButton";
+            this.Dev2DHCPButton.Size = new System.Drawing.Size(86, 28);
+            this.Dev2DHCPButton.TabIndex = 21;
+            this.Dev2DHCPButton.Text = "DHCP";
+            this.Dev2DHCPButton.UseVisualStyleBackColor = false;
+            this.Dev2DHCPButton.Click += new System.EventHandler(this.Dev2DHCPButton_Click);
+            // 
+            // Dev1DHCPButton
+            // 
+            this.Dev1DHCPButton.BackColor = System.Drawing.SystemColors.Window;
+            this.Dev1DHCPButton.Font = new System.Drawing.Font("Perpetua Titling MT", 10.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.Dev1DHCPButton.Location = new System.Drawing.Point(79, 93);
+            this.Dev1DHCPButton.Margin = new System.Windows.Forms.Padding(2);
+            this.Dev1DHCPButton.Name = "Dev1DHCPButton";
+            this.Dev1DHCPButton.Size = new System.Drawing.Size(86, 28);
+            this.Dev1DHCPButton.TabIndex = 21;
+            this.Dev1DHCPButton.Text = "DHCP";
+            this.Dev1DHCPButton.UseVisualStyleBackColor = false;
+            this.Dev1DHCPButton.Click += new System.EventHandler(this.Dev1DHCPButton_Click);
+            // 
+            // Dev1DHCPCheckBox
+            // 
+            this.Dev1DHCPCheckBox.AutoSize = true;
+            this.Dev1DHCPCheckBox.Enabled = false;
+            this.Dev1DHCPCheckBox.Location = new System.Drawing.Point(10, 83);
+            this.Dev1DHCPCheckBox.Margin = new System.Windows.Forms.Padding(2);
+            this.Dev1DHCPCheckBox.Name = "Dev1DHCPCheckBox";
+            this.Dev1DHCPCheckBox.Size = new System.Drawing.Size(56, 17);
+            this.Dev1DHCPCheckBox.TabIndex = 22;
+            this.Dev1DHCPCheckBox.Text = "DHCP";
+            this.Dev1DHCPCheckBox.UseVisualStyleBackColor = true;
+            // 
+            // Dev2DHCPCheckBox
+            // 
+            this.Dev2DHCPCheckBox.AutoSize = true;
+            this.Dev2DHCPCheckBox.Enabled = false;
+            this.Dev2DHCPCheckBox.Location = new System.Drawing.Point(11, 87);
+            this.Dev2DHCPCheckBox.Margin = new System.Windows.Forms.Padding(2);
+            this.Dev2DHCPCheckBox.Name = "Dev2DHCPCheckBox";
+            this.Dev2DHCPCheckBox.Size = new System.Drawing.Size(56, 17);
+            this.Dev2DHCPCheckBox.TabIndex = 22;
+            this.Dev2DHCPCheckBox.Text = "DHCP";
+            this.Dev2DHCPCheckBox.UseVisualStyleBackColor = true;
+            // 
+            // DHCPOptionsGB
+            // 
+            this.DHCPOptionsGB.Location = new System.Drawing.Point(643, 511);
+            this.DHCPOptionsGB.Name = "DHCPOptionsGB";
+            this.DHCPOptionsGB.Size = new System.Drawing.Size(490, 183);
+            this.DHCPOptionsGB.TabIndex = 18;
+            this.DHCPOptionsGB.TabStop = false;
+            this.DHCPOptionsGB.Text = "DHCP Options";
+            // 
+            // DHCPManagementGB
+            // 
+            this.DHCPManagementGB.Location = new System.Drawing.Point(5, 511);
+            this.DHCPManagementGB.Name = "DHCPManagementGB";
+            this.DHCPManagementGB.Size = new System.Drawing.Size(632, 93);
+            this.DHCPManagementGB.TabIndex = 19;
+            this.DHCPManagementGB.TabStop = false;
+            this.DHCPManagementGB.Text = "DHCP Management";
+            // 
+            // DHCPListView
+            // 
+            this.DHCPListView.BackColor = System.Drawing.SystemColors.ControlDarkDark;
+            this.DHCPListView.ForeColor = System.Drawing.SystemColors.InfoText;
+            this.DHCPListView.HideSelection = false;
+            this.DHCPListView.Location = new System.Drawing.Point(7, 19);
+            this.DHCPListView.Name = "DHCPListView";
+            this.DHCPListView.Size = new System.Drawing.Size(350, 212);
+            this.DHCPListView.TabIndex = 36;
+            this.DHCPListView.UseCompatibleStateImageBehavior = false;
+            this.DHCPListView.View = System.Windows.Forms.View.Details;
             // 
             // RouterForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1175, 510);
+            this.ClientSize = new System.Drawing.Size(1140, 703);
+            this.Controls.Add(this.DHCPManagementGB);
+            this.Controls.Add(this.DHCPOptionsGB);
             this.Controls.Add(this.PowerButton);
             this.Controls.Add(this.ExtraGB);
             this.Controls.Add(this.RipGB);
@@ -927,6 +1022,7 @@
             this.ArpGB.PerformLayout();
             this.RoutTabGB.ResumeLayout(false);
             this.RipGB.ResumeLayout(false);
+            this.ExtraGB.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }
@@ -1007,6 +1103,13 @@
         private System.Windows.Forms.Button RIPIntervalButton;
         private System.Windows.Forms.TextBox TimerPeriodicTextBox;
         private System.Windows.Forms.GroupBox ExtraGB;
+        private System.Windows.Forms.CheckBox Dev1DHCPCheckBox;
+        private System.Windows.Forms.Button Dev1DHCPButton;
+        private System.Windows.Forms.CheckBox Dev2DHCPCheckBox;
+        private System.Windows.Forms.Button Dev2DHCPButton;
+        private System.Windows.Forms.GroupBox DHCPOptionsGB;
+        private System.Windows.Forms.GroupBox DHCPManagementGB;
+        private System.Windows.Forms.ListView DHCPListView;
     }
 }
 

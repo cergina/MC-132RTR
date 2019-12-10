@@ -99,6 +99,8 @@ namespace MC_132RTR
             RoutTabGB.Enabled = ValueToSet;
             ExtraGB.Enabled = ValueToSet;
             RipGB.Enabled = ValueToSet;
+            DHCPManagementGB.Enabled = ValueToSet;
+            DHCPOptionsGB.Enabled = ValueToSet;
         }
 
         // //////////////////
@@ -116,6 +118,10 @@ namespace MC_132RTR
             // RIP
             RIPListView.Items.Clear();
             Middleman.GetListViewItemsRIP().ForEach(Item => RIPListView.Items.Add(Item));
+
+            // DHCP
+            DHCPListView.Items.Clear();
+            //TODO Middleman.GetListViewItemsDHCP().ForEach(Item => DHCPListView.Items.Add(Item));
 
             // RIP timer
             RIPinTimeLabel.Text = "RIP periodic attempt in [" + T_RIPv2.NextUpdate + "] seconds";
@@ -153,6 +159,27 @@ namespace MC_132RTR
 
             UpdateDeviceInfo();
         }
+
+        private void Dev1DHCPButton_Click(object sender, EventArgs e)
+        {
+            if (Dev1DHCPCheckBox.Checked)
+                Middleman.DisableDHCPOnDevice(Device.Dev1);
+            else
+                Middleman.EnableDHCPOnDevice(Device.Dev1);
+
+            UpdateDeviceInfo();
+        }
+
+        private void Dev2DHCPButton_Click(object sender, EventArgs e)
+        {
+            if (Dev2DHCPCheckBox.Checked)
+                Middleman.DisableDHCPOnDevice(Device.Dev2);
+            else
+                Middleman.EnableDHCPOnDevice(Device.Dev2);
+
+            UpdateDeviceInfo();
+        }
+
         private void TimerArpButton_Click(object sender, EventArgs e)
         {
             try
@@ -296,8 +323,8 @@ namespace MC_132RTR
             ActiveCheckBox.Checked = Device.RouterRunning;
             PowerCheckBox.Checked = true;
 
-            ProcessDeviceFE(Device.Dev1, Dev1Label, Dev1NetworkLabel, Dev1MacLabel, Dev1UsableCHeckBox, Dev1RIPv2CheckBox);
-            ProcessDeviceFE(Device.Dev2, Dev2Label, Dev2NetworkLabel, Dev2MacLabel, Dev2UsableCHeckBox, Dev2RIPv2CheckBox);
+            ProcessDeviceFE(Device.Dev1, Dev1Label, Dev1NetworkLabel, Dev1MacLabel, Dev1UsableCHeckBox, Dev1RIPv2CheckBox, Dev1DHCPCheckBox);
+            ProcessDeviceFE(Device.Dev2, Dev2Label, Dev2NetworkLabel, Dev2MacLabel, Dev2UsableCHeckBox, Dev2RIPv2CheckBox, Dev2DHCPCheckBox);
 
             if (Device.RouterRunning)
             {
@@ -311,7 +338,7 @@ namespace MC_132RTR
             }
         }
 
-        private void ProcessDeviceFE(String DevNO, Label DevLabel, Label NetworkLabel, Label MacLabel, CheckBox UsableCheckBox, CheckBox RIPv2CheckBox)
+        private void ProcessDeviceFE(String DevNO, Label DevLabel, Label NetworkLabel, Label MacLabel, CheckBox UsableCheckBox, CheckBox RIPv2CheckBox, CheckBox DHCPCheckBox)
         {
             if (String.IsNullOrEmpty(DevNO))
                 return;
@@ -322,6 +349,7 @@ namespace MC_132RTR
             MacLabel.Text = Tmp.MacToString();
             UsableCheckBox.Checked = Tmp.IsUsable();
             RIPv2CheckBox.Checked = !Tmp.DEV_DisabledRIPv2;
+            DHCPCheckBox.Checked = !Tmp.DEV_DisabledDHCP;
         }
 
         private void StaticAddButton_Click(object sender, EventArgs e)
@@ -354,5 +382,7 @@ namespace MC_132RTR
 
             return whichNumberToUse;
         }
+
+
     }
 }

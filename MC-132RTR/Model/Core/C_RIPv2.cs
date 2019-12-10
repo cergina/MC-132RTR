@@ -80,7 +80,7 @@ namespace MC_132RTR.Model.Core
             EthernetPacket EthPckt = Extractor.GetEthPacket(Layer0);
             IPv4Packet Ipv4 = Extractor.GetIPv4Packet(EthPckt);
             UdpPacket Udp = Extractor.GetUdpPacket(Ipv4);
-
+            
             P_RIPv2 PR = new P_RIPv2(Udp.PayloadData);
 
             Ipv4 = P_RIPv2.UponArrival(PR, Ipv4, out bool Ok);

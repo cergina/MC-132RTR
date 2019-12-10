@@ -87,6 +87,29 @@ namespace MC_132RTR.Controller.Middleman
             }
         }
 
+        // DHCP
+        public static void EnableDHCPOnDevice(string DevS)
+        {
+            if (String.IsNullOrEmpty(DevS))
+                return;
+
+            Device Dev = Device.PairDeviceWithToString(DevS);
+            if (Dev != null)
+                Dev.EnableDHCP();
+        }
+
+        public static void DisableDHCPOnDevice(string DevS)
+        {
+            if (String.IsNullOrEmpty(DevS))
+                return;
+
+            Device Dev = Device.PairDeviceWithToString(DevS);
+            if (Dev != null)
+            {
+                Dev.DisableDHCP();
+            }
+        }
+
         // ARP
         public static void SendTestArp(String Ip, int DevNum)
         {
