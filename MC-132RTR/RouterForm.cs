@@ -169,7 +169,7 @@ namespace MC_132RTR
             {
                 Middleman.SaveDHCPSettings(
                     DHCPIpStartTextBox.Text, DHCPIpEndTextBox.Text,
-                    DHCPMaskTextBox.Text);
+                    DHCPMaskTextBox.Text, );
             }
             catch (Exception en) { }
         }
@@ -196,7 +196,8 @@ namespace MC_132RTR
 
         private void DHCPAddButton_Click(object sender, EventArgs e)
         {
-            // TODO
+            Middleman.TryToAddDHCP(DHCPIpTextBox.Text, 
+                DHCPDefGateTextBox.Text, DHCPMacTextBox.Text);
         }
 
         // Timers

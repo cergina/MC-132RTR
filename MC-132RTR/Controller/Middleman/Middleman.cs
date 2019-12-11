@@ -5,6 +5,7 @@ using MC_132RTR.Model.TablePrimitive;
 using System;
 using System.Collections.Generic;
 using System.Net;
+using System.Net.NetworkInformation;
 using System.Threading;
 using System.Windows.Forms;
 
@@ -88,15 +89,18 @@ namespace MC_132RTR.Controller.Middleman
         }
 
         // DHCP
-        public static void SaveDHCPSettings(String IpStart, String IpEnd, String IpMask)
+        public static void SaveDHCPSettings(String IpStart, String IpEnd, String IpMask, String Mode)
         {
             try
             {
+                if (String.IsNullOrEmpty(Mode))
+                    throw new NotSupportedException();
+
                 IPAddress IpFirst = IPAddress.Parse(IpStart);
                 IPAddress IpLast = IPAddress.Parse(IpEnd);
                 Mask SubnetMask = new Mask(IPAddress.Parse(IpMask));
 
-                // TODO C_DHCP.GetInstance().
+                C_DHCP.GetInstance().SettingsChange(IpFirst, IpLast, SubnetMask, Mode);
             }
             catch (Exception en) { }
         }
@@ -222,6 +226,19 @@ namespace MC_132RTR.Controller.Middleman
                 default:
                     break;
             }
+        }
+
+        internal static void TryToAddDHCP(string IpText, string DefGatText, string ForMacText)
+        {
+            try
+            {
+                T_DHCP.GetInstance().AddManual(
+                    IPAddress.Parse(IpText),
+                    ,
+                    IPAddress.Parse(DefGatText),
+                    PhysicalAddress.Parse(ForMacText)
+                    );
+            } catch (Exception en) { }
         }
 
         /*

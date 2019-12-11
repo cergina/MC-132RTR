@@ -1,7 +1,10 @@
 ﻿using MC_132RTR.Model.Core;
 using MC_132RTR.Model.TablePrimitive;
+using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
+using System.Net.NetworkInformation;
 using System.Threading;
 
 namespace MC_132RTR.Model.Table
@@ -43,5 +46,10 @@ namespace MC_132RTR.Model.Table
 
         public List<TP_DHCP> GetListForView()
             => Table.ToList();
+
+        internal void AddManual(IPAddress IPToAssign, IPAddress IpDefGat, PhysicalAddress MacForThis)
+        {
+            TP_DHCP TPDH = new TP_DHCP(IPToAssign, , IpDefGat, MacForThis, C_DHCP.MANUAL);
+        }
     }
 }

@@ -1,5 +1,6 @@
 ﻿using MC_132RTR.Model.Core;
 using MC_132RTR.Model.Support;
+using MC_132RTR.Model.Table;
 using System;
 using System.Net;
 using System.Net.NetworkInformation;
@@ -16,6 +17,16 @@ namespace MC_132RTR.Model.TablePrimitive
         public short Type { get; private set; } = -1;
 
         public int Timer = 0;
+
+        public TP_DHCP(IPAddress Ip, Mask MaskIp, IPAddress DefGateIp, PhysicalAddress MAC, short Type)
+        {
+            IpAssigned = Ip;
+            SubnetMask = MaskIp;
+            DefGateway = DefGateIp;
+            MacBind = MAC;
+            this.Type = Type;
+            Timer = (Type == C_DHCP.MANUAL) ? -1 : T_DHCP.TIMER;
+        }
 
         public ListViewItem ToListViewItem()
         {

@@ -114,6 +114,7 @@
             this.DHCPTimeColumn = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.DHCPTypeColumn = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.DHCPOptionsGB = new System.Windows.Forms.GroupBox();
+            this.DHCPInfoLabel = new System.Windows.Forms.Label();
             this.DHCPSaveButton = new System.Windows.Forms.Button();
             this.DHCPIpEndTextBox = new System.Windows.Forms.TextBox();
             this.DHCPIpStartTextBox = new System.Windows.Forms.TextBox();
@@ -134,7 +135,6 @@
             this.label4 = new System.Windows.Forms.Label();
             this.DHCPIpTextBox = new System.Windows.Forms.TextBox();
             this.CommentTextBox = new System.Windows.Forms.Label();
-            this.DHCPInfoLabel = new System.Windows.Forms.Label();
             this.Dev1GB.SuspendLayout();
             this.Dev2GB.SuspendLayout();
             this.RouterGB.SuspendLayout();
@@ -1055,6 +1055,15 @@
             this.DHCPOptionsGB.TabStop = false;
             this.DHCPOptionsGB.Text = "DHCP Options";
             // 
+            // DHCPInfoLabel
+            // 
+            this.DHCPInfoLabel.AutoSize = true;
+            this.DHCPInfoLabel.Location = new System.Drawing.Point(19, 117);
+            this.DHCPInfoLabel.Name = "DHCPInfoLabel";
+            this.DHCPInfoLabel.Size = new System.Drawing.Size(41, 13);
+            this.DHCPInfoLabel.TabIndex = 42;
+            this.DHCPInfoLabel.Text = "label10";
+            // 
             // DHCPSaveButton
             // 
             this.DHCPSaveButton.BackColor = System.Drawing.SystemColors.Window;
@@ -1132,7 +1141,6 @@
             this.DHCPAutoRadioButton.Name = "DHCPAutoRadioButton";
             this.DHCPAutoRadioButton.Size = new System.Drawing.Size(88, 17);
             this.DHCPAutoRadioButton.TabIndex = 1;
-            this.DHCPAutoRadioButton.TabStop = true;
             this.DHCPAutoRadioButton.Text = "AUTOMATIC";
             this.DHCPAutoRadioButton.UseVisualStyleBackColor = true;
             // 
@@ -1157,6 +1165,7 @@
             // DHCPDynRadioButton
             // 
             this.DHCPDynRadioButton.AutoSize = true;
+            this.DHCPDynRadioButton.Checked = true;
             this.DHCPDynRadioButton.Location = new System.Drawing.Point(14, 17);
             this.DHCPDynRadioButton.Name = "DHCPDynRadioButton";
             this.DHCPDynRadioButton.Size = new System.Drawing.Size(74, 17);
@@ -1257,15 +1266,6 @@
             this.CommentTextBox.TabIndex = 20;
             this.CommentTextBox.Text = "TextToPut";
             this.CommentTextBox.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            // 
-            // DHCPInfoLabel
-            // 
-            this.DHCPInfoLabel.AutoSize = true;
-            this.DHCPInfoLabel.Location = new System.Drawing.Point(19, 117);
-            this.DHCPInfoLabel.Name = "DHCPInfoLabel";
-            this.DHCPInfoLabel.Size = new System.Drawing.Size(41, 13);
-            this.DHCPInfoLabel.TabIndex = 42;
-            this.DHCPInfoLabel.Text = "label10";
             // 
             // RouterForm
             // 
