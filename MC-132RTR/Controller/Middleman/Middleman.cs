@@ -89,12 +89,12 @@ namespace MC_132RTR.Controller.Middleman
         }
 
         // DHCP
-        public static void SaveDHCPSettings(String IpStart, String IpEnd, String IpMask, String Mode)
+        public static void SaveDHCPSettings(String IpStart, String IpEnd, String IpMask, uint Mode)
         {
             try
             {
-                if (String.IsNullOrEmpty(Mode))
-                    throw new NotSupportedException();
+                if (Mode == C_DHCP.NOTHING)
+                    return;
 
                 IPAddress IpFirst = IPAddress.Parse(IpStart);
                 IPAddress IpLast = IPAddress.Parse(IpEnd);
@@ -234,10 +234,17 @@ namespace MC_132RTR.Controller.Middleman
             {
                 T_DHCP.GetInstance().AddManual(
                     IPAddress.Parse(IpText),
-                    ,
                     IPAddress.Parse(DefGatText),
                     PhysicalAddress.Parse(ForMacText)
                     );
+            } catch (Exception en) { }
+        }
+
+        internal static void TryToDeleteDHCP(string IpText)
+        {
+            try
+            {
+                T_DHCP.GetInstance().DeleteManual(IPAddress.Parse(IpText));
             } catch (Exception en) { }
         }
 
@@ -270,7 +277,6 @@ namespace MC_132RTR.Controller.Middleman
                     return -1;
             }
         }
-
 
         public static List<ListViewItem> GetListViewItemsARP()
         {
@@ -350,8 +356,24 @@ namespace MC_132RTR.Controller.Middleman
 
         internal static string GetDHCPState()
         {
-            // TODO
-            return "Stav DHCP";
+            // DEV [null/0/1] | IpS <-> IpL | M:Mask | DG:Gateway
+            string ToReturn = $"DHCP[{C_DHCP.RUNNING.ToString()}], DEV[";
+            // null / 1 / 2
+            ToReturn += (C_DHCP.ActiveDevice_S == null) ? "null" : C_DHCP.ActiveDevice_S;
+            ToReturn += "] | ";
+            // first Ip
+            ToReturn += C_DHCP.IpStart != null ? C_DHCP.IpStart.ToString() : "null";
+            ToReturn += " <-> ";
+            // last Ip
+            ToReturn += C_DHCP.IpLast != null ? C_DHCP.IpLast.ToString() : "null";
+            ToReturn += "\nM: ";
+            //maska
+            ToReturn += C_DHCP.DefaultMask != null ? C_DHCP.DefaultMask.SubnetMask.ToString() : "null";
+            ToReturn += " | DG: ";
+            // default gateway
+            ToReturn += C_DHCP.IpDefGate != null ? C_DHCP.IpDefGate.ToString() : "null";
+            ToReturn += $" | MOD: {C_DHCP.GetInstance().ModeAsString()}";
+            return ToReturn;
         }
     }
 }

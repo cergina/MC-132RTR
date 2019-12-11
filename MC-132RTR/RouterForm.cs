@@ -169,9 +169,34 @@ namespace MC_132RTR
             {
                 Middleman.SaveDHCPSettings(
                     DHCPIpStartTextBox.Text, DHCPIpEndTextBox.Text,
-                    DHCPMaskTextBox.Text, );
+                    DHCPMaskTextBox.Text, (uint)(WhichDHCPMode(false)));
             }
             catch (Exception en) { }
+
+            DHCP_Options_Reset();
+            DHCP_Management_Reset();
+            UpdateDHCPState();
+        }
+
+        private void DHCP_Options_Reset()
+        {
+            // TODO if available set to the values else set to ""
+
+            DHCPIpStartTextBox.Text = C_DHCP.IpStart != null ? C_DHCP.IpStart.ToString() : "";
+            DHCPIpEndTextBox.Text = C_DHCP.IpLast != null ? C_DHCP.IpLast.ToString() : "";
+            DHCPMaskTextBox.Text = C_DHCP.DefaultMask != null ? C_DHCP.DefaultMask.SubnetMask.ToString() : "";
+
+
+        }
+
+        private object WhichDHCPMode(bool AsString)
+        {
+            if (DHCPDynRadioButton.Checked)
+                return (AsString) ? (object)C_DHCP.DYNAMIC_S : (object)C_DHCP.DYNAMIC;
+            else if (DHCPAutoRadioButton.Checked)
+                return (AsString) ? (object)C_DHCP.AUTOMAT_S : (object)C_DHCP.AUTOMAT;
+            else
+                return (AsString) ? (object)C_DHCP.NOTHING_S : (object)C_DHCP.NOTHING;
         }
 
         private void Dev1DHCPButton_Click(object sender, EventArgs e)
@@ -198,6 +223,19 @@ namespace MC_132RTR
         {
             Middleman.TryToAddDHCP(DHCPIpTextBox.Text, 
                 DHCPDefGateTextBox.Text, DHCPMacTextBox.Text);
+            DHCP_Management_Reset();
+        }
+        private void DHCPDeleteButton_Click(object sender, EventArgs e)
+        {
+            Middleman.TryToDeleteDHCP(DHCPIpTextBox.Text);
+            DHCP_Management_Reset();
+        }
+
+        private void DHCP_Management_Reset()
+        {
+            DHCPIpTextBox.Text = "eg.: 192.168.11.1";
+            DHCPDefGateTextBox.Text = C_DHCP.IpDefGate != null ? C_DHCP.IpDefGate.ToString() : "";
+            DHCPMacTextBox.Text = "eg.: AC-BC-DE-07-08-09";
         }
 
         // Timers
@@ -257,6 +295,8 @@ namespace MC_132RTR
                 GuiTImersInit();
             }
             catch (Exception en) { }
+
+            UpdateDHCPState();
         }
 
         // //////////////////
@@ -368,8 +408,11 @@ namespace MC_132RTR
                 }
             }
 
-            DHCPInfoLabel.Text = Middleman.GetDHCPState();
+            UpdateDHCPState();
         }
+
+        private void UpdateDHCPState()
+            => DHCPInfoLabel.Text = Middleman.GetDHCPState();
 
         private void ProcessDeviceFE(String DevNO, Label DevLabel, Label NetworkLabel, Label MacLabel, CheckBox UsableCheckBox, CheckBox RIPv2CheckBox, CheckBox DHCPCheckBox)
         {
@@ -415,5 +458,6 @@ namespace MC_132RTR
 
             return whichNumberToUse;
         }
+
     }
 }

@@ -290,6 +290,9 @@ namespace MC_132RTR.Model.Core
         public static Device PairDeviceWithToString(String Name)
             => ListOfDevices.Find(Dev => Dev.ToString().Equals(Name));
 
+        public static Device PairDeviceWithId(String Id)
+            => ListOfDevices.Find(Dev => Dev.Id.Equals(Id));
+
         public string IpToString()
             => (Network != null) ? "IP: " + Network.ToString() : "IP is null";
 

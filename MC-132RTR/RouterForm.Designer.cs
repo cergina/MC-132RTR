@@ -135,6 +135,7 @@
             this.label4 = new System.Windows.Forms.Label();
             this.DHCPIpTextBox = new System.Windows.Forms.TextBox();
             this.CommentTextBox = new System.Windows.Forms.Label();
+            this.DHCPDeleteButton = new System.Windows.Forms.Button();
             this.Dev1GB.SuspendLayout();
             this.Dev2GB.SuspendLayout();
             this.RouterGB.SuspendLayout();
@@ -152,7 +153,7 @@
             // 
             this.PowerButton.BackColor = System.Drawing.Color.Red;
             this.PowerButton.Font = new System.Drawing.Font("Perpetua Titling MT", 10.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.PowerButton.ForeColor = System.Drawing.SystemColors.Control;
+            this.PowerButton.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
             this.PowerButton.Location = new System.Drawing.Point(4, 636);
             this.PowerButton.Margin = new System.Windows.Forms.Padding(2);
             this.PowerButton.Name = "PowerButton";
@@ -166,7 +167,7 @@
             // 
             this.StartButton.BackColor = System.Drawing.Color.Green;
             this.StartButton.Font = new System.Drawing.Font("Perpetua Titling MT", 10.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.StartButton.ForeColor = System.Drawing.SystemColors.ButtonFace;
+            this.StartButton.ForeColor = System.Drawing.Color.Silver;
             this.StartButton.Location = new System.Drawing.Point(6, 45);
             this.StartButton.Margin = new System.Windows.Forms.Padding(2);
             this.StartButton.Name = "StartButton";
@@ -219,7 +220,7 @@
             // 
             // Dev1DHCPButton
             // 
-            this.Dev1DHCPButton.BackColor = System.Drawing.SystemColors.Window;
+            this.Dev1DHCPButton.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(192)))));
             this.Dev1DHCPButton.Font = new System.Drawing.Font("Perpetua Titling MT", 10.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.Dev1DHCPButton.Location = new System.Drawing.Point(79, 93);
             this.Dev1DHCPButton.Margin = new System.Windows.Forms.Padding(2);
@@ -330,7 +331,7 @@
             // 
             // Dev2DHCPButton
             // 
-            this.Dev2DHCPButton.BackColor = System.Drawing.SystemColors.Window;
+            this.Dev2DHCPButton.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(192)))));
             this.Dev2DHCPButton.Font = new System.Drawing.Font("Perpetua Titling MT", 10.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.Dev2DHCPButton.Location = new System.Drawing.Point(80, 97);
             this.Dev2DHCPButton.Margin = new System.Windows.Forms.Padding(2);
@@ -1048,9 +1049,9 @@
             this.DHCPOptionsGB.Controls.Add(this.label5);
             this.DHCPOptionsGB.Controls.Add(this.DHCPMaskTextBox);
             this.DHCPOptionsGB.Controls.Add(this.DHCPDynRadioButton);
-            this.DHCPOptionsGB.Location = new System.Drawing.Point(273, 365);
+            this.DHCPOptionsGB.Location = new System.Drawing.Point(273, 351);
             this.DHCPOptionsGB.Name = "DHCPOptionsGB";
-            this.DHCPOptionsGB.Size = new System.Drawing.Size(364, 140);
+            this.DHCPOptionsGB.Size = new System.Drawing.Size(364, 154);
             this.DHCPOptionsGB.TabIndex = 18;
             this.DHCPOptionsGB.TabStop = false;
             this.DHCPOptionsGB.Text = "DHCP Options";
@@ -1058,7 +1059,7 @@
             // DHCPInfoLabel
             // 
             this.DHCPInfoLabel.AutoSize = true;
-            this.DHCPInfoLabel.Location = new System.Drawing.Point(19, 117);
+            this.DHCPInfoLabel.Location = new System.Drawing.Point(19, 113);
             this.DHCPInfoLabel.Name = "DHCPInfoLabel";
             this.DHCPInfoLabel.Size = new System.Drawing.Size(41, 13);
             this.DHCPInfoLabel.TabIndex = 42;
@@ -1066,9 +1067,9 @@
             // 
             // DHCPSaveButton
             // 
-            this.DHCPSaveButton.BackColor = System.Drawing.SystemColors.Window;
+            this.DHCPSaveButton.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(192)))), ((int)(((byte)(192)))));
             this.DHCPSaveButton.Font = new System.Drawing.Font("Perpetua Titling MT", 7.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.DHCPSaveButton.Location = new System.Drawing.Point(182, 86);
+            this.DHCPSaveButton.Location = new System.Drawing.Point(182, 82);
             this.DHCPSaveButton.Margin = new System.Windows.Forms.Padding(2);
             this.DHCPSaveButton.Name = "DHCPSaveButton";
             this.DHCPSaveButton.Size = new System.Drawing.Size(154, 26);
@@ -1079,6 +1080,7 @@
             // 
             // DHCPIpEndTextBox
             // 
+            this.DHCPIpEndTextBox.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(192)))), ((int)(((byte)(192)))));
             this.DHCPIpEndTextBox.Location = new System.Drawing.Point(219, 54);
             this.DHCPIpEndTextBox.Margin = new System.Windows.Forms.Padding(2);
             this.DHCPIpEndTextBox.Name = "DHCPIpEndTextBox";
@@ -1087,6 +1089,7 @@
             // 
             // DHCPIpStartTextBox
             // 
+            this.DHCPIpStartTextBox.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(192)))), ((int)(((byte)(192)))));
             this.DHCPIpStartTextBox.Location = new System.Drawing.Point(56, 54);
             this.DHCPIpStartTextBox.Margin = new System.Windows.Forms.Padding(2);
             this.DHCPIpStartTextBox.Name = "DHCPIpStartTextBox";
@@ -1115,7 +1118,7 @@
             // 
             // DHCPTimerButton
             // 
-            this.DHCPTimerButton.BackColor = System.Drawing.SystemColors.Window;
+            this.DHCPTimerButton.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(224)))), ((int)(((byte)(192)))));
             this.DHCPTimerButton.Font = new System.Drawing.Font("Perpetua Titling MT", 7.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.DHCPTimerButton.Location = new System.Drawing.Point(242, 12);
             this.DHCPTimerButton.Margin = new System.Windows.Forms.Padding(2);
@@ -1128,6 +1131,7 @@
             // 
             // DHCPTimerTextBox
             // 
+            this.DHCPTimerTextBox.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(224)))), ((int)(((byte)(192)))));
             this.DHCPTimerTextBox.Location = new System.Drawing.Point(180, 15);
             this.DHCPTimerTextBox.Margin = new System.Windows.Forms.Padding(2);
             this.DHCPTimerTextBox.Name = "DHCPTimerTextBox";
@@ -1137,17 +1141,18 @@
             // DHCPAutoRadioButton
             // 
             this.DHCPAutoRadioButton.AutoSize = true;
+            this.DHCPAutoRadioButton.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(192)))), ((int)(((byte)(192)))));
             this.DHCPAutoRadioButton.Location = new System.Drawing.Point(87, 17);
             this.DHCPAutoRadioButton.Name = "DHCPAutoRadioButton";
             this.DHCPAutoRadioButton.Size = new System.Drawing.Size(88, 17);
             this.DHCPAutoRadioButton.TabIndex = 1;
             this.DHCPAutoRadioButton.Text = "AUTOMATIC";
-            this.DHCPAutoRadioButton.UseVisualStyleBackColor = true;
+            this.DHCPAutoRadioButton.UseVisualStyleBackColor = false;
             // 
             // label5
             // 
             this.label5.AutoSize = true;
-            this.label5.Location = new System.Drawing.Point(19, 95);
+            this.label5.Location = new System.Drawing.Point(19, 88);
             this.label5.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.label5.Name = "label5";
             this.label5.Size = new System.Drawing.Size(33, 13);
@@ -1156,7 +1161,8 @@
             // 
             // DHCPMaskTextBox
             // 
-            this.DHCPMaskTextBox.Location = new System.Drawing.Point(56, 92);
+            this.DHCPMaskTextBox.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(192)))), ((int)(((byte)(192)))));
+            this.DHCPMaskTextBox.Location = new System.Drawing.Point(56, 85);
             this.DHCPMaskTextBox.Margin = new System.Windows.Forms.Padding(2);
             this.DHCPMaskTextBox.Name = "DHCPMaskTextBox";
             this.DHCPMaskTextBox.Size = new System.Drawing.Size(117, 20);
@@ -1165,6 +1171,7 @@
             // DHCPDynRadioButton
             // 
             this.DHCPDynRadioButton.AutoSize = true;
+            this.DHCPDynRadioButton.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(192)))), ((int)(((byte)(192)))));
             this.DHCPDynRadioButton.Checked = true;
             this.DHCPDynRadioButton.Location = new System.Drawing.Point(14, 17);
             this.DHCPDynRadioButton.Name = "DHCPDynRadioButton";
@@ -1172,10 +1179,11 @@
             this.DHCPDynRadioButton.TabIndex = 0;
             this.DHCPDynRadioButton.TabStop = true;
             this.DHCPDynRadioButton.Text = "DYNAMIC";
-            this.DHCPDynRadioButton.UseVisualStyleBackColor = true;
+            this.DHCPDynRadioButton.UseVisualStyleBackColor = false;
             // 
             // DHCPManagementGB
             // 
+            this.DHCPManagementGB.Controls.Add(this.DHCPDeleteButton);
             this.DHCPManagementGB.Controls.Add(this.DHCPAddButton);
             this.DHCPManagementGB.Controls.Add(this.label7);
             this.DHCPManagementGB.Controls.Add(this.DHCPMacTextBox);
@@ -1183,9 +1191,9 @@
             this.DHCPManagementGB.Controls.Add(this.DHCPDefGateTextBox);
             this.DHCPManagementGB.Controls.Add(this.label4);
             this.DHCPManagementGB.Controls.Add(this.DHCPIpTextBox);
-            this.DHCPManagementGB.Location = new System.Drawing.Point(4, 530);
+            this.DHCPManagementGB.Location = new System.Drawing.Point(4, 511);
             this.DHCPManagementGB.Name = "DHCPManagementGB";
-            this.DHCPManagementGB.Size = new System.Drawing.Size(587, 82);
+            this.DHCPManagementGB.Size = new System.Drawing.Size(587, 101);
             this.DHCPManagementGB.TabIndex = 19;
             this.DHCPManagementGB.TabStop = false;
             this.DHCPManagementGB.Text = "DHCP Management";
@@ -1194,19 +1202,19 @@
             // 
             this.DHCPAddButton.BackColor = System.Drawing.SystemColors.Window;
             this.DHCPAddButton.Font = new System.Drawing.Font("Perpetua Titling MT", 10.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.DHCPAddButton.Location = new System.Drawing.Point(324, 42);
+            this.DHCPAddButton.Location = new System.Drawing.Point(372, 19);
             this.DHCPAddButton.Margin = new System.Windows.Forms.Padding(2);
             this.DHCPAddButton.Name = "DHCPAddButton";
-            this.DHCPAddButton.Size = new System.Drawing.Size(257, 31);
+            this.DHCPAddButton.Size = new System.Drawing.Size(205, 34);
             this.DHCPAddButton.TabIndex = 23;
-            this.DHCPAddButton.Text = "ADD";
+            this.DHCPAddButton.Text = "ADD (all 3)";
             this.DHCPAddButton.UseVisualStyleBackColor = false;
             this.DHCPAddButton.Click += new System.EventHandler(this.DHCPAddButton_Click);
             // 
             // label7
             // 
             this.label7.AutoSize = true;
-            this.label7.Location = new System.Drawing.Point(15, 52);
+            this.label7.Location = new System.Drawing.Point(18, 74);
             this.label7.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.label7.Name = "label7";
             this.label7.Size = new System.Drawing.Size(48, 13);
@@ -1215,7 +1223,7 @@
             // 
             // DHCPMacTextBox
             // 
-            this.DHCPMacTextBox.Location = new System.Drawing.Point(95, 49);
+            this.DHCPMacTextBox.Location = new System.Drawing.Point(120, 71);
             this.DHCPMacTextBox.Margin = new System.Windows.Forms.Padding(2);
             this.DHCPMacTextBox.Name = "DHCPMacTextBox";
             this.DHCPMacTextBox.Size = new System.Drawing.Size(164, 20);
@@ -1224,7 +1232,7 @@
             // label6
             // 
             this.label6.AutoSize = true;
-            this.label6.Location = new System.Drawing.Point(327, 21);
+            this.label6.Location = new System.Drawing.Point(18, 49);
             this.label6.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.label6.Name = "label6";
             this.label6.Size = new System.Drawing.Size(86, 13);
@@ -1233,7 +1241,7 @@
             // 
             // DHCPDefGateTextBox
             // 
-            this.DHCPDefGateTextBox.Location = new System.Drawing.Point(417, 18);
+            this.DHCPDefGateTextBox.Location = new System.Drawing.Point(120, 46);
             this.DHCPDefGateTextBox.Margin = new System.Windows.Forms.Padding(2);
             this.DHCPDefGateTextBox.Name = "DHCPDefGateTextBox";
             this.DHCPDefGateTextBox.Size = new System.Drawing.Size(164, 20);
@@ -1242,7 +1250,7 @@
             // label4
             // 
             this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(11, 21);
+            this.label4.Location = new System.Drawing.Point(18, 21);
             this.label4.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.label4.Name = "label4";
             this.label4.Size = new System.Drawing.Size(58, 13);
@@ -1251,7 +1259,7 @@
             // 
             // DHCPIpTextBox
             // 
-            this.DHCPIpTextBox.Location = new System.Drawing.Point(95, 18);
+            this.DHCPIpTextBox.Location = new System.Drawing.Point(120, 18);
             this.DHCPIpTextBox.Margin = new System.Windows.Forms.Padding(2);
             this.DHCPIpTextBox.Name = "DHCPIpTextBox";
             this.DHCPIpTextBox.Size = new System.Drawing.Size(164, 20);
@@ -1260,17 +1268,31 @@
             // CommentTextBox
             // 
             this.CommentTextBox.AutoSize = true;
-            this.CommentTextBox.Location = new System.Drawing.Point(331, 287);
+            this.CommentTextBox.Location = new System.Drawing.Point(331, 268);
             this.CommentTextBox.Name = "CommentTextBox";
             this.CommentTextBox.Size = new System.Drawing.Size(57, 13);
             this.CommentTextBox.TabIndex = 20;
             this.CommentTextBox.Text = "TextToPut";
             this.CommentTextBox.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
+            // DHCPDeleteButton
+            // 
+            this.DHCPDeleteButton.BackColor = System.Drawing.SystemColors.Window;
+            this.DHCPDeleteButton.Font = new System.Drawing.Font("Perpetua Titling MT", 10.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.DHCPDeleteButton.Location = new System.Drawing.Point(372, 57);
+            this.DHCPDeleteButton.Margin = new System.Windows.Forms.Padding(2);
+            this.DHCPDeleteButton.Name = "DHCPDeleteButton";
+            this.DHCPDeleteButton.Size = new System.Drawing.Size(205, 34);
+            this.DHCPDeleteButton.TabIndex = 35;
+            this.DHCPDeleteButton.Text = "DELETE (just  Ip)";
+            this.DHCPDeleteButton.UseVisualStyleBackColor = false;
+            this.DHCPDeleteButton.Click += new System.EventHandler(this.DHCPDeleteButton_Click);
+            // 
             // RouterForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.BackColor = System.Drawing.Color.White;
             this.ClientSize = new System.Drawing.Size(1140, 735);
             this.Controls.Add(this.CommentTextBox);
             this.Controls.Add(this.DHCPManagementGB);
@@ -1421,6 +1443,7 @@
         private System.Windows.Forms.TextBox DHCPIpStartTextBox;
         private System.Windows.Forms.Button DHCPSaveButton;
         private System.Windows.Forms.Label DHCPInfoLabel;
+        private System.Windows.Forms.Button DHCPDeleteButton;
     }
 }
 

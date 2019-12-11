@@ -49,7 +49,22 @@ namespace MC_132RTR.Model.Table
 
         internal void AddManual(IPAddress IPToAssign, IPAddress IpDefGat, PhysicalAddress MacForThis)
         {
-            TP_DHCP TPDH = new TP_DHCP(IPToAssign, , IpDefGat, MacForThis, C_DHCP.MANUAL);
+            if (C_DHCP.DefaultMask == null || !C_DHCP.DefaultMask.IsCorrect() || !C_DHCP.RUNNING)
+                return;
+
+            if (!C_DHCP.GetInstance().OkToAssignIp(IPToAssign))
+                return;
+
+            if (Table.Find(Item => Item.IpAssigned.Equals(IPToAssign)) != null)
+                return;
+
+            TP_DHCP TPDH = new TP_DHCP(IPToAssign, C_DHCP.DefaultMask, IpDefGat, MacForThis, C_DHCP.MANUAL);
+            Table.Add(TPDH);
+        }
+
+        internal void DeleteManual(IPAddress IPAddress)
+        {
+            Table.RemoveAll(Item => Item.Type == C_DHCP.MANUAL && Item.IpAssigned.Equals(IPAddress));
         }
     }
 }
