@@ -15,6 +15,7 @@ namespace MC_132RTR.Model.Table
         private static T_DHCP Instance = null;
 
         public List<TP_DHCP> Table = new List<TP_DHCP>();
+        public List<IPAddress> IpPool = null;
 
         private T_DHCP()
         {
@@ -63,8 +64,6 @@ namespace MC_132RTR.Model.Table
         }
 
         internal void DeleteManual(IPAddress IPAddress)
-        {
-            Table.RemoveAll(Item => Item.Type == C_DHCP.MANUAL && Item.IpAssigned.Equals(IPAddress));
-        }
+            => Table.RemoveAll(Item => Item.Type == C_DHCP.MANUAL && Item.IpAssigned.Equals(IPAddress));
     }
 }
