@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 
@@ -146,6 +147,61 @@ namespace MC_132RTR.Model.Support
                 return false;
 
             return true;
+        }
+
+        public static List<IPAddress> GetListOfIntermezzoIp(IPAddress FirstIp, IPAddress LastIp, bool IncorporateArguments)
+        {
+            List<IPAddress> Tmp = new List<IPAddress>();
+
+            if (IncorporateArguments)
+                Tmp.Add(FirstIp);
+
+            // not changed
+            uint L0 = LastIp.GetAddressBytes()[0];
+            uint L1 = LastIp.GetAddressBytes()[1];
+            uint L2 = LastIp.GetAddressBytes()[2];
+            uint L3 = LastIp.GetAddressBytes()[3];
+
+            // changed
+            uint T0 = FirstIp.GetAddressBytes()[0];
+            uint T1 = FirstIp.GetAddressBytes()[1];
+            uint T2 = FirstIp.GetAddressBytes()[2];
+            uint T3 = FirstIp.GetAddressBytes()[3];
+
+            while (true)
+            {
+                // 193.x.x.x vs 192.x.x.x
+                if (T0 > L0)
+                    break;
+
+                // 192.5.x.x vs 192.4.x.x
+                if (T0 == L0 && T1 > L1)
+                    break;
+
+                // 192.5.80.x vs 192.5.78.x
+                if (T0 == L0 && T1 == L1 && T2 > L2)
+                    break;
+
+                // 192.5.80.92 vs 192.5.80.91
+                if (T0 == L0 && T1 == L1 && T2 == L2 && T3 > L3)
+                    break;
+
+                // after this part it is sure that we can increment IP
+                uint NewIp = (T0 << 24) | (T1 << 16) | (T2 << 8) | T3;
+                ++NewIp;
+
+                T3 = NewIp & 255;
+                T2 = (NewIp >> 8) & 255;
+                T1 = (NewIp >> 16) & 255;
+                T0 = (NewIp >> 24) & 255;
+
+                Tmp.Add(IPAddress.Parse($"{T0}.{T1}.{T2}.{T3}"));
+            }
+
+            if (IncorporateArguments)
+                Tmp.Add(LastIp);
+
+            return Tmp;
         }
 
         public override string ToString()

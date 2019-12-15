@@ -19,7 +19,6 @@ namespace MC_132RTR.Model.Table
 
         private T_DHCP()
         {
-
         }
 
         public void Thread_Operation()
@@ -36,6 +35,16 @@ namespace MC_132RTR.Model.Table
 
                 Thread.Sleep(1000);
             }
+        }
+
+        public void InitDHCP()
+        {
+            Table = new List<TP_DHCP>();  // empty
+            IpPool = new List<IPAddress>();   // generate
+
+            IPAddress AlreadyAssigned = Device.PairDeviceWithId(C_DHCP.ActiveDevice_S).Network.Address;
+
+            
         }
 
         public void ChangeTimer(int Adept)

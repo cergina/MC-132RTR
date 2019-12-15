@@ -1,5 +1,6 @@
 ﻿using MC_132RTR.Model.Packet;
 using MC_132RTR.Model.Support;
+using MC_132RTR.Model.Table;
 using PacketDotNet;
 using SharpPcap;
 using System;
@@ -114,6 +115,7 @@ namespace MC_132RTR.Model.Core
                     IpDefGate = Dev.Network.Address;
 
                     RUNNING = true;
+                    T_DHCP.GetInstance().InitDHCP();
                     return;
                 }
             }
