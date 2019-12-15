@@ -128,6 +128,9 @@ namespace MC_132RTR.Model.Core
             if (!Dev.Network.IsWithinNetworkRange(IpToAssign))
                 return false;
 
+            if (!T_DHCP.GetInstance().IpPool.Contains(IpToAssign))
+                return false;
+
             return true;
         }
     }

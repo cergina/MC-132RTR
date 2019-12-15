@@ -149,11 +149,11 @@ namespace MC_132RTR.Model.Support
             return true;
         }
 
-        public static List<IPAddress> GetListOfIntermezzoIp(IPAddress FirstIp, IPAddress LastIp, bool IncorporateArguments)
+        public static List<IPAddress> GetListOfIntermezzoIp(IPAddress FirstIp, IPAddress LastIp, IPAddress AvoidIp, bool IncorporateArguments)
         {
             List<IPAddress> Tmp = new List<IPAddress>();
 
-            if (IncorporateArguments)
+            if (IncorporateArguments && !FirstIp.Equals(AvoidIp))
                 Tmp.Add(FirstIp);
 
             // not changed
@@ -195,10 +195,12 @@ namespace MC_132RTR.Model.Support
                 T1 = (NewIp >> 16) & 255;
                 T0 = (NewIp >> 24) & 255;
 
-                Tmp.Add(IPAddress.Parse($"{T0}.{T1}.{T2}.{T3}"));
+                IPAddress IpToAdd = IPAddress.Parse($"{T0}.{T1}.{T2}.{T3}");
+                if (!IpToAdd.Equals(AvoidIp))
+                    Tmp.Add(IpToAdd);
             }
 
-            if (IncorporateArguments)
+            if (IncorporateArguments && !LastIp.Equals(AvoidIp))
                 Tmp.Add(LastIp);
 
             return Tmp;

@@ -1,4 +1,5 @@
-﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
+﻿using MC_132RTR.Model.Support;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
 using System.Collections.Generic;
 using System.Net;
@@ -98,13 +99,28 @@ namespace MC_132RTR.Model.Support.Tests
             {
                 Assert.IsFalse((new Network("192.168.11.1", "128.0.255.0")).IsCorrect());
                 Assert.Fail();
-            } catch (Exception e) { };
+            }
+            catch (Exception e) { };
             try
             {
                 Assert.IsFalse((new Network(null, "255.255.0.0")).IsCorrect());
                 Assert.Fail();
             }
             catch (Exception e) { };
+        }
+
+        [TestMethod()]
+        public void GetListOfIntermezzoIpTest()
+        {
+            // test is checked in the console view of test explorer windows,
+            // additional output
+            Console.WriteLine("Start test\n\n\n");
+
+            Network.GetListOfIntermezzoIp(IPAddress.Parse("192.168.11.1"), 
+                IPAddress.Parse("192.168.12.5"), null,  true).ForEach(
+                Item => Console.WriteLine(Item.ToString()));
+
+            Console.WriteLine("Finish test");
         }
     }
 }

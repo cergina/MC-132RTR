@@ -1,4 +1,5 @@
 ﻿using MC_132RTR.Model.Core;
+using MC_132RTR.Model.Support;
 using MC_132RTR.Model.TablePrimitive;
 using System;
 using System.Collections.Generic;
@@ -40,11 +41,10 @@ namespace MC_132RTR.Model.Table
         public void InitDHCP()
         {
             Table = new List<TP_DHCP>();  // empty
-            IpPool = new List<IPAddress>();   // generate
 
             IPAddress AlreadyAssigned = Device.PairDeviceWithId(C_DHCP.ActiveDevice_S).Network.Address;
 
-            
+            IpPool = Network.GetListOfIntermezzoIp(C_DHCP.IpStart, C_DHCP.IpLast, AlreadyAssigned, true);
         }
 
         public void ChangeTimer(int Adept)
@@ -69,6 +69,8 @@ namespace MC_132RTR.Model.Table
                 return;
 
             TP_DHCP TPDH = new TP_DHCP(IPToAssign, C_DHCP.DefaultMask, IpDefGat, MacForThis, C_DHCP.MANUAL);
+
+            IpPool.Remove(IPToAssign);
             Table.Add(TPDH);
         }
 
