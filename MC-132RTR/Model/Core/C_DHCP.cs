@@ -23,8 +23,8 @@ namespace MC_132RTR.Model.Core
         public const uint AUTOMAT = 3;
         public const string AUTOMAT_S = "AUTOMAT";
 
-        public const short Port_UDP_DHCP_ClientToServer = 67;
-        public const short Port_UDP_DHCP_ServerToClient = 68;
+        public const ushort Port_UDP_DHCP_ClientToServer = 67;
+        public const ushort Port_UDP_DHCP_ServerToClient = 68;
 
         public static C_DHCP Instance = null;
         public static bool RUNNING { get; private set; } = false;
@@ -79,6 +79,28 @@ namespace MC_132RTR.Model.Core
             IPv4Packet Ipv4 = Extractor.GetIPv4Packet(EthPckt);
             UdpPacket Udp = Extractor.GetUdpPacket(Ipv4);
 
+            switch(P_DHCP.IdentifyMessageType(Udp.PayloadData))
+            {
+                case P_DHCP.DHCPDISCOVER:
+                    ProcessDiscover(Udp.PayloadData, ReceivalDev);
+                    return;
+                case P_DHCP.DHCPREQUEST:
+                    ProcesRequest(Udp.PayloadData, ReceivalDev);
+                    return;
+                case P_DHCP.DHCPOFFER:
+                case P_DHCP.DHCPACK:
+                default:
+                    return;
+            }
+        }
+
+        private void ProcesRequest(byte[] Data, Device ReceivalDev)
+        {
+            // TODO
+        }
+
+        private void ProcessDiscover(byte[] Data, Device ReceivalDev)
+        {
             // TODO
         }
 

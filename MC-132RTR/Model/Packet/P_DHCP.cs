@@ -1,26 +1,151 @@
-﻿using MC_132RTR.Model.Support;
+﻿using MC_132RTR.Model.Core;
+using MC_132RTR.Model.Support;
+using PacketDotNet;
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Net;
 using System.Net.NetworkInformation;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace MC_132RTR.Model.Packet
 {
     class P_DHCP
     {
+        public const short BOOTP_BASE_SIZE = 236;
+        public const short DHCP_BASE_SIZE = 240;
+        public const uint MAGIC_COOKIE = 0x63825363;
+
         public const Byte DHCPDISCOVER = 1;
         public const Byte DHCPOFFER = 2;
         public const Byte DHCPREQUEST = 3;
         public const Byte DHCPACK = 5;
 
+        /*  DHCP Stuff */
+        public Byte[] Bytes { get; private set; } = null;
 
+        /* PARSING */
+        public P_DHCP(Byte[] ExternalBytes)
+        {
+            this.Bytes = ExternalBytes;
+
+            // TODO
+        }
+
+        /* CRAFTING */
+
+        private P_DHCP(Byte OpCode, uint XID, IPAddress Yiaddr, IPAddress Siaddr, PhysicalAddress Chaddr) {
+            Bytes = new byte[1];
+
+            // BOOTP base
+            Bytes = Insertor.Insert(Bytes, 0, OpCode);
+            Bytes = Insertor.Insert(Bytes, Bytes.Length, (Byte)1);  // HTYPE
+            Bytes = Insertor.Insert(Bytes, Bytes.Length, (Byte)6);  // HLEN
+            Bytes = Insertor.Insert(Bytes, Bytes.Length, (Byte)0);  // HOPS
+
+            Bytes = Insertor.Insert(Bytes, Bytes.Length, XID);
+            Bytes = Insertor.Insert(Bytes, Bytes.Length, (uint)0); // SECS, FLAG same time
+            Bytes = Insertor.Insert(Bytes, Bytes.Length, (uint)0); // CIADDR
+            Bytes = Insertor.Insert(Bytes, Bytes.Length, Yiaddr); // YIADDR
+            Bytes = Insertor.Insert(Bytes, Bytes.Length, Siaddr); // SIADDR
+            Bytes = Insertor.Insert(Bytes, Bytes.Length, (uint)0); // GIADDR
+
+            Bytes = Insertor.Insert(Bytes, Bytes.Length, Chaddr); // MAC has 6B, CHADDR has 16B so fill 10B
+            Bytes = Insertor.Insert(Bytes, Bytes.Length, (Byte)0, 10);
+
+            Bytes = Insertor.Insert(Bytes, Bytes.Length, (Byte)0, 192); // SNAME + FILE
+
+            Bytes = Insertor.Insert(Bytes, Bytes.Length, MAGIC_COOKIE);
+        }
+
+        public static void Send(Device ExitDev, UdpPacket P_UDP, IPAddress Ip_Source, IPAddress Ip_Target, PhysicalAddress MAC_Target)
+        {
+            if (ExitDev.DEV_Disabled || ExitDev.DEV_DisabledDHCP)
+                return;
+
+            IPv4Packet IP4 = new IPv4Packet(Ip_Source, Ip_Target)
+            {
+                PayloadData = P_UDP.Bytes,
+                TimeToLive = 1,
+                Protocol = IPProtocolType.UDP,
+                PayloadLength = (ushort)P_UDP.Length
+            };
+            IP4.Checksum = IP4.CalculateIPChecksum();
+
+            ExitDev.SendViaThisDevice(MAC_Target, EthernetPacketType.IpV4, IP4.Bytes);
+        }
+
+        internal static byte IdentifyMessageType(byte[] PayloadData)
+        {
+            if (PayloadData == null || PayloadData.Length <= DHCP_BASE_SIZE)
+                return 0;
+
+            byte[] Extract = Extractor.Extract(PayloadData, DHCP_BASE_SIZE, 3);
+            
+            if (Extract != null && Extract.Length == 3 
+                && Extract[0] == DHCP_OPTION_MESSAGETYPE && Extract[1] == 1)
+                return Extract[2];
+
+            return 0;
+        }
+
+        /*                 BOOTP                        */
+        static UdpPacket BOOTP_w_DHCP_OFFER()
+        {
+            byte[] OptionBytes = new byte[1];
+
+            // inserting options
+            GenerateOption53(ref OptionBytes, DHCPOFFER);
+            GenerateOption1(ref OptionBytes, );
+            GenerateOption3(ref OptionBytes, );
+            GenerateOption51(ref OptionBytes, );
+            GenerateOption58(ref OptionBytes, );
+            GenerateOption59(ref OptionBytes, );
+            GenerateOption54(ref OptionBytes, );
+            GenerateOption6(ref OptionBytes, );
+
+            // Attach options to P_DHCP
+            P_DHCP PD = new P_DHCP();
+            PD.AttachOptions(OptionBytes);
+
+            UdpPacket Udp = new UdpPacket(C_DHCP.Port_UDP_DHCP_ClientToServer, C_DHCP.Port_UDP_DHCP_ServerToClient);
+            Udp.PayloadData = PD.Bytes;
+        }
+
+        static UdpPacket BOOTP_w_DHCP_ACK()
+        {
+            byte[] OptionBytes = new byte[1];
+
+            // inserting options
+            GenerateOption53(ref OptionBytes, DHCPACK);
+            GenerateOption1(ref OptionBytes, );
+            GenerateOption3(ref OptionBytes, );
+            GenerateOption51(ref OptionBytes, );
+            GenerateOption58(ref OptionBytes, );
+            GenerateOption59(ref OptionBytes, );
+            GenerateOption54(ref OptionBytes, );
+            GenerateOption6(ref OptionBytes, );
+
+            // Attach options to P_DHCP
+            P_DHCP PD = new P_DHCP();
+            PD.AttachOptions(OptionBytes);
+
+            UdpPacket Udp = new UdpPacket(C_DHCP.Port_UDP_DHCP_ClientToServer, C_DHCP.Port_UDP_DHCP_ServerToClient);
+            Udp.PayloadData = PD.Bytes;
+        }
+
+        static UdpPacket BOOTP_w_DHCP_DISCOVER()
+        {
+            throw new NotSupportedException();
+        }
+
+        static UdpPacket BOOTP_w_DHCP_REQUEST()
+        {
+            throw new NotSupportedException();
+        }
+
+        /*                     DHCP                              */
 
 
         /* DHCP Options Insertion */
-
         public const Byte DHCP_OPTION_MESSAGETYPE = 53;
         public const Byte DHCP_OPTION_CLIENTID = 61;
         public const Byte DHCP_OPTION_REQIP = 50;
@@ -33,13 +158,17 @@ namespace MC_132RTR.Model.Packet
         public const Byte DHCP_OPTION_RENEWAL = 58;
         public const Byte DHCP_OPTION_REBIND = 59;
 
+        // DHCP Pad
+        static void GenerateOption0(ref Byte[] Bytes)
+            => Bytes = Insertor.Insert(Bytes, Bytes.Length, (Byte)0);
+
+        // DHCP Terminate
+        static void GenerateOption255(ref Byte[] Bytes)
+            => Bytes = Insertor.Insert(Bytes, Bytes.Length, (Byte)255);
+
         // DHCP Message type
         static void GenerateOption53(ref Byte[] Bytes, Byte Value)
-        {
-            Bytes = Insertor.Insert(Bytes, Bytes.Length, DHCP_OPTION_MESSAGETYPE);
-            Bytes = Insertor.Insert(Bytes, Bytes.Length, (Byte)1);
-            Bytes = Insertor.Insert(Bytes, Bytes.Length, Value);
-        }
+            => GenerateOptionByte(ref Bytes, DHCP_OPTION_MESSAGETYPE, Value);
 
         // DHCP Client identification
         static void GenerateOption61(ref Byte[] Bytes, PhysicalAddress MAC)
@@ -93,6 +222,13 @@ namespace MC_132RTR.Model.Packet
         // DHCP Ip Lease Time
         static void GenerateOption59(ref Byte[] Bytes, uint RebindingTime)
             => GenerateOptionUINT(ref Bytes, DHCP_OPTION_REBIND, RebindingTime);
+
+        private static void GenerateOptionByte(ref Byte[] Bytes, Byte OptionCode, uint Value)
+        {
+            Bytes = Insertor.Insert(Bytes, Bytes.Length, OptionCode);
+            Bytes = Insertor.Insert(Bytes, Bytes.Length, (Byte)1);
+            Bytes = Insertor.Insert(Bytes, Bytes.Length, Value);
+        }
 
         private static void GenerateOptionUINT(ref Byte[] Bytes, Byte OptionCode, uint Value)
         {

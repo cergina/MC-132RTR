@@ -21,6 +21,21 @@ namespace MC_132RTR.Model.Packet
             return Data;
         }
 
+        public static byte[] Insert(byte[] Data, int StartByte, byte Value, int HowManyTimes)
+        {
+            if (Data == null || Value == null || StartByte < 0 || HowManyTimes < 0)
+                return null;
+
+            byte[] tmp = new byte[HowManyTimes];
+            for (int i = 0; i < HowManyTimes; ++i)
+                tmp[i] = Value;
+
+            Data = MakeBiggerIfNecessary(Data, StartByte, tmp.Length);
+            Array.Copy(tmp, 0, Data, StartByte, tmp.Length);
+
+            return Data;
+        }
+
         public static byte[] Insert(byte[]Data, int StartByte, ushort Value)
         {
             if (Data == null || StartByte < 0)
