@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
+using System.Net.NetworkInformation;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -65,6 +66,19 @@ namespace MC_132RTR.Model.Packet
                 return null;
 
             byte[] ValueBytes = ((IPAddress)Value).GetAddressBytes();
+
+            Data = MakeBiggerIfNecessary(Data, StartByte, ValueBytes.Length);
+            Array.Copy(ValueBytes, 0, Data, StartByte, ValueBytes.Length);
+
+            return Data;
+        }
+
+        public static byte[] Insert(byte[] Data, int StartByte, PhysicalAddress Value)
+        {
+            if (Data == null || StartByte < 0)
+                return null;
+
+            byte[] ValueBytes = ((PhysicalAddress)Value).GetAddressBytes();
 
             Data = MakeBiggerIfNecessary(Data, StartByte, ValueBytes.Length);
             Array.Copy(ValueBytes, 0, Data, StartByte, ValueBytes.Length);
