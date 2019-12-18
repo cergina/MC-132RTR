@@ -181,12 +181,9 @@ namespace MC_132RTR
         private void DHCP_Options_Reset()
         {
             // TODO if available set to the values else set to ""
-
             DHCPIpStartTextBox.Text = C_DHCP.IpStart != null ? C_DHCP.IpStart.ToString() : "";
             DHCPIpEndTextBox.Text = C_DHCP.IpLast != null ? C_DHCP.IpLast.ToString() : "";
             DHCPMaskTextBox.Text = C_DHCP.DefaultMask != null ? C_DHCP.DefaultMask.SubnetMask.ToString() : "";
-
-
         }
 
         private object WhichDHCPMode(bool AsString)

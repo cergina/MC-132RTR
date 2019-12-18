@@ -149,12 +149,12 @@ namespace MC_132RTR.Model.Support
             return true;
         }
 
-        public static Dictionary<IPAddress, bool> GetListOfIntermezzoIp(IPAddress FirstIp, IPAddress LastIp, IPAddress AvoidIp, bool IncorporateArguments)
+        public static Dictionary<uint, bool> GetListOfIntermezzoIp(IPAddress FirstIp, IPAddress LastIp, IPAddress AvoidIp, bool IncorporateArguments)
         {
-            Dictionary<IPAddress, bool> Tmp = new Dictionary<IPAddress, bool>();
+            Dictionary<uint, bool> Tmp = new Dictionary<uint, bool>();
 
             if (IncorporateArguments && !FirstIp.Equals(AvoidIp))
-                Tmp.Add(FirstIp, true);
+                Tmp.Add(BitConverter.ToUInt32(FirstIp.GetAddressBytes(), 0), true);
 
             // not changed
             uint L0 = LastIp.GetAddressBytes()[0];
@@ -196,12 +196,16 @@ namespace MC_132RTR.Model.Support
                 T0 = (NewIp >> 24) & 255;
 
                 IPAddress IpToAdd = IPAddress.Parse($"{T0}.{T1}.{T2}.{T3}");
+                
+                if (IpToAdd.Equals(LastIp))
+                    break;
+
                 if (!IpToAdd.Equals(AvoidIp))
-                    Tmp.Add(IpToAdd, true);
+                    Tmp.Add(BitConverter.ToUInt32(IpToAdd.GetAddressBytes(), 0), true);
             }
 
-            if (IncorporateArguments && !LastIp.Equals(AvoidIp))
-                Tmp.Add(LastIp, true);
+            if (IncorporateArguments && LastIp != null && !LastIp.Equals(AvoidIp))
+                Tmp.Add(BitConverter.ToUInt32(LastIp.GetAddressBytes(),0), true);
 
             return Tmp;
         }

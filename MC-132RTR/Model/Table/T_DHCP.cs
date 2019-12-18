@@ -1,6 +1,7 @@
 ﻿using MC_132RTR.Model.Core;
 using MC_132RTR.Model.Support;
 using MC_132RTR.Model.TablePrimitive;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
@@ -21,7 +22,7 @@ namespace MC_132RTR.Model.Table
         public List<TP_DHCP> Table = new List<TP_DHCP>();
         // available ip's
         // public List<IPAddress> IpPool = null;
-        public Dictionary<IPAddress, bool> DictPool { get; private set; } = null;
+        public Dictionary<uint, bool> DictPool { get; private set; } = null;
 
         private T_DHCP()
         {
@@ -41,6 +42,9 @@ namespace MC_132RTR.Model.Table
                     {
                         if (TPD.Holding && TPD.Temporary == 0)
                             MakeReservedAvailable(TPD.IpAssigned);
+
+                        if (TPD.Timer == 0 && TPD.Type == C_DHCP.DYNAMIC)
+                            MakeReservedAvailable(TPD.IpAssigned);
                     }
 
                     Table.RemoveAll(Item => Item.Holding && Item.Temporary == 0);
@@ -52,9 +56,9 @@ namespace MC_132RTR.Model.Table
                     foreach (TP_DHCP TPD in Table)
                     {
                         if (TPD.Holding)
-                            --TPD.Temporary;
+                            TPD.Temporary = (TPD.Temporary > 0) ? (byte)(TPD.Temporary - 1) : (byte)0;
                         else
-                            --TPD.Timer;
+                            TPD.Timer = (TPD.Timer > 0) ? (uint)(TPD.Timer - 1) : (uint)0;
                     }
                 }
 
@@ -67,7 +71,7 @@ namespace MC_132RTR.Model.Table
             Table = new List<TP_DHCP>();  // empty
 
             IPAddress AlreadyAssigned = Device.PairDeviceWithId(C_DHCP.ActiveDevice_S).Network.Address;
-
+            
             DictPool = Network.GetListOfIntermezzoIp(C_DHCP.IpStart, C_DHCP.IpLast, AlreadyAssigned, true);
         }
 
@@ -103,8 +107,7 @@ namespace MC_132RTR.Model.Table
 
         internal void MakeReservedAvailable(IPAddress Ip)
         {
-            //Table.RemoveAll(Item => Item.IpAssigned.Equals(Ip) && Item.Holding);
-            DictPool[Ip] = true;
+            DictPool[BitConverter.ToUInt32(Ip.GetAddressBytes(), 0)] = true;
         }
 
         internal void MakeReservedRegular(IPAddress Ip)
@@ -115,14 +118,14 @@ namespace MC_132RTR.Model.Table
         // TEMPORARY
         internal IPAddress RandomFromPool()
         {
-            List<IPAddress> keys = new List<IPAddress>(DictPool.Keys);
+            List<uint> keys = new List<uint>(DictPool.Keys);
 
-            foreach (IPAddress Ip in keys)
+            foreach (uint Ip in keys)
             {
                 if (DictPool[Ip])
                 {
                     DictPool[Ip] = false;
-                    return Ip;
+                    return new IPAddress(Ip);
                 }
             }
 
@@ -152,7 +155,7 @@ namespace MC_132RTR.Model.Table
 
             TP_DHCP TPDH = new TP_DHCP(IPToAssign, SubnetMask, IpDefGate, MacForThis, Type, false);
 
-            DictPool[IPToAssign] = false;
+            DictPool[BitConverter.ToUInt32(IPToAssign.GetAddressBytes(), 0)] = false;
             Table.Add(TPDH);
 
             return true;

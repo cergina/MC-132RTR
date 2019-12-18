@@ -182,10 +182,15 @@ namespace MC_132RTR.Model.Core
                 return false;
 
             // todo: check if it works, else dat do uint
-            if (T_DHCP.GetInstance().DictPool[IpToAssign])
-                return true;
 
-            return false;
+            uint key = BitConverter.ToUInt32(IpToAssign.GetAddressBytes(), 0);
+
+            bool SuccesfullGet = T_DHCP.GetInstance().DictPool.TryGetValue(key, out bool val);
+
+            if (SuccesfullGet)
+                return val;
+            else
+                return false;
         }
     }
 }
