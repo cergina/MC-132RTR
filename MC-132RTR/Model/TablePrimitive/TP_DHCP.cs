@@ -16,16 +16,21 @@ namespace MC_132RTR.Model.TablePrimitive
         public PhysicalAddress MacBind { get; private set; } = null;
         public uint Type { get; private set; } = C_DHCP.NOTHING;
 
-        public int Timer = 0;
+        public uint Timer = 0;
 
-        public TP_DHCP(IPAddress Ip, Mask MaskIp, IPAddress DefGateIp, PhysicalAddress MAC, uint Type)
+        public bool Holding = false;
+        public Byte Temporary = 10;
+
+        public TP_DHCP(IPAddress Ip, Mask MaskIp, IPAddress DefGateIp, PhysicalAddress MAC, uint Type, bool Temporary)
         {
             IpAssigned = Ip;
             SubnetMask = MaskIp;
             DefGateway = DefGateIp;
             MacBind = MAC;
             this.Type = Type;
-            Timer = (Type == C_DHCP.MANUAL) ? -1 : T_DHCP.TIMER;
+            Timer = T_DHCP.TIMER;
+
+            Holding = Temporary;
         }
 
         public ListViewItem ToListViewItem()
@@ -35,9 +40,10 @@ namespace MC_132RTR.Model.TablePrimitive
             String DHCPDefGatColumn = DefGateway.ToString();
             String DHCPMacColumn = MacBind.ToString();
             String DHCPTimeColumn = Timer.ToString();
+            String DHCPHoldColumn = (Holding) ? Temporary.ToString() : "NOT";
             TypeAsString(out String DHCPTypeColumn);
 
-            return new ListViewItem(new string[] { DHCPIpColumn, DHCPMaskColumn, DHCPDefGatColumn, DHCPMacColumn, DHCPTimeColumn, DHCPTypeColumn });
+            return new ListViewItem(new string[] { DHCPIpColumn, DHCPMaskColumn, DHCPDefGatColumn, DHCPMacColumn, DHCPTimeColumn, DHCPTypeColumn, DHCPHoldColumn });
         }
 
         private void TypeAsString(out String Column)

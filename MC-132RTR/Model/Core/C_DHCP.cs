@@ -1,12 +1,14 @@
 ﻿using MC_132RTR.Model.Packet;
 using MC_132RTR.Model.Support;
 using MC_132RTR.Model.Table;
+using MC_132RTR.Model.TablePrimitive;
 using PacketDotNet;
 using SharpPcap;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
+using System.Net.NetworkInformation;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -98,30 +100,39 @@ namespace MC_132RTR.Model.Core
         {
             P_DHCP PD_R = new P_DHCP(Data);
 
-            // TODO
-            TP_DHCP TPD_Ack = FindACKSetup(PD_R);
+            if (!PD_R.IsFor(IpDefGate))
+                return;
+
+            PhysicalAddress MAC = PD_R.IsBy();
+            if (MAC == null)
+                return;
+
+            TP_DHCP TPD_Ack = T_DHCP.GetInstance().Find(MAC);
 
             if (TPD_Ack == null)
                 return; // Or send DHCP NAK
 
-            UdpPacket Ack = P_DHCP.BOOTP_w_DHCP_OFFER();
-            P_DHCP.Send(, Ack, , ,);
+            UdpPacket Ack = P_DHCP.BOOTP_w_DHCP_ACK(TPD_Ack, PD_R.XID);
+            P_DHCP.Send(ReceivalDev, Ack, ReceivalDev.Network.Address, IPAddress.Parse("255.255.255.255"), MAC);
         }
 
         private void ProcessDiscover(byte[] Data, Device ReceivalDev)
         {
             P_DHCP PD_D = new P_DHCP(Data);
 
-            // TODO
+            PhysicalAddress MAC = PD_D.IsBy();
+            if (MAC == null)
+                return;
+
             // this does not have to be in DHCP table yet
             // but may be as a manual/automatic there is
-            TP_DHCP TPD_Offer = FindOfferedSetup(PD_D);
+            TP_DHCP TPD_Offer = T_DHCP.GetInstance().Find(MAC);
 
             if (TPD_Offer == null)
                 return; // Or send DHCP NAK
 
-            UdpPacket Offer = P_DHCP.BOOTP_w_DHCP_OFFER();
-            P_DHCP.Send(, Offer, , ,);
+            UdpPacket Offer = P_DHCP.BOOTP_w_DHCP_OFFER(TPD_Offer, PD_D.XID);
+            P_DHCP.Send(ReceivalDev, Offer, ReceivalDev.Network.Address, IPAddress.Parse("255.255.255.255"), PhysicalAddress.Parse("FF-FF-FF-FF-FF-FF"));
         }
 
         public string ModeAsString()
@@ -170,10 +181,11 @@ namespace MC_132RTR.Model.Core
             if (!Dev.Network.IsWithinNetworkRange(IpToAssign))
                 return false;
 
-            if (!T_DHCP.GetInstance().IpPool.Contains(IpToAssign))
-                return false;
+            // todo: check if it works, else dat do uint
+            if (T_DHCP.GetInstance().DictPool[IpToAssign])
+                return true;
 
-            return true;
+            return false;
         }
     }
 }

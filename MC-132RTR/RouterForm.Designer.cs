@@ -127,6 +127,7 @@
             this.DHCPMaskTextBox = new System.Windows.Forms.TextBox();
             this.DHCPDynRadioButton = new System.Windows.Forms.RadioButton();
             this.DHCPManagementGB = new System.Windows.Forms.GroupBox();
+            this.DHCPDeleteButton = new System.Windows.Forms.Button();
             this.DHCPAddButton = new System.Windows.Forms.Button();
             this.label7 = new System.Windows.Forms.Label();
             this.DHCPMacTextBox = new System.Windows.Forms.TextBox();
@@ -135,7 +136,7 @@
             this.label4 = new System.Windows.Forms.Label();
             this.DHCPIpTextBox = new System.Windows.Forms.TextBox();
             this.CommentTextBox = new System.Windows.Forms.Label();
-            this.DHCPDeleteButton = new System.Windows.Forms.Button();
+            this.DHCPHoldColumn = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.Dev1GB.SuspendLayout();
             this.Dev2GB.SuspendLayout();
             this.RouterGB.SuspendLayout();
@@ -996,7 +997,8 @@
             this.DHCPDefGatColumn,
             this.DHCPMacColumn,
             this.DHCPTimeColumn,
-            this.DHCPTypeColumn});
+            this.DHCPTypeColumn,
+            this.DHCPHoldColumn});
             this.DHCPListView.ForeColor = System.Drawing.SystemColors.InfoText;
             this.DHCPListView.HideSelection = false;
             this.DHCPListView.Location = new System.Drawing.Point(6, 19);
@@ -1014,26 +1016,27 @@
             // DHCPMaskColumn
             // 
             this.DHCPMaskColumn.Text = "Mask";
-            this.DHCPMaskColumn.Width = 97;
+            this.DHCPMaskColumn.Width = 84;
             // 
             // DHCPDefGatColumn
             // 
             this.DHCPDefGatColumn.Text = "Default Gateway";
-            this.DHCPDefGatColumn.Width = 97;
+            this.DHCPDefGatColumn.Width = 91;
             // 
             // DHCPMacColumn
             // 
             this.DHCPMacColumn.Text = "MAC";
-            this.DHCPMacColumn.Width = 91;
+            this.DHCPMacColumn.Width = 87;
             // 
             // DHCPTimeColumn
             // 
             this.DHCPTimeColumn.Text = "Time";
+            this.DHCPTimeColumn.Width = 47;
             // 
             // DHCPTypeColumn
             // 
             this.DHCPTypeColumn.Text = "Type";
-            this.DHCPTypeColumn.Width = 83;
+            this.DHCPTypeColumn.Width = 63;
             // 
             // DHCPOptionsGB
             // 
@@ -1198,6 +1201,19 @@
             this.DHCPManagementGB.TabStop = false;
             this.DHCPManagementGB.Text = "DHCP Management";
             // 
+            // DHCPDeleteButton
+            // 
+            this.DHCPDeleteButton.BackColor = System.Drawing.SystemColors.Window;
+            this.DHCPDeleteButton.Font = new System.Drawing.Font("Perpetua Titling MT", 10.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.DHCPDeleteButton.Location = new System.Drawing.Point(372, 57);
+            this.DHCPDeleteButton.Margin = new System.Windows.Forms.Padding(2);
+            this.DHCPDeleteButton.Name = "DHCPDeleteButton";
+            this.DHCPDeleteButton.Size = new System.Drawing.Size(205, 34);
+            this.DHCPDeleteButton.TabIndex = 35;
+            this.DHCPDeleteButton.Text = "DELETE (just  Ip)";
+            this.DHCPDeleteButton.UseVisualStyleBackColor = false;
+            this.DHCPDeleteButton.Click += new System.EventHandler(this.DHCPDeleteButton_Click);
+            // 
             // DHCPAddButton
             // 
             this.DHCPAddButton.BackColor = System.Drawing.SystemColors.Window;
@@ -1275,18 +1291,10 @@
             this.CommentTextBox.Text = "TextToPut";
             this.CommentTextBox.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
-            // DHCPDeleteButton
+            // DHCPHoldColumn
             // 
-            this.DHCPDeleteButton.BackColor = System.Drawing.SystemColors.Window;
-            this.DHCPDeleteButton.Font = new System.Drawing.Font("Perpetua Titling MT", 10.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.DHCPDeleteButton.Location = new System.Drawing.Point(372, 57);
-            this.DHCPDeleteButton.Margin = new System.Windows.Forms.Padding(2);
-            this.DHCPDeleteButton.Name = "DHCPDeleteButton";
-            this.DHCPDeleteButton.Size = new System.Drawing.Size(205, 34);
-            this.DHCPDeleteButton.TabIndex = 35;
-            this.DHCPDeleteButton.Text = "DELETE (just  Ip)";
-            this.DHCPDeleteButton.UseVisualStyleBackColor = false;
-            this.DHCPDeleteButton.Click += new System.EventHandler(this.DHCPDeleteButton_Click);
+            this.DHCPHoldColumn.Text = "TEMP";
+            this.DHCPHoldColumn.Width = 53;
             // 
             // RouterForm
             // 
@@ -1444,6 +1452,7 @@
         private System.Windows.Forms.Button DHCPSaveButton;
         private System.Windows.Forms.Label DHCPInfoLabel;
         private System.Windows.Forms.Button DHCPDeleteButton;
+        private System.Windows.Forms.ColumnHeader DHCPHoldColumn;
     }
 }
 

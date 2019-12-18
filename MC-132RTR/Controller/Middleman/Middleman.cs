@@ -234,6 +234,7 @@ namespace MC_132RTR.Controller.Middleman
             {
                 T_DHCP.GetInstance().AddManual(
                     IPAddress.Parse(IpText),
+                    C_DHCP.DefaultMask,
                     IPAddress.Parse(DefGatText),
                     PhysicalAddress.Parse(ForMacText)
                     );
@@ -272,7 +273,7 @@ namespace MC_132RTR.Controller.Middleman
                             return -1;
                     }
                 case DHCP:
-                    return T_DHCP.TIMER;
+                    return (int)T_DHCP.TIMER;
                 default:
                     return -1;
             }

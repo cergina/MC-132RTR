@@ -1,7 +1,6 @@
 ﻿using MC_132RTR.Model.Core;
 using MC_132RTR.Model.Support;
 using MC_132RTR.Model.TablePrimitive;
-using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
@@ -12,11 +11,17 @@ namespace MC_132RTR.Model.Table
 {
     class T_DHCP
     {
-        public static int TIMER { private set; get; } = 30;
+        public static uint TIMER { private set; get; } = 70;
+        public static uint TIMER_RENEWAL { private set; get; } = 30;
+        public static uint TIMER_REBIND { private set; get; } = 50;
+
         private static T_DHCP Instance = null;
 
+        // assigned ip's
         public List<TP_DHCP> Table = new List<TP_DHCP>();
-        public List<IPAddress> IpPool = null;
+        // available ip's
+        // public List<IPAddress> IpPool = null;
+        public Dictionary<IPAddress, bool> DictPool { get; private set; } = null;
 
         private T_DHCP()
         {
@@ -31,7 +36,26 @@ namespace MC_132RTR.Model.Table
 
                 if (Device.RouterRunning && C_DHCP.RUNNING)
                 {
-                    // TODO
+                    // REMOVE OLD RESERVATIONS
+                    foreach (TP_DHCP TPD in Table)
+                    {
+                        if (TPD.Holding && TPD.Temporary == 0)
+                            MakeReservedAvailable(TPD.IpAssigned);
+                    }
+
+                    Table.RemoveAll(Item => Item.Holding && Item.Temporary == 0);
+
+                    // REMOVE DYNAMIC ENTRIES
+                    Table.RemoveAll(Item => !Item.Holding && Item.Type == C_DHCP.DYNAMIC && Item.Timer == 0);
+
+                    // OTHER
+                    foreach (TP_DHCP TPD in Table)
+                    {
+                        if (TPD.Holding)
+                            --TPD.Temporary;
+                        else
+                            --TPD.Timer;
+                    }
                 }
 
                 Thread.Sleep(1000);
@@ -44,11 +68,15 @@ namespace MC_132RTR.Model.Table
 
             IPAddress AlreadyAssigned = Device.PairDeviceWithId(C_DHCP.ActiveDevice_S).Network.Address;
 
-            IpPool = Network.GetListOfIntermezzoIp(C_DHCP.IpStart, C_DHCP.IpLast, AlreadyAssigned, true);
+            DictPool = Network.GetListOfIntermezzoIp(C_DHCP.IpStart, C_DHCP.IpLast, AlreadyAssigned, true);
         }
 
         public void ChangeTimer(int Adept)
-            => TIMER = (Adept > 0) ? Adept : TIMER;
+        {
+            TIMER = (Adept >= 30) ? (uint)Adept : TIMER;
+            TIMER_RENEWAL = TIMER / 2;
+            TIMER_REBIND = TIMER / 4 * 3;
+        }
 
         // generic stuff
         public static T_DHCP GetInstance()
@@ -57,21 +85,77 @@ namespace MC_132RTR.Model.Table
         public List<TP_DHCP> GetListForView()
             => Table.ToList();
 
-        internal void AddManual(IPAddress IPToAssign, IPAddress IpDefGat, PhysicalAddress MacForThis)
+        internal TP_DHCP Find(PhysicalAddress MAC)
+        {
+            // search in table
+            TP_DHCP TPD_IT = Table.Find(Item => Item.MacBind.Equals(MAC));
+            if (TPD_IT != null)
+                return TPD_IT;
+
+            // if not in table
+            return TemporarilyAssign(MAC);
+        }
+
+        internal TP_DHCP TemporarilyAssign(PhysicalAddress MAC)
+        {
+            return new TP_DHCP(RandomFromPool(), C_DHCP.DefaultMask, C_DHCP.IpDefGate, MAC, C_DHCP.Mode, true);
+        }
+
+        internal void MakeReservedAvailable(IPAddress Ip)
+        {
+            //Table.RemoveAll(Item => Item.IpAssigned.Equals(Ip) && Item.Holding);
+            DictPool[Ip] = true;
+        }
+
+        internal void MakeReservedRegular(IPAddress Ip)
+        {
+            Table.Find(Item => Item.IpAssigned.Equals(Ip)).Holding = false;
+        }
+
+        // TEMPORARY
+        internal IPAddress RandomFromPool()
+        {
+            List<IPAddress> keys = new List<IPAddress>(DictPool.Keys);
+
+            foreach (IPAddress Ip in keys)
+            {
+                if (DictPool[Ip])
+                {
+                    DictPool[Ip] = false;
+                    return Ip;
+                }
+            }
+
+            return null;
+        }
+
+        // REGULAR
+        internal bool AddDynamic(IPAddress IPToAssign, Mask SubnetMask, IPAddress IpDefGate, PhysicalAddress MacForThis)
+            => Add(IPToAssign, SubnetMask, IpDefGate, MacForThis, C_DHCP.DYNAMIC);
+
+        internal bool AddManual(IPAddress IPToAssign, Mask SubnetMask, IPAddress IpDefGate, PhysicalAddress MacForThis)
+            => Add(IPToAssign, SubnetMask, IpDefGate, MacForThis, C_DHCP.MANUAL);
+
+        internal bool AddAutomatic(IPAddress IPToAssign, Mask SubnetMask, IPAddress IpDefGate, PhysicalAddress MacForThis)
+            => Add(IPToAssign, SubnetMask, IpDefGate, MacForThis, C_DHCP.AUTOMAT);
+
+        internal bool Add(IPAddress IPToAssign, Mask SubnetMask, IPAddress IpDefGate, PhysicalAddress MacForThis, uint Type)
         {
             if (C_DHCP.DefaultMask == null || !C_DHCP.DefaultMask.IsCorrect() || !C_DHCP.RUNNING)
-                return;
+                return false;
 
             if (!C_DHCP.GetInstance().OkToAssignIp(IPToAssign))
-                return;
+                return false;
 
             if (Table.Find(Item => Item.IpAssigned.Equals(IPToAssign)) != null)
-                return;
+                return false;
 
-            TP_DHCP TPDH = new TP_DHCP(IPToAssign, C_DHCP.DefaultMask, IpDefGat, MacForThis, C_DHCP.MANUAL);
+            TP_DHCP TPDH = new TP_DHCP(IPToAssign, SubnetMask, IpDefGate, MacForThis, Type, false);
 
-            IpPool.Remove(IPToAssign);
+            DictPool[IPToAssign] = false;
             Table.Add(TPDH);
+
+            return true;
         }
 
         internal void DeleteManual(IPAddress IPAddress)

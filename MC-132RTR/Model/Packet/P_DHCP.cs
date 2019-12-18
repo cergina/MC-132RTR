@@ -1,5 +1,7 @@
 ﻿using MC_132RTR.Model.Core;
 using MC_132RTR.Model.Support;
+using MC_132RTR.Model.Table;
+using MC_132RTR.Model.TablePrimitive;
 using PacketDotNet;
 using System;
 using System.Collections.Generic;
@@ -26,7 +28,7 @@ namespace MC_132RTR.Model.Packet
         public Byte OP { get; private set; }
         public uint XID { get; private set; }
         public PhysicalAddress CHADDR { get; private set; }
-        public List<byte[]> OptionsList { get; private set; } = new List<byte[]>();
+        private Dictionary<Byte, byte[]> OptionDict = new Dictionary<Byte, byte[]>();
 
         public P_DHCP(Byte[] ExternalBytes)
         {
@@ -60,10 +62,8 @@ namespace MC_132RTR.Model.Packet
                     }
 
                     Byte OptionLen = (byte)Extractor.Extract(this.Bytes, OptionsPos, typeof(byte));
+                    OptionDict.Add(CurrentOption, Extractor.Extract(this.Bytes, OptionsPos + 1, OptionLen));
                     
-                    OptionsList.Add(
-                        Extractor.Extract(this.Bytes, OptionsPos - 1, OptionLen + 2)
-                        );
                     OptionsPos += OptionLen;
                 }
             }
@@ -93,6 +93,25 @@ namespace MC_132RTR.Model.Packet
             Bytes = Insertor.Insert(Bytes, Bytes.Length, (Byte)0, 192); // SNAME + FILE
 
             Bytes = Insertor.Insert(Bytes, Bytes.Length, MAGIC_COOKIE);
+        }
+
+        internal bool IsFor(IPAddress IpRouter)
+        {
+            OptionDict.TryGetValue(DHCP_OPTION_SERVERID, out byte[] ServerOption);
+
+            // if not mentioned, its for us            
+            if (ServerOption == null || ServerOption.Length < 4)
+                return true;
+
+            return (C_DHCP.IpDefGate.GetAddressBytes().Equals(ServerOption)) ? true : false;
+        }
+
+        internal PhysicalAddress IsBy()
+        {
+            if (OptionDict.TryGetValue(DHCP_OPTION_CLIENTID, out byte[] ClientOption))
+                return new PhysicalAddress(ClientOption);
+            else
+                return null;
         }
 
         public static void Send(Device ExitDev, UdpPacket P_UDP, IPAddress Ip_Source, IPAddress Ip_Target, PhysicalAddress MAC_Target)
@@ -127,48 +146,74 @@ namespace MC_132RTR.Model.Packet
         }
 
         /*                 BOOTP                        */
-        public static UdpPacket BOOTP_w_DHCP_OFFER()
+        public static UdpPacket BOOTP_w_DHCP_OFFER(TP_DHCP TPD, uint XID_Previous)
         {
             byte[] OptionBytes = new byte[1];
+
+            List<IPAddress> ListRoutersFor3 = new List<IPAddress>
+            {
+                TPD.DefGateway
+            };
+
+            List<IPAddress> ListRoutersFor6 = new List<IPAddress>
+            {
+                IPAddress.Parse("8.8.8.8")
+            };
 
             // inserting options
             GenerateOption53(ref OptionBytes, DHCPOFFER);
-            GenerateOption1(ref OptionBytes, );
-            GenerateOption3(ref OptionBytes, );
-            GenerateOption51(ref OptionBytes, );
-            GenerateOption58(ref OptionBytes, );
-            GenerateOption59(ref OptionBytes, );
-            GenerateOption54(ref OptionBytes, );
-            GenerateOption6(ref OptionBytes, );
+            GenerateOption1(ref OptionBytes, TPD.SubnetMask);
+            GenerateOption3(ref OptionBytes, ListRoutersFor3);
+            GenerateOption51(ref OptionBytes, T_DHCP.TIMER);
+            GenerateOption58(ref OptionBytes, T_DHCP.TIMER_RENEWAL);
+            GenerateOption59(ref OptionBytes, T_DHCP.TIMER_REBIND);
+            GenerateOption54(ref OptionBytes, TPD.DefGateway);
+            GenerateOption6(ref OptionBytes, ListRoutersFor6);
+            GenerateOption255(ref OptionBytes);
 
             // Attach options to P_DHCP
-            P_DHCP PD = new P_DHCP();
+            P_DHCP PD = new P_DHCP(0x02, XID_Previous, IPAddress.Parse("0.0.0.0"), TPD.DefGateway, TPD.MacBind);
             PD.AttachOptions(OptionBytes);
 
             UdpPacket Udp = new UdpPacket(C_DHCP.Port_UDP_DHCP_ClientToServer, C_DHCP.Port_UDP_DHCP_ServerToClient);
             Udp.PayloadData = PD.Bytes;
+
+            return Udp;
         }
 
-        public static UdpPacket BOOTP_w_DHCP_ACK()
+        public static UdpPacket BOOTP_w_DHCP_ACK(TP_DHCP TPD, uint XID_Previous)
         {
             byte[] OptionBytes = new byte[1];
 
+            List<IPAddress> ListRoutersFor3 = new List<IPAddress>
+            {
+                TPD.DefGateway
+            };
+
+            List<IPAddress> ListRoutersFor6 = new List<IPAddress>
+            {
+                IPAddress.Parse("8.8.8.8")
+            };
+
             // inserting options
             GenerateOption53(ref OptionBytes, DHCPACK);
-            GenerateOption1(ref OptionBytes, );
-            GenerateOption3(ref OptionBytes, );
-            GenerateOption51(ref OptionBytes, );
-            GenerateOption58(ref OptionBytes, );
-            GenerateOption59(ref OptionBytes, );
-            GenerateOption54(ref OptionBytes, );
-            GenerateOption6(ref OptionBytes, );
+            GenerateOption1(ref OptionBytes, TPD.SubnetMask);
+            GenerateOption3(ref OptionBytes, ListRoutersFor3);
+            GenerateOption51(ref OptionBytes, T_DHCP.TIMER);
+            GenerateOption58(ref OptionBytes, T_DHCP.TIMER_RENEWAL);
+            GenerateOption59(ref OptionBytes, T_DHCP.TIMER_REBIND);
+            GenerateOption54(ref OptionBytes, TPD.DefGateway);
+            GenerateOption6(ref OptionBytes, ListRoutersFor6);
+            GenerateOption255(ref OptionBytes);
 
             // Attach options to P_DHCP
-            P_DHCP PD = new P_DHCP();
+            P_DHCP PD = new P_DHCP(0x02, XID_Previous, TPD.IpAssigned, TPD.DefGateway, TPD.MacBind);
             PD.AttachOptions(OptionBytes);
 
             UdpPacket Udp = new UdpPacket(C_DHCP.Port_UDP_DHCP_ClientToServer, C_DHCP.Port_UDP_DHCP_ServerToClient);
             Udp.PayloadData = PD.Bytes;
+
+            return Udp;
         }
 
         static UdpPacket BOOTP_w_DHCP_DISCOVER()
@@ -180,6 +225,9 @@ namespace MC_132RTR.Model.Packet
         {
             throw new NotSupportedException();
         }
+
+        private void AttachOptions(byte[] optionBytes)
+            => Bytes = Insertor.Insert(Bytes, DHCP_BASE_SIZE, optionBytes, optionBytes.Length);
 
         /*                     DHCP                            */
 
