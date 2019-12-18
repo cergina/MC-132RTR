@@ -96,12 +96,32 @@ namespace MC_132RTR.Model.Core
 
         private void ProcesRequest(byte[] Data, Device ReceivalDev)
         {
+            P_DHCP PD_R = new P_DHCP(Data);
+
             // TODO
+            TP_DHCP TPD_Ack = FindACKSetup(PD_R);
+
+            if (TPD_Ack == null)
+                return; // Or send DHCP NAK
+
+            UdpPacket Ack = P_DHCP.BOOTP_w_DHCP_OFFER();
+            P_DHCP.Send(, Ack, , ,);
         }
 
         private void ProcessDiscover(byte[] Data, Device ReceivalDev)
         {
+            P_DHCP PD_D = new P_DHCP(Data);
+
             // TODO
+            // this does not have to be in DHCP table yet
+            // but may be as a manual/automatic there is
+            TP_DHCP TPD_Offer = FindOfferedSetup(PD_D);
+
+            if (TPD_Offer == null)
+                return; // Or send DHCP NAK
+
+            UdpPacket Offer = P_DHCP.BOOTP_w_DHCP_OFFER();
+            P_DHCP.Send(, Offer, , ,);
         }
 
         public string ModeAsString()

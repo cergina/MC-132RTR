@@ -20,14 +20,53 @@ namespace MC_132RTR.Model.Packet
         public const Byte DHCPACK = 5;
 
         /*  DHCP Stuff */
-        public Byte[] Bytes { get; private set; } = null;
 
         /* PARSING */
+        public Byte[] Bytes { get; private set; } = null;
+        public Byte OP { get; private set; }
+        public uint XID { get; private set; }
+        public PhysicalAddress CHADDR { get; private set; }
+        public List<byte[]> OptionsList { get; private set; } = new List<byte[]>();
+
         public P_DHCP(Byte[] ExternalBytes)
         {
             this.Bytes = ExternalBytes;
 
-            // TODO
+            OP = (Byte)Extractor.Extract(this.Bytes, 0, typeof(Byte));
+            XID = (uint)Extractor.Extract(this.Bytes, 4, typeof(uint));
+            CHADDR = (PhysicalAddress)Extractor.Extract(this.Bytes, 28, typeof(PhysicalAddress));
+
+            uint TmpMC = (uint)Extractor.Extract(this.Bytes, BOOTP_BASE_SIZE, typeof(uint));
+            // parse options if its truly DHCP
+            if (MAGIC_COOKIE.Equals(TmpMC))
+            {
+                int OptionsPos = DHCP_BASE_SIZE;
+                int OptionsSize = this.Bytes.Length;
+                Byte CurrentOption = 0;
+
+                while (OptionsPos < OptionsSize)
+                {
+                    CurrentOption = (byte)Extractor.Extract(this.Bytes, OptionsPos, typeof(byte));
+
+                    // DHCP break
+                    if (CurrentOption == 255)
+                        break;
+
+                    // DHCP pad
+                    if (CurrentOption == 0)
+                    {
+                        ++OptionsPos;
+                        continue;
+                    }
+
+                    Byte OptionLen = (byte)Extractor.Extract(this.Bytes, OptionsPos, typeof(byte));
+                    
+                    OptionsList.Add(
+                        Extractor.Extract(this.Bytes, OptionsPos - 1, OptionLen + 2)
+                        );
+                    OptionsPos += OptionLen;
+                }
+            }
         }
 
         /* CRAFTING */
@@ -88,7 +127,7 @@ namespace MC_132RTR.Model.Packet
         }
 
         /*                 BOOTP                        */
-        static UdpPacket BOOTP_w_DHCP_OFFER()
+        public static UdpPacket BOOTP_w_DHCP_OFFER()
         {
             byte[] OptionBytes = new byte[1];
 
@@ -110,7 +149,7 @@ namespace MC_132RTR.Model.Packet
             Udp.PayloadData = PD.Bytes;
         }
 
-        static UdpPacket BOOTP_w_DHCP_ACK()
+        public static UdpPacket BOOTP_w_DHCP_ACK()
         {
             byte[] OptionBytes = new byte[1];
 
@@ -142,7 +181,7 @@ namespace MC_132RTR.Model.Packet
             throw new NotSupportedException();
         }
 
-        /*                     DHCP                              */
+        /*                     DHCP                            */
 
 
         /* DHCP Options Insertion */

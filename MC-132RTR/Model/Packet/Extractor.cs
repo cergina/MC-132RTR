@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
+using System.Net.NetworkInformation;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -44,6 +45,11 @@ namespace MC_132RTR.Model.Packet
                 byte[] NewIp = new byte[4];
                 Array.Copy(Data, StartByte, NewIp, 0, 4);
                 return (IPAddress)new IPAddress(NewIp);
+            } else if (Type == typeof(PhysicalAddress))
+            {
+                byte[] NewMAC = new byte[6];
+                Array.Copy(Data, StartByte, NewMAC, 0, 6);
+                return (PhysicalAddress)new PhysicalAddress(NewMAC);
             }
 
             // such Type is not specified
