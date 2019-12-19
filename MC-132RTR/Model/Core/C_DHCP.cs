@@ -107,10 +107,15 @@ namespace MC_132RTR.Model.Core
             if (MAC == null)
                 return;
 
-            TP_DHCP TPD_Ack = T_DHCP.GetInstance().Find(MAC);
+            TP_DHCP TPD_Ack = T_DHCP.GetInstance().Find(MAC, true);
 
             if (TPD_Ack == null)
                 return; // Or send DHCP NAK
+            else
+            {
+                TPD_Ack.Refresh(); // TODO check if refreshes or need externally find and change
+                T_DHCP.GetInstance().MakeReservedRegular(TPD_Ack.IpAssigned);
+            }
 
             UdpPacket Ack = P_DHCP.BOOTP_w_DHCP_ACK(TPD_Ack, PD_R.XID);
             P_DHCP.Send(ReceivalDev, Ack, ReceivalDev.Network.Address, IPAddress.Parse("255.255.255.255"), MAC);
@@ -126,7 +131,7 @@ namespace MC_132RTR.Model.Core
 
             // this does not have to be in DHCP table yet
             // but may be as a manual/automatic there is
-            TP_DHCP TPD_Offer = T_DHCP.GetInstance().Find(MAC);
+            TP_DHCP TPD_Offer = T_DHCP.GetInstance().Find(MAC, false);
 
             if (TPD_Offer == null)
                 return; // Or send DHCP NAK

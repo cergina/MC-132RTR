@@ -37,7 +37,7 @@ namespace MC_132RTR.Model.Table
 
                 if (Device.RouterRunning && C_DHCP.RUNNING)
                 {
-                    // REMOVE OLD RESERVATIONS
+                    // FREE IpPool that will be deleted
                     foreach (TP_DHCP TPD in Table)
                     {
                         if (TPD.Holding && TPD.Temporary == 0)
@@ -47,12 +47,13 @@ namespace MC_132RTR.Model.Table
                             MakeReservedAvailable(TPD.IpAssigned);
                     }
 
+                    // REMOVE OLD RESERVATIONS
                     Table.RemoveAll(Item => Item.Holding && Item.Temporary == 0);
 
                     // REMOVE DYNAMIC ENTRIES
                     Table.RemoveAll(Item => !Item.Holding && Item.Type == C_DHCP.DYNAMIC && Item.Timer == 0);
 
-                    // OTHER
+                    // REGULAR DECREMENTS
                     foreach (TP_DHCP TPD in Table)
                     {
                         if (TPD.Holding)
@@ -89,7 +90,7 @@ namespace MC_132RTR.Model.Table
         public List<TP_DHCP> GetListForView()
             => Table.ToList();
 
-        internal TP_DHCP Find(PhysicalAddress MAC)
+        internal TP_DHCP Find(PhysicalAddress MAC, bool NoTemporary)
         {
             // search in table
             TP_DHCP TPD_IT = Table.Find(Item => Item.MacBind.Equals(MAC));
@@ -97,7 +98,7 @@ namespace MC_132RTR.Model.Table
                 return TPD_IT;
 
             // if not in table
-            return TemporarilyAssign(MAC);
+            return NoTemporary ? null : TemporarilyAssign(MAC);
         }
 
         internal TP_DHCP TemporarilyAssign(PhysicalAddress MAC)

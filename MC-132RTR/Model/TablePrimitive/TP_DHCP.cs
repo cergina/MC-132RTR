@@ -28,7 +28,7 @@ namespace MC_132RTR.Model.TablePrimitive
             DefGateway = DefGateIp;
             MacBind = MAC;
             this.Type = Type;
-            Timer = T_DHCP.TIMER;
+            Timer = (Type == C_DHCP.MANUAL) ? 0 : T_DHCP.TIMER; // because he did not ask yet
 
             Holding = Temporary;
         }
@@ -64,5 +64,8 @@ namespace MC_132RTR.Model.TablePrimitive
                     return;
             }
         }
+
+        internal void Refresh()
+            => Timer = T_DHCP.TIMER;
     }
 }
