@@ -26,6 +26,7 @@ namespace MC_132RTR.Model.TablePrimitive
             IpAssigned = Ip;
             SubnetMask = MaskIp;
             DefGateway = DefGateIp;
+
             MacBind = MAC;
             this.Type = Type;
             Timer = (Type == C_DHCP.MANUAL) ? 0 : T_DHCP.TIMER; // because he did not ask yet

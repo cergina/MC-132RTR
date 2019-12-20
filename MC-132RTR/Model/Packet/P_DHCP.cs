@@ -45,7 +45,7 @@ namespace MC_132RTR.Model.Packet
                 int OptionsPos = DHCP_BASE_SIZE;
                 int OptionsSize = this.Bytes.Length;
                 Byte CurrentOption = 0;
-
+                
                 while (OptionsPos < OptionsSize)
                 {
                     CurrentOption = (byte)Extractor.Extract(this.Bytes, OptionsPos, typeof(byte));
@@ -61,10 +61,12 @@ namespace MC_132RTR.Model.Packet
                         continue;
                     }
 
-                    Byte OptionLen = (byte)Extractor.Extract(this.Bytes, OptionsPos, typeof(byte));
+                    ++OptionsPos;
+
+                    byte OptionLen = (byte)Extractor.Extract(this.Bytes, OptionsPos, typeof(byte));
                     OptionDict.Add(CurrentOption, Extractor.Extract(this.Bytes, OptionsPos + 1, OptionLen));
-                    
-                    OptionsPos += OptionLen;
+
+                    OptionsPos += OptionLen + 1;
                 }
             }
         }
@@ -81,7 +83,12 @@ namespace MC_132RTR.Model.Packet
             Bytes = Insertor.Insert(Bytes, Bytes.Length, (Byte)0);  // HOPS
 
             Bytes = Insertor.Insert(Bytes, Bytes.Length, XID);
-            Bytes = Insertor.Insert(Bytes, Bytes.Length, (uint)0); // SECS, FLAG same time
+            
+            //Bytes = Insertor.Insert(Bytes, Bytes.Length, (uint)0); // SECS, FLAG same time
+            Bytes = Insertor.Insert(Bytes, Bytes.Length, (ushort)0);
+            Bytes = Insertor.Insert(Bytes, Bytes.Length, (byte)128);
+            Bytes = Insertor.Insert(Bytes, Bytes.Length, (byte)0);
+
             Bytes = Insertor.Insert(Bytes, Bytes.Length, (uint)0); // CIADDR
             Bytes = Insertor.Insert(Bytes, Bytes.Length, Yiaddr); // YIADDR
             Bytes = Insertor.Insert(Bytes, Bytes.Length, Siaddr); // SIADDR
@@ -109,7 +116,11 @@ namespace MC_132RTR.Model.Packet
         internal PhysicalAddress IsBy()
         {
             if (OptionDict.TryGetValue(DHCP_OPTION_CLIENTID, out byte[] ClientOption))
-                return new PhysicalAddress(ClientOption);
+            {
+                byte[] IgnoredType = new byte[6];
+                Array.Copy(ClientOption, 1, IgnoredType, 0, 6);
+                return new PhysicalAddress(IgnoredType);
+            }
             else
                 return null;
         }
@@ -172,7 +183,7 @@ namespace MC_132RTR.Model.Packet
             GenerateOption255(ref OptionBytes);
 
             // Attach options to P_DHCP
-            P_DHCP PD = new P_DHCP(0x02, XID_Previous, IPAddress.Parse("0.0.0.0"), TPD.DefGateway, TPD.MacBind);
+            P_DHCP PD = new P_DHCP(0x02, XID_Previous, TPD.IpAssigned/*IPAddress.Parse("0.0.0.0")*/, TPD.DefGateway, TPD.MacBind);
             PD.AttachOptions(OptionBytes);
 
             UdpPacket Udp = new UdpPacket(C_DHCP.Port_UDP_DHCP_ClientToServer, C_DHCP.Port_UDP_DHCP_ServerToClient);
@@ -310,7 +321,7 @@ namespace MC_132RTR.Model.Packet
         static void GenerateOption59(ref Byte[] Bytes, uint RebindingTime)
             => GenerateOptionUINT(ref Bytes, DHCP_OPTION_REBIND, RebindingTime);
 
-        private static void GenerateOptionByte(ref Byte[] Bytes, Byte OptionCode, uint Value)
+        private static void GenerateOptionByte(ref Byte[] Bytes, Byte OptionCode, byte Value)
         {
             Bytes = Insertor.Insert(Bytes, Bytes.Length, OptionCode);
             Bytes = Insertor.Insert(Bytes, Bytes.Length, (Byte)1);

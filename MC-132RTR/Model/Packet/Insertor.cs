@@ -94,7 +94,8 @@ namespace MC_132RTR.Model.Packet
                 return null;
 
             byte[] ValueBytes = ((PhysicalAddress)Value).GetAddressBytes();
-
+            Console.WriteLine($"Idem vlozit {Value.ToString()}");
+            // todo try by one
             Data = MakeBiggerIfNecessary(Data, StartByte, ValueBytes.Length);
             Array.Copy(ValueBytes, 0, Data, StartByte, ValueBytes.Length);
 
