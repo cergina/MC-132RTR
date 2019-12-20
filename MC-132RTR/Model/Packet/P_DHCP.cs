@@ -107,10 +107,12 @@ namespace MC_132RTR.Model.Packet
             OptionDict.TryGetValue(DHCP_OPTION_SERVERID, out byte[] ServerOption);
 
             // if not mentioned, its for us            
-            if (ServerOption == null || ServerOption.Length < 4)
+            if (ServerOption == null || ServerOption.Length != 4)
+            {
                 return true;
+            }
 
-            return (C_DHCP.IpDefGate.GetAddressBytes().Equals(ServerOption)) ? true : false;
+            return IpRouter.Equals(new IPAddress(ServerOption)) ? true : false;
         }
 
         internal PhysicalAddress IsBy()

@@ -116,9 +116,7 @@ namespace MC_132RTR.Model.Support.Tests
             // additional output
             Console.WriteLine("Start test\n\n\n");
 
-            Network.GetListOfIntermezzoIp(IPAddress.Parse("192.168.11.1"), 
-                IPAddress.Parse("192.168.12.5"), null,  true).ForEach(
-                Item => Console.WriteLine(Item.ToString()));
+            // TODO
 
             Console.WriteLine("Finish test");
         }

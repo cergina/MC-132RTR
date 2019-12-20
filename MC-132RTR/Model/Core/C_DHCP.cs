@@ -104,13 +104,16 @@ namespace MC_132RTR.Model.Core
                 return;
 
             PhysicalAddress MAC = PD_R.IsBy();
+
             if (MAC == null)
                 return;
 
-            TP_DHCP TPD_Ack = T_DHCP.GetInstance().Find(MAC, true);
+            TP_DHCP TPD_Ack = T_DHCP.GetInstance().Find(MAC, true, out bool WasThere);
 
             if (TPD_Ack == null)
+            {
                 return; // Or send DHCP NAK
+            }
             else
             {
                 TPD_Ack.Refresh(); // TODO check if refreshes or need externally find and change
@@ -131,10 +134,13 @@ namespace MC_132RTR.Model.Core
 
             // this does not have to be in DHCP table yet
             // but may be as a manual/automatic there is
-            TP_DHCP TPD_Offer = T_DHCP.GetInstance().Find(MAC, false);
+            TP_DHCP TPD_Offer = T_DHCP.GetInstance().Find(MAC, false, out bool WasInDHCPTable);
 
             if (TPD_Offer == null)
                 return; // Or send DHCP NAK
+
+            if (!WasInDHCPTable)
+                T_DHCP.GetInstance().Add(TPD_Offer);
 
             UdpPacket Offer = P_DHCP.BOOTP_w_DHCP_OFFER(TPD_Offer, PD_D.XID);
             P_DHCP.Send(ReceivalDev, Offer, ReceivalDev.Network.Address, IPAddress.Parse("255.255.255.255"), PhysicalAddress.Parse("FF-FF-FF-FF-FF-FF"));

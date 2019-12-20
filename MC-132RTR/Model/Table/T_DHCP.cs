@@ -90,12 +90,16 @@ namespace MC_132RTR.Model.Table
         public List<TP_DHCP> GetListForView()
             => Table.ToList();
 
-        internal TP_DHCP Find(PhysicalAddress MAC, bool NoTemporary)
+        internal TP_DHCP Find(PhysicalAddress MAC, bool NoTemporary, out bool WasThere)
         {
+            WasThere = false;
             // search in table
             TP_DHCP TPD_IT = Table.Find(Item => Item.MacBind.Equals(MAC));
             if (TPD_IT != null)
+            {
+                WasThere = true;
                 return TPD_IT;
+            }
 
             // if not in table
             return NoTemporary ? null : TemporarilyAssign(MAC);
@@ -131,6 +135,12 @@ namespace MC_132RTR.Model.Table
             }
 
             return null;
+        }
+
+        // REGULAR
+        internal void Add(TP_DHCP TPD)
+        {
+            Table.Add(TPD);
         }
 
         // REGULAR

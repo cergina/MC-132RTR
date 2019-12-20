@@ -25,9 +25,12 @@ Resolution: Dr. Macko has to still confirm this
 ------------------------------------------------------------------
 
  **Extra functionality:**
- - GUI: ??
- - Functionality: ??
+ - GUI: | 100% implemented | tested
+ - Functionality: 
+ - DHCP manual | 100% implemented | tested with 1 pc
+ - DHCP automatic | 100% implemented | tested with 1 pc
+ - DHCP dynamic | 100% implemented | tested with 1 pc
 
-Resolution: After consulting with Dr. Macko, I can implement NAT/DHCP
-
-DHCP will be implemented.
+Resolution1: After consulting with Dr. Macko, I can implement NAT/DHCP
+Resolution2: DHCP was implemented
+Resolution2: Dr. Macko still has to confirm this
