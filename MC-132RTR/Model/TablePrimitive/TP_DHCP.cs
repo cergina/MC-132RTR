@@ -15,11 +15,12 @@ namespace MC_132RTR.Model.TablePrimitive
         public IPAddress DefGateway { get; private set; } = null;
         public PhysicalAddress MacBind { get; private set; } = null;
         public uint Type { get; private set; } = C_DHCP.NOTHING;
+        public bool SucceededWithManual { get;  set; } = false;
 
         public uint Timer = 0;
 
         public bool Holding = false;
-        public Byte Temporary = 10;
+        public Byte Temporary = 20;
 
         public TP_DHCP(IPAddress Ip, Mask MaskIp, IPAddress DefGateIp, PhysicalAddress MAC, uint Type, bool Temporary)
         {
@@ -68,5 +69,17 @@ namespace MC_132RTR.Model.TablePrimitive
 
         internal void Refresh()
             => Timer = T_DHCP.TIMER;
+
+        internal void SucceedByManual(TP_DHCP TPD_IT_MANUAL)
+        {
+            if (TPD_IT_MANUAL == null)
+                return;
+
+            if (TPD_IT_MANUAL.MacBind.Equals(this.MacBind))
+            {
+                T_DHCP.GetInstance().MakeReservedAvailable(this.IpAssigned);
+                SucceededWithManual = true;
+            }
+        }
     }
 }

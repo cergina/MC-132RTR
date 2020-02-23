@@ -53,6 +53,9 @@ namespace MC_132RTR.Model.Table
                     // REMOVE DYNAMIC ENTRIES
                     Table.RemoveAll(Item => !Item.Holding && Item.Type == C_DHCP.DYNAMIC && Item.Timer == 0);
 
+                    // REMOVE USELESS ENTRIES
+                    Table.RemoveAll(Item => Item.SucceededWithManual == true);
+
                     // REGULAR DECREMENTS
                     foreach (TP_DHCP TPD in Table)
                     {
@@ -94,11 +97,23 @@ namespace MC_132RTR.Model.Table
         {
             WasThere = false;
             // search in table
-            TP_DHCP TPD_IT = Table.Find(Item => Item.MacBind.Equals(MAC));
-            if (TPD_IT != null)
+            TP_DHCP TPD_IT_MANUAL = Table.Find(Item => Item.MacBind.Equals(MAC) && Item.Type == C_DHCP.MANUAL);
+            TP_DHCP TPD_IT_DIFFER = Table.Find(Item => Item.MacBind.Equals(MAC) && Item.Type != C_DHCP.MANUAL);
+
+            if (TPD_IT_DIFFER != null || TPD_IT_MANUAL != null)
             {
                 WasThere = true;
-                return TPD_IT;
+
+                if (TPD_IT_MANUAL == null)
+                    return TPD_IT_DIFFER;
+
+                // TPD MANUAL exists
+
+                // If DIFFER coexists with MANUAL its redundant
+                if (TPD_IT_DIFFER != null)
+                    TPD_IT_DIFFER.SucceedByManual(TPD_IT_MANUAL);
+
+                return TPD_IT_MANUAL;
             }
 
             // if not in table
@@ -162,6 +177,10 @@ namespace MC_132RTR.Model.Table
                 return false;
 
             if (Table.Find(Item => Item.IpAssigned.Equals(IPToAssign)) != null)
+                return false;
+
+            if (Type == C_DHCP.MANUAL &&
+                Table.Find(Item => Item.Type == C_DHCP.MANUAL && Item.MacBind.Equals(MacForThis)) != null)
                 return false;
 
             TP_DHCP TPDH = new TP_DHCP(IPToAssign, SubnetMask, IpDefGate, MacForThis, Type, false);
